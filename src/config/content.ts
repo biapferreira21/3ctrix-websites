@@ -141,8 +141,8 @@ export const founder = {
   name: "Beatriz Ferreira",
   role: "Founder da 3C Trix Studio",
   text: "A 3C Trix Studio nasceu para dar a pequenos negócios websites mais modernos, profissionais e úteis — combinando design, código e análise concreta de cada negócio.",
-  photo: withBasePath("/beatriz.jpg"),
-  photoExists: false, // mude para true quando adicionar a fotografia
+  photo: withBasePath("/beatriz-founder.png"),
+  photoExists: true,
   photoPlaceholder: "Adicionar fotografia",
 };
 
