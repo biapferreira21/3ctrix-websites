@@ -95,7 +95,7 @@ export async function POST(request: Request) {
     process.env.CONTACT_TO_EMAIL?.trim() || "websites@3ctrix.com";
   const fromEmail =
     process.env.CONTACT_FROM_EMAIL?.trim() ||
-    "3C Trix Studio <websites@3ctrix.com>";
+    "3C Trix Studio <onboarding@resend.dev>";
 
   if (!apiKey) {
     console.error("[contacto] RESEND_API_KEY não está configurada.");
