@@ -158,6 +158,6 @@ export const contactSection = {
     "Ainda não sei",
   ],
   consentLabel: "Autorizo o contacto da 3C Trix Studio relativamente a este pedido.",
-  submitLabel: "Pedir análise gratuita",
+  submitLabel: "Enviar pedido por WhatsApp",
 };
 import { withBasePath } from "./deployment";

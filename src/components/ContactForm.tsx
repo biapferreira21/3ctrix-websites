@@ -6,7 +6,7 @@ import { FadeIn } from "./ui/motion";
 import { IconCheck } from "./ui/icons";
 import { contactSection } from "@/config/content";
 import { cn } from "@/lib/cn";
-import { withBasePath } from "@/config/deployment";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 type FormState = {
   nome: string;
@@ -59,7 +59,7 @@ export function ContactForm() {
     if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const found = validate(values);
     setErrors(found);
@@ -69,28 +69,31 @@ export function ContactForm() {
       return;
     }
 
-    setStatus("loading");
-    setServerMessage("");
+    const message = [
+      "Olá, gostaria de pedir uma análise gratuita ao meu website.",
+      "",
+      `Nome: ${values.nome.trim()}`,
+      values.negocio.trim() ? `Negócio: ${values.negocio.trim()}` : "",
+      `Email: ${values.email.trim()}`,
+      values.telefone.trim() ? `Telefone: ${values.telefone.trim()}` : "",
+      values.website.trim() ? `Website atual: ${values.website.trim()}` : "",
+      values.servico ? `Serviço: ${values.servico}` : "",
+      "",
+      `Mensagem: ${values.mensagem.trim()}`,
+    ]
+      .filter((line) => line !== "")
+      .join("\n");
 
-    try {
-      const res = await fetch(withBasePath("/api/contact"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      if (!res.ok) throw new Error("Falha no envio");
-
-      setStatus("success");
-      setServerMessage(
-        "Pedido enviado com sucesso. Entraremos em contacto o mais breve possível."
-      );
-      setValues(initialState);
-    } catch {
+    const whatsappUrl = getWhatsAppUrl(message);
+    if (!whatsappUrl) {
       setStatus("error");
       setServerMessage(
-        "Não foi possível enviar o pedido. Tente novamente ou contacte-nos diretamente."
+        "O WhatsApp está temporariamente indisponível. Contacte-nos por email."
       );
+      return;
     }
+
+    window.location.assign(whatsappUrl);
   }
 
   const inputBase =
