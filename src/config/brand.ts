@@ -42,7 +42,7 @@ export const contact = {
   // WhatsApp em formato internacional (apenas dígitos), ex.: "351912345678".
   // Enquanto estiver vazio, o botão de WhatsApp fica desativado.
   whatsappNumber:
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim() || "351985477498",
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim() || "351935477498",
 
   // Mensagem pré-preenchida do WhatsApp.
   whatsappMessage:
