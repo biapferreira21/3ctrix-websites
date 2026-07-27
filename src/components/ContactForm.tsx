@@ -5,8 +5,8 @@ import { Container } from "./ui/Container";
 import { FadeIn } from "./ui/motion";
 import { IconCheck } from "./ui/icons";
 import { contactSection } from "@/config/content";
+import { withBasePath } from "@/config/deployment";
 import { cn } from "@/lib/cn";
-import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 type FormState = {
   nome: string;
@@ -17,6 +17,7 @@ type FormState = {
   servico: string;
   mensagem: string;
   consentimento: boolean;
+  _gotcha: string;
 };
 
 type Errors = Partial<Record<keyof FormState, string>>;
@@ -30,6 +31,7 @@ const initialState: FormState = {
   servico: "",
   mensagem: "",
   consentimento: false,
+  _gotcha: "",
 };
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -59,7 +61,7 @@ export function ContactForm() {
     if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const found = validate(values);
     setErrors(found);
@@ -69,31 +71,41 @@ export function ContactForm() {
       return;
     }
 
-    const message = [
-      "Olá, gostaria de pedir uma análise gratuita ao meu website.",
-      "",
-      `Nome: ${values.nome.trim()}`,
-      values.negocio.trim() ? `Negócio: ${values.negocio.trim()}` : "",
-      `Email: ${values.email.trim()}`,
-      values.telefone.trim() ? `Telefone: ${values.telefone.trim()}` : "",
-      values.website.trim() ? `Website atual: ${values.website.trim()}` : "",
-      values.servico ? `Serviço: ${values.servico}` : "",
-      "",
-      `Mensagem: ${values.mensagem.trim()}`,
-    ]
-      .filter((line) => line !== "")
-      .join("\n");
+    setStatus("loading");
+    setServerMessage("");
 
-    const whatsappUrl = getWhatsAppUrl(message);
-    if (!whatsappUrl) {
+    try {
+      const response = await fetch(withBasePath("/api/contact"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const result = (await response.json()) as {
+        ok?: boolean;
+        error?: string;
+      };
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Não foi possível enviar o pedido.");
+      }
+
+      setValues(initialState);
+      setErrors({});
+      setStatus("success");
+      setServerMessage(
+        "Pedido enviado com sucesso! Vamos responder para o seu email."
+      );
+    } catch (error) {
       setStatus("error");
       setServerMessage(
-        "O WhatsApp está temporariamente indisponível. Contacte-nos por email."
+        error instanceof Error
+          ? error.message
+          : "Não foi possível enviar o pedido. Tente novamente."
       );
-      return;
     }
-
-    window.location.assign(whatsappUrl);
   }
 
   const inputBase =
@@ -137,6 +149,20 @@ export function ContactForm() {
               noValidate
               className="rounded-[1.7rem] border-[3px] border-night bg-white p-6 shadow-[8px_8px_0_#3E855A] sm:p-8"
             >
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="contact-company-confirmation">
+                  Deixe este campo vazio
+                </label>
+                <input
+                  id="contact-company-confirmation"
+                  name="_gotcha"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={values._gotcha}
+                  onChange={(e) => update("_gotcha", e.target.value)}
+                />
+              </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="nome" className="mb-1.5 block text-sm font-medium text-ink">
