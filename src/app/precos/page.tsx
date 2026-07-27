@@ -74,8 +74,9 @@ export default function PricingPage() {
                 return (
                   <StaggerItem key={plan.id} className={cn("h-full", plan.featured && "lg:-translate-y-4")}>
                     <article
+                      id={plan.id}
                       className={cn(
-                        "group relative flex h-full min-h-[32rem] flex-col overflow-hidden rounded-[2rem] border-[4px] p-6 shadow-[7px_7px_0_#C69A44] transition-transform duration-300 hover:-translate-y-2 sm:p-7",
+                        "group relative flex h-full min-h-[32rem] scroll-mt-28 flex-col overflow-hidden rounded-[2rem] border-[4px] p-6 shadow-[7px_7px_0_#C69A44] transition-transform duration-300 hover:-translate-y-2 sm:p-7",
                         tone.shell
                       )}
                     >
@@ -121,7 +122,7 @@ export default function PricingPage() {
             </Stagger>
 
             <FadeIn className="mt-5">
-              <div className="flex flex-col items-start justify-between gap-6 rounded-[2rem] border-[3px] border-white bg-white/[0.08] p-6 shadow-[6px_6px_0_#9985DC] backdrop-blur-sm sm:flex-row sm:items-center sm:p-8">
+              <div id={customPlan.id} className="flex scroll-mt-28 flex-col items-start justify-between gap-6 rounded-[2rem] border-[3px] border-white bg-white/[0.08] p-6 shadow-[6px_6px_0_#9985DC] backdrop-blur-sm sm:flex-row sm:items-center sm:p-8">
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-light">
                     Solução personalizada

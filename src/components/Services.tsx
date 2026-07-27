@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Container } from "./ui/Container";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Stagger, StaggerItem, FadeIn } from "./ui/motion";
@@ -42,9 +43,11 @@ function ServiceCard({
   };
 
   return (
-    <article
+    <Link
+      href={`/precos#${id}`}
+      aria-label={`Saber mais sobre ${title}`}
       onMouseMove={onMove}
-      className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border-[3px] border-night p-6 transition-all duration-300 hover:-translate-y-1.5 ${tone}`}
+      className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border-[3px] border-night p-6 transition-all duration-300 hover:-translate-y-1.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-lilac focus-visible:ring-offset-4 ${tone}`}
     >
       {/* luz que segue o cursor (verde → roxo) */}
       <div
@@ -78,7 +81,7 @@ function ServiceCard({
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
