@@ -44,7 +44,7 @@ function ServiceCard({
 
   return (
     <Link
-      href={`/precos#${id}`}
+      href={`/websites/precos#${id}`}
       aria-label={`Saber mais sobre ${title}`}
       onMouseMove={onMove}
       className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border-[3px] border-night p-6 transition-all duration-300 hover:-translate-y-1.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-lilac focus-visible:ring-offset-4 ${tone}`}
@@ -111,7 +111,7 @@ export function Services() {
 
         <FadeIn className="mt-12 flex flex-col items-center gap-6 text-center">
           <p className="max-w-xl text-sm text-slate">{servicesNote}</p>
-          <Button href="/precos" variant="secondary">
+          <Button href="/websites/precos" variant="secondary">
             Ver preços
           </Button>
         </FadeIn>

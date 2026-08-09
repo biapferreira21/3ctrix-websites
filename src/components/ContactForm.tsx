@@ -54,7 +54,7 @@ export function ContactForm() {
   const [values, setValues] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>("idle");
-  const [serverMessage, setServerMessage] = useState("");
+  const [serverMensagem, setServerMensagem] = useState("");
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setValues((v) => ({ ...v, [key]: value }));
@@ -67,12 +67,12 @@ export function ContactForm() {
     setErrors(found);
     if (Object.keys(found).length > 0) {
       setStatus("error");
-      setServerMessage("Verifique os campos assinalados e tente novamente.");
+      setServerMensagem("Verifique os campos assinalados e tente novamente.");
       return;
     }
 
     setStatus("loading");
-    setServerMessage("");
+    setServerMensagem("");
 
     try {
       const response = await fetch(withBasePath("/api/contact"), {
@@ -81,7 +81,7 @@ export function ContactForm() {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, formType: "websites" }),
       });
       const result = (await response.json()) as {
         ok?: boolean;
@@ -95,12 +95,12 @@ export function ContactForm() {
       setValues(initialState);
       setErrors({});
       setStatus("success");
-      setServerMessage(
+      setServerMensagem(
         "Pedido enviado com sucesso! Vamos responder para o seu email."
       );
     } catch (error) {
       setStatus("error");
-      setServerMessage(
+      setServerMensagem(
         error instanceof Error
           ? error.message
           : "Não foi possível enviar o pedido. Tente novamente."
@@ -348,12 +348,12 @@ export function ContactForm() {
                     <span className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center">
                       <IconCheck size={14} />
                     </span>
-                    {serverMessage}
+                    {serverMensagem}
                   </p>
                 )}
-                {status === "error" && serverMessage && (
+                {status === "error" && serverMensagem && (
                   <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
-                    {serverMessage}
+                    {serverMensagem}
                   </p>
                 )}
               </div>

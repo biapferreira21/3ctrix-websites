@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 type ContactPayload = {
+  formType?: "websites" | "studio";
   nome?: string;
   negocio?: string;
   email?: string;
@@ -12,25 +13,21 @@ type ContactPayload = {
   _gotcha?: string;
 };
 
-const MAX_LENGTHS = {
+const limits = {
   nome: 100,
   negocio: 120,
   email: 254,
   telefone: 40,
   website: 500,
   servico: 120,
-  mensagem: 3000,
+  mensagem: 5000,
 } as const;
 
-function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+function clean(value: string | undefined, max: number) {
+  return value?.trim().slice(0, max) ?? "";
 }
 
-function clean(value: string | undefined, maxLength: number): string {
-  return value?.trim().slice(0, maxLength) ?? "";
-}
-
-function escapeHtml(value: string): string {
+function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -39,130 +36,82 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#039;");
 }
 
-function detailRow(label: string, value: string): string {
-  if (!value) return "";
-
-  return `
-    <tr>
-      <td style="padding:8px 12px;color:#5e665f;font-size:14px;vertical-align:top">${escapeHtml(label)}</td>
-      <td style="padding:8px 12px;color:#102018;font-size:14px;font-weight:600;vertical-align:top">${escapeHtml(value)}</td>
-    </tr>
-  `;
-}
-
 export async function POST(request: Request) {
   let data: ContactPayload;
-
   try {
     data = await request.json();
   } catch {
-    return NextResponse.json(
-      { ok: false, error: "Pedido inválido." },
-      { status: 400 }
-    );
+    return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
   }
 
-  // Campo invisível: bots costumam preenchê-lo, pessoas não.
-  if (data._gotcha?.trim()) {
-    return NextResponse.json({ ok: true });
-  }
+  if (data._gotcha?.trim()) return NextResponse.json({ ok: true });
 
   const contact = {
-    nome: clean(data.nome, MAX_LENGTHS.nome),
-    negocio: clean(data.negocio, MAX_LENGTHS.negocio),
-    email: clean(data.email, MAX_LENGTHS.email),
-    telefone: clean(data.telefone, MAX_LENGTHS.telefone),
-    website: clean(data.website, MAX_LENGTHS.website),
-    servico: clean(data.servico, MAX_LENGTHS.servico),
-    mensagem: clean(data.mensagem, MAX_LENGTHS.mensagem),
+    nome: clean(data.nome, limits.nome),
+    negocio: clean(data.negocio, limits.negocio),
+    email: clean(data.email, limits.email),
+    telefone: clean(data.telefone, limits.telefone),
+    website: clean(data.website, limits.website),
+    servico: clean(data.servico, limits.servico),
+    mensagem: clean(data.mensagem, limits.mensagem),
   };
 
-  const errors: string[] = [];
-  if (!contact.nome) errors.push("nome");
-  if (!contact.email || !isValidEmail(contact.email)) errors.push("email");
-  if (!contact.mensagem) errors.push("mensagem");
-  if (data.consentimento !== true) errors.push("consentimento");
-
-  if (errors.length > 0) {
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email);
+  if (!contact.nome || !validEmail || !contact.mensagem || data.consentimento !== true) {
     return NextResponse.json(
-      { ok: false, error: "Campos inválidos.", fields: errors },
+      { ok: false, error: "Please check the required fields." },
       { status: 422 }
     );
   }
 
   const apiKey = process.env.RESEND_API_KEY?.trim();
-  const toEmail =
-    process.env.CONTACT_TO_EMAIL?.trim() || "websites@3ctrix.com";
+  const isWebsitesEnquiry = data.formType === "websites";
+  const toEmail = isWebsitesEnquiry
+    ? process.env.WEBSITES_CONTACT_TO_EMAIL?.trim() || "websites@3ctrix.com"
+    : process.env.CONTACT_TO_EMAIL?.trim() || "beatrizferreira@3ctrix.com";
   const fromEmail =
     process.env.CONTACT_FROM_EMAIL?.trim() ||
-    "3C Trix Studio <onboarding@resend.dev>";
+    "3C Trix Studio <contact@3ctrix.com>";
 
   if (!apiKey) {
-    console.error("[contacto] RESEND_API_KEY não está configurada.");
+    console.error("[contact] RESEND_API_KEY is not configured.");
     return NextResponse.json(
-      {
-        ok: false,
-        error:
-          "O envio por email está temporariamente indisponível. Contacte-nos por WhatsApp.",
-      },
+      { ok: false, error: "Email delivery is temporarily unavailable." },
       { status: 503 }
     );
   }
 
-  const subjectName = contact.negocio || contact.nome;
-  const plainText = [
-    "Novo pedido de análise gratuita",
-    "",
-    `Nome: ${contact.nome}`,
-    contact.negocio ? `Negócio: ${contact.negocio}` : "",
+  const detailRows = [
+    ["Name", contact.nome],
+    ["Company", contact.negocio],
+    ["Email", contact.email],
+    ["Phone", contact.telefone],
+    ["Website", contact.website],
+    ["Enquiry", contact.servico],
+  ]
+    .filter(([, value]) => value)
+    .map(
+      ([label, value]) =>
+        `<tr><td style="padding:8px 12px;color:#55615A">${escapeHtml(label)}</td><td style="padding:8px 12px;font-weight:600">${escapeHtml(value)}</td></tr>`
+    )
+    .join("");
+
+  const text = [
+    "New 3C Trix Studio enquiry",
+    `Name: ${contact.nome}`,
+    contact.negocio && `Company: ${contact.negocio}`,
     `Email: ${contact.email}`,
-    contact.telefone ? `Telefone ou WhatsApp: ${contact.telefone}` : "",
-    contact.website ? `Website atual: ${contact.website}` : "",
-    contact.servico ? `Tipo de serviço: ${contact.servico}` : "",
+    contact.telefone && `Phone: ${contact.telefone}`,
+    contact.website && `Website: ${contact.website}`,
+    contact.servico && `Enquiry: ${contact.servico}`,
     "",
-    "Mensagem:",
     contact.mensagem,
   ]
     .filter(Boolean)
     .join("\n");
 
-  const html = `
-    <!doctype html>
-    <html lang="pt">
-      <body style="margin:0;background:#f2eefb;font-family:Arial,sans-serif;color:#102018">
-        <div style="max-width:640px;margin:0 auto;padding:32px 16px">
-          <div style="overflow:hidden;border:2px solid #102018;border-radius:20px;background:#ffffff;box-shadow:6px 6px 0 #9985dc">
-            <div style="background:#3e855a;padding:22px 24px;color:#ffffff">
-              <p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase">3C Trix Studio</p>
-              <h1 style="margin:0;font-size:24px;line-height:1.25">Novo pedido de análise gratuita</h1>
-            </div>
-            <div style="padding:22px 12px">
-              <table role="presentation" style="width:100%;border-collapse:collapse">
-                ${detailRow("Nome", contact.nome)}
-                ${detailRow("Negócio", contact.negocio)}
-                ${detailRow("Email", contact.email)}
-                ${detailRow("Telefone ou WhatsApp", contact.telefone)}
-                ${detailRow("Website atual", contact.website)}
-                ${detailRow("Tipo de serviço", contact.servico)}
-              </table>
-              <div style="margin:18px 12px 4px;padding:18px;border-radius:14px;background:#f6dfb6">
-                <p style="margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#3e855a">Mensagem</p>
-                <p style="margin:0;white-space:pre-wrap;font-size:15px;line-height:1.6">${escapeHtml(contact.mensagem)}</p>
-              </div>
-            </div>
-          </div>
-          <p style="margin:18px 0 0;text-align:center;color:#667068;font-size:12px">
-            Enviado através do formulário em 3ctrix.com/websites
-          </p>
-        </div>
-      </body>
-    </html>
-  `;
-
-  let resendResponse: Response;
-
   try {
-    resendResponse = await fetch("https://api.resend.com/emails", {
+    const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -173,35 +122,24 @@ export async function POST(request: Request) {
         from: fromEmail,
         to: [toEmail],
         reply_to: contact.email,
-        subject: `Novo pedido — ${subjectName}`,
-        text: plainText,
-        html,
-        tags: [{ name: "source", value: "website-contact-form" }],
+        subject: `New 3C Trix enquiry — ${contact.servico || contact.negocio || contact.nome}`,
+        text,
+        html: `<div style="max-width:640px;margin:auto;font-family:Arial,sans-serif;color:#18211B"><div style="border:2px solid #18211B;border-radius:18px;overflow:hidden"><div style="background:#0B4F1C;color:white;padding:24px"><strong>3C Trix Studio</strong><h1 style="font-size:24px;margin:8px 0 0">New website enquiry</h1></div><table style="width:100%;padding:12px">${detailRows}</table><div style="margin:12px 24px 24px;padding:18px;background:#F2F6F1;border-radius:12px;white-space:pre-wrap">${escapeHtml(contact.mensagem)}</div></div></div>`,
+        tags: [{ name: "source", value: isWebsitesEnquiry ? "websites" : "studio" }],
       }),
     });
-  } catch (error) {
-    console.error("[contacto] Falha de ligação ao Resend.", error);
-    return NextResponse.json(
-      {
-        ok: false,
-        error:
-          "Não foi possível enviar o pedido. Tente novamente ou contacte-nos por WhatsApp.",
-      },
-      { status: 502 }
-    );
-  }
 
-  if (!resendResponse.ok) {
-    const resendError = await resendResponse.text();
-    console.error(
-      `[contacto] Resend devolveu ${resendResponse.status}: ${resendError}`
-    );
+    if (!response.ok) {
+      console.error(`[contact] Resend returned ${response.status}: ${await response.text()}`);
+      return NextResponse.json(
+        { ok: false, error: "The request could not be sent. Please try again." },
+        { status: 502 }
+      );
+    }
+  } catch (error) {
+    console.error("[contact] Resend request failed.", error);
     return NextResponse.json(
-      {
-        ok: false,
-        error:
-          "Não foi possível enviar o pedido. Tente novamente ou contacte-nos por WhatsApp.",
-      },
+      { ok: false, error: "The request could not be sent. Please try again." },
       { status: 502 }
     );
   }
@@ -210,8 +148,5 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  return NextResponse.json(
-    { ok: false, error: "Método não permitido." },
-    { status: 405 }
-  );
+  return NextResponse.json({ ok: false, error: "Method not allowed." }, { status: 405 });
 }

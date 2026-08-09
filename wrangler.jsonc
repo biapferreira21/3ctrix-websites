@@ -25,11 +25,11 @@
   },
   "routes": [
     {
-      "pattern": "3ctrix.com/websites",
+      "pattern": "3ctrix.com",
       "zone_name": "3ctrix.com"
     },
     {
-      "pattern": "3ctrix.com/websites/*",
+      "pattern": "3ctrix.com/*",
       "zone_name": "3ctrix.com"
     }
   ]

@@ -1,55 +1,64 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { ExternalLink } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Logo } from "./ui/Logo";
-import { Button } from "./ui/Button";
 import { Container } from "./ui/Container";
-import { navLinks, primaryCta } from "@/config/navigation";
+import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 
-function MenuIcon({ open }: { open: boolean }) {
-  return (
-    <span className="relative block h-4 w-5" aria-hidden>
-      <span
-        className={cn(
-          "absolute left-0 h-[2px] w-5 rounded bg-current transition-all duration-300",
-          open ? "top-1.5 rotate-45" : "top-0.5"
-        )}
-      />
-      <span
-        className={cn(
-          "absolute left-0 top-1.5 h-[2px] w-5 rounded bg-current transition-opacity duration-200",
-          open && "opacity-0"
-        )}
-      />
-      <span
-        className={cn(
-          "absolute left-0 h-[2px] w-5 rounded bg-current transition-all duration-300",
-          open ? "top-1.5 -rotate-45" : "top-[10px]"
-        )}
-      />
-    </span>
-  );
-}
+const studioLinks = [
+  { label: "Home", href: siteConfig.urls.home, external: false },
+  { label: "Research", href: siteConfig.urls.research, external: false },
+  { label: "Automations", href: siteConfig.urls.automations, external: false },
+  { label: "Websites", href: siteConfig.urls.websites, external: false },
+  { label: "AlphaVote", href: siteConfig.urls.alphaVote, external: true },
+] as const;
+const websitesLinksPt = [
+  { label: "Serviços", href: "/websites#servicos", external: false },
+  { label: "Projetos", href: "/websites#projetos", external: false },
+  { label: "Como funciona", href: "/websites/como-funciona", external: false },
+  { label: "Preços", href: "/websites/precos", external: false },
+  { label: "Perguntas frequentes", href: "/websites#faq", external: false },
+] as const;
 
-export function Header({ variant = "auto" }: { variant?: "auto" | "solid" }) {
+const websitesLinksEn = [
+  { label: "Services", href: "/websites/en#servicos", external: false },
+  { label: "Projects", href: "/websites/en#projetos", external: false },
+  { label: "How it works", href: "/websites/en/how-it-works", external: false },
+  { label: "Pricing", href: "/websites/en/pricing", external: false },
+  { label: "FAQ", href: "/websites/en#faq", external: false },
+] as const;
+
+export function Header({ variant: _variant }: { variant?: "auto" | "solid" } = {}) {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const inWebsites = pathname.startsWith("/websites");
+  const websitesEnglish = pathname.startsWith("/websites/en");
+  const links = inWebsites
+    ? websitesEnglish
+      ? websitesLinksEn
+      : websitesLinksPt
+    : studioLinks;
+  const contactHref = inWebsites
+    ? websitesEnglish
+      ? "/websites/en#contacto"
+      : "/websites#contacto"
+    : `${pathname === "/" ? "" : "/"}#contact`;
+  const contactLabel = inWebsites
+    ? websitesEnglish
+      ? "Contact"
+      : "Contacto"
+    : "Contact";
   const reduce = useReducedMotion();
-
-  // "auto": claro sobre o hero escuro, sólido ao rolar.
-  // "solid": sempre sólido/claro (páginas internas de fundo claro).
-  const onDark = false;
-  const solid = true;
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -59,115 +68,121 @@ export function Header({ variant = "auto" }: { variant?: "auto" | "solid" }) {
   }, [open]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
   }, []);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        solid
-          ? "border-b-2 border-night bg-[#f5f1e8]/90 backdrop-blur-md"
-          : "border-b-2 border-night bg-[#f5f1e8]/90 backdrop-blur-md"
-      )}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 border-b-[3px] border-night bg-[#f5f1e8]/95 backdrop-blur-md">
       <Container>
         <div className="flex h-20 items-center justify-between gap-4">
-          <Link
-            href={variant === "solid" ? "/" : "#inicio"}
-            aria-label="3C Trix Studio — início"
-            className="rounded-md"
-          >
-            <Logo size={46} light={onDark} />
+          <Link href="/" aria-label="3C Trix Studio home" className="rounded-md">
+            <Logo size={44} />
           </Link>
-
-          <nav aria-label="Principal" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      "group relative rounded-full px-3 py-2 text-sm font-medium transition-colors",
-                      onDark
-                        ? "text-white/75 hover:text-white"
-                        : "text-slate hover:text-forest-deep"
-                    )}
-                  >
-                    {link.label}
-                    <span className="absolute inset-x-3 -bottom-0.5 h-[2px] origin-left scale-x-0 rounded bg-emerald transition-transform duration-300 group-hover:scale-x-100" />
-                  </Link>
+          <nav aria-label="Main navigation" className="hidden lg:block">
+            <ul className="flex items-center gap-0.5">
+              {links.map((link) => (
+                <li key={link.label}>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-slate transition-colors hover:bg-mint hover:text-forest-deep"
+                    >
+                      {link.label}
+                      <ExternalLink size={13} aria-hidden />
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      aria-current={pathname === link.href ? "page" : undefined}
+                      className={cn(
+                        "rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-mint hover:text-forest-deep",
+                        pathname === link.href ? "bg-mint text-forest-deep" : "text-slate"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
           </nav>
-
-          <div className="hidden lg:block">
-            <Button
-              href={primaryCta.href}
-              size="md"
-              variant={onDark ? "outlineLight" : "primary"}
-            >
-              {primaryCta.label}
-            </Button>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className={cn(
-              "inline-flex h-11 w-11 items-center justify-center rounded-lg transition-colors lg:hidden",
-              onDark ? "text-white hover:bg-white/10" : "text-forest-deep hover:bg-mist"
-            )}
-            aria-expanded={open}
-            aria-controls="menu-movel"
-            aria-label={open ? "Fechar menu" : "Abrir menu"}
+          <Link
+            href={contactHref}
+            className="hidden min-h-11 items-center justify-center rounded-full border-[3px] border-night bg-emerald px-5 py-2 text-sm font-bold text-night shadow-[3px_3px_0_#16180F] transition-transform hover:-translate-y-0.5 lg:inline-flex"
           >
-            <MenuIcon open={open} />
+            {contactLabel}
+          </Link>
+          <button
+            ref={menuButton}
+            type="button"
+            onClick={() => setOpen((current) => !current)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border-2 border-night bg-white text-night lg:hidden"
+          >
+            <span className="relative h-4 w-5" aria-hidden>
+              <span className={cn("absolute left-0 top-0.5 h-0.5 w-5 bg-current transition-transform", open && "translate-y-[6px] rotate-45")} />
+              <span className={cn("absolute left-0 top-[7px] h-0.5 w-5 bg-current transition-opacity", open && "opacity-0")} />
+              <span className={cn("absolute left-0 top-[13px] h-0.5 w-5 bg-current transition-transform", open && "-translate-y-[6px] -rotate-45")} />
+            </span>
           </button>
         </div>
       </Container>
-
       <AnimatePresence>
         {open && (
-          <motion.div
-            id="menu-movel"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: reduce ? 0 : 0.25, ease: "easeInOut" }}
-            className="overflow-hidden border-b-2 border-night bg-[#f5f1e8] lg:hidden"
+          <motion.nav
+            id="mobile-menu"
+            aria-label="Mobile navigation"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: reduce ? 0 : 0.2 }}
+            className="overflow-hidden border-t-2 border-night bg-[#f5f1e8] lg:hidden"
           >
-            <nav aria-label="Menu móvel">
-              <Container>
-                <ul className="flex flex-col py-4">
-                  {navLinks.map((link) => (
-                    <li key={link.href}>
+            <Container>
+              <ul className="space-y-1 py-5">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    {link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex min-h-12 items-center justify-between rounded-xl px-4 py-3 text-base font-semibold text-ink hover:bg-mint"
+                      >
+                        {link.label} <ExternalLink size={16} aria-hidden />
+                      </a>
+                    ) : (
                       <Link
                         href={link.href}
-                        onClick={() => setOpen(false)}
-                        className="block rounded-lg px-3 py-3 text-base font-medium text-ink transition-colors hover:bg-mist"
+                        className="flex min-h-12 items-center rounded-xl px-4 py-3 text-base font-semibold text-ink hover:bg-mint"
                       >
                         {link.label}
                       </Link>
-                    </li>
-                  ))}
-                  <li className="mt-3">
-                    <Button
-                      href={primaryCta.href}
-                      size="lg"
-                      className="w-full"
-                      onClick={() => setOpen(false)}
-                    >
-                      {primaryCta.label}
-                    </Button>
+                    )}
                   </li>
-                </ul>
-              </Container>
-            </nav>
-          </motion.div>
+                ))}
+                <li className="pt-2">
+                  <Link
+                    href={contactHref}
+                    className="flex min-h-12 items-center justify-center rounded-full border-[3px] border-night bg-emerald px-5 py-3 text-sm font-bold text-night"
+                  >
+                    {contactLabel}
+                  </Link>
+                </li>
+              </ul>
+            </Container>
+          </motion.nav>
         )}
       </AnimatePresence>
     </header>

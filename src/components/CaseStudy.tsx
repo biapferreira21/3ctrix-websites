@@ -48,7 +48,7 @@ export function CaseStudy() {
                 rel="noopener noreferrer"
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-night bg-emerald px-5 py-2.5 text-sm font-bold text-night shadow-[3px_3px_0_#9985DC] transition-all hover:-translate-y-0.5"
               >
-                Novo website
+                Website de raiz
                 <IconArrowUpRight size={15} />
               </a>
             </div>

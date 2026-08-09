@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/websites",
   reactStrictMode: true,
   poweredByHeader: false,
   devIndicators: false,

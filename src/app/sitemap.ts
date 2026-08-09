@@ -1,38 +1,26 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/config/brand";
+import { siteConfig } from "@/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  return [
-    {
-      url: siteUrl,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${siteUrl}/como-funciona`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${siteUrl}/precos`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/politica-de-privacidade`,
-      lastModified: now,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${siteUrl}/termos-e-condicoes`,
-      lastModified: now,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-  ];
+  const routes = [
+    ["", 1],
+    ["/research", 0.9],
+    ["/automations", 0.9],
+    ["/websites", 0.9],
+    ["/websites/como-funciona", 0.8],
+    ["/websites/precos", 0.8],
+    ["/websites/en", 0.8],
+    ["/websites/en/how-it-works", 0.7],
+    ["/websites/en/pricing", 0.7],
+    [siteConfig.urls.privacy, 0.3],
+    [siteConfig.urls.terms, 0.3],
+  ] as const;
+
+  return routes.map(([path, priority]) => ({
+    url: `${siteConfig.siteUrl}${path}`,
+    lastModified: now,
+    changeFrequency: path ? "monthly" : "weekly",
+    priority,
+  }));
 }

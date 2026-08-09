@@ -3,7 +3,7 @@
  * -------------------------------------------------------------
  * Altere aqui os textos e os preços "a partir de" dos serviços.
  * O nome do ícone corresponde a um ícone do lucide-react
- * (ver mapeamento em src/components/Services.tsx).
+ * (ver mapeamento em src/components/Serviços.tsx).
  */
 
 export type Service = {

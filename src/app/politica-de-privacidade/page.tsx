@@ -1,113 +1,77 @@
 import type { Metadata } from "next";
 import { LegalLayout } from "@/components/LegalLayout";
-import { brand, contact } from "@/config/brand";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidade",
-  description:
-    "Política de Privacidade da 3C Trix Studio — como tratamos os dados recolhidos através do website.",
-  robots: { index: true, follow: true },
+  title: "Privacy Policy | 3C Trix Studio",
+  description: "How 3C Trix Studio handles information submitted through this website.",
+  alternates: { canonical: "/politica-de-privacidade" },
 };
 
-function H2({ children }: { children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <h2 className="font-display text-xl font-semibold text-ink">{children}</h2>
+    <section className="space-y-3">
+      <h2 className="text-xl font-semibold text-ink">{title}</h2>
+      {children}
+    </section>
   );
 }
 
-export default function PoliticaPrivacidade() {
+export default function PrivacyPolicyPage() {
   return (
-    <LegalLayout title="Política de Privacidade" updatedAt="julho de 2026">
+    <LegalLayout title="Privacy Policy" updatedAt="July 2026">
       <p>
-        A presente Política de Privacidade descreve como a {brand.name} recolhe,
-        utiliza e protege os dados pessoais fornecidos através deste website. Ao
-        utilizar o website e, em particular, o formulário de contacto, o
-        utilizador declara ter tomado conhecimento desta política.
+        This working policy explains how {siteConfig.companyName} handles personal
+        information submitted through this website, particularly through its
+        contact forms.
       </p>
-
-      <section className="space-y-3">
-        <H2>1. Responsável pelo tratamento</H2>
+      <Section title="1. Information we collect">
         <p>
-          O responsável pelo tratamento dos dados é a {brand.name}. Para
-          qualquer questão relacionada com privacidade, pode contactar-nos
-          através do email indicado no website.
+          Depending on the form, information may include your name, organisation,
+          email address, website, project details and any other information you
+          choose to include in your message.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>2. Dados recolhidos</H2>
+      </Section>
+      <Section title="2. How information is used">
         <p>
-          Através do formulário de contacto podemos recolher: nome, nome do
-          negócio, email, telefone ou WhatsApp, endereço do website atual, tipo
-          de serviço pretendido e a mensagem enviada. Apenas são tratados os
-          dados que o utilizador escolhe fornecer.
+          Information is used to review and respond to enquiries, prepare project
+          discussions or proposals, and maintain relevant business correspondence.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>3. Finalidade e fundamento</H2>
+      </Section>
+      <Section title="3. Service providers">
         <p>
-          Os dados são utilizados exclusivamente para responder ao pedido de
-          contacto, elaborar propostas e prestar os serviços solicitados. O
-          fundamento para este tratamento é o consentimento do utilizador,
-          manifestado ao submeter o formulário, e a execução de diligências
-          pré-contratuais.
+          Technical providers may process limited information when required for
+          website hosting or email delivery. Personal information is not sold.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>4. Conservação dos dados</H2>
+      </Section>
+      <Section title="4. Retention and security">
         <p>
-          Os dados são conservados apenas durante o período necessário ao
-          cumprimento das finalidades referidas ou até que o utilizador solicite
-          a sua eliminação.
+          Information should be retained only for as long as reasonably required
+          for the relevant enquiry, relationship, legal obligation or legitimate
+          business record. Appropriate technical and organisational safeguards
+          should be maintained.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>5. Partilha com terceiros</H2>
+      </Section>
+      <Section title="5. Your rights">
         <p>
-          A {brand.name} não vende nem cede os dados a terceiros. Poderão ser
-          utilizados fornecedores de serviços técnicos (por exemplo, alojamento
-          ou envio de email) estritamente para o funcionamento do website e da
-          comunicação, sempre com garantias adequadas de proteção de dados.
+          Depending on applicable law, you may have rights to access, correct,
+          restrict or request deletion of personal information. Use the professional
+          contact email configured on this website to make a request.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>6. Direitos do titular</H2>
+      </Section>
+      <Section title="6. Cookies and analytics">
         <p>
-          O utilizador pode, a qualquer momento, exercer os direitos de acesso,
-          retificação, eliminação, limitação, portabilidade e oposição
-          relativamente aos seus dados, contactando-nos através do email
-          disponível no website. Tem ainda o direito de apresentar reclamação
-          junto da Comissão Nacional de Proteção de Dados (CNPD).
+          The website is designed to minimise tracking. If analytics or additional
+          cookies are enabled later, this policy and any required consent controls
+          should be updated first.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>7. Cookies</H2>
-        <p>
-          Este website procura minimizar a utilização de cookies. Caso venham a
-          ser utilizados cookies de medição ou funcionalidades adicionais, esta
-          política será atualizada em conformidade.
-        </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>8. Contacto</H2>
-        <p>
-          Para exercer os seus direitos ou esclarecer dúvidas sobre esta
-          política, contacte-nos através de{" "}
-          <a
-            href={`mailto:${contact.email}`}
-            className="font-medium text-forest underline underline-offset-2"
-          >
-            {contact.email}
-          </a>
-          .
-        </p>
-      </section>
+      </Section>
     </LegalLayout>
   );
 }

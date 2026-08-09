@@ -101,7 +101,7 @@ export function Problems() {
               href="#contacto"
               className="inline-flex min-h-11 items-center rounded-full bg-emerald px-5 py-2.5 text-sm font-semibold text-night transition-all hover:-translate-y-0.5 hover:bg-emerald-bright"
             >
-              Peça uma análise gratuita
+              Pedir análise gratuita
             </a>
           </div>
         </div>

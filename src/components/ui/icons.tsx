@@ -67,7 +67,7 @@ export function IconSeo(p: IconProps) {
 }
 
 /** Manutenção — controlos/afinações. */
-export function IconMaintenance(p: IconProps) {
+export function IconManutenção(p: IconProps) {
   return (
     <Svg {...p}>
       <path d="M4 7.5h9M17 7.5h3" />
@@ -209,7 +209,7 @@ export const serviceIcons = {
   redesign: IconRedesign,
   raiz: IconBuild,
   seo: IconSeo,
-  manutencao: IconMaintenance,
+  manutencao: IconManutenção,
 } as const;
 
 export const processIcons = {

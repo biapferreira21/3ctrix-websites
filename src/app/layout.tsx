@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { siteUrl } from "@/config/brand";
+import { siteConfig } from "@/config/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,53 +17,28 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: "3C Trix Studio | Criação e Redesign de Websites",
-    template: "%s | 3C Trix Studio",
+    default: "3C Trix Studio | Research, AI Automation and Digital Products",
+    template: "%s",
   },
   description:
-    "Criamos e modernizamos websites para pequenos negócios em Lisboa e Portugal. Design responsivo, funcionalidades personalizadas e entrega até 15 dias.",
-  keywords: [
-    "criação de websites",
-    "redesign de websites",
-    "websites para pequenos negócios",
-    "web design Lisboa",
-    "criação de websites Portugal",
-    "melhorar website empresarial",
-    "website para restaurante",
-    "website para clínica",
-    "website para loja local",
-  ],
-  authors: [{ name: "3C Trix Studio" }],
-  creator: "3C Trix Studio",
-  publisher: "3C Trix Studio",
-  alternates: {
-    canonical: "/",
-  },
+    "3C Trix Studio researches emerging technology, communicates it clearly and applies it through products, automations, websites and practical business solutions.",
+  authors: [{ name: siteConfig.companyName }],
+  creator: siteConfig.companyName,
+  publisher: siteConfig.companyName,
   openGraph: {
     type: "website",
-    locale: "pt_PT",
-    url: siteUrl,
-    siteName: "3C Trix Studio",
-    title: "3C Trix Studio | Criação e Redesign de Websites",
-    description:
-      "Criamos e modernizamos websites para pequenos negócios em Lisboa e Portugal. Design responsivo, funcionalidades personalizadas e entrega até 15 dias.",
+    locale: "en_GB",
+    siteName: siteConfig.companyName,
+    images: [{ url: "/og.png", width: 1792, height: 919, alt: "3C Trix Studio — research, content and implementation" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "3C Trix Studio | Criação e Redesign de Websites",
-    description:
-      "Criamos e modernizamos websites para pequenos negócios em Lisboa e Portugal.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  twitter: { card: "summary_large_image", images: ["/og.png"] },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#06140D",
+  themeColor: "#0E1712",
   width: "device-width",
   initialScale: 1,
 };
@@ -74,13 +49,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-PT" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="font-sans">
         <a
-          href="#conteudo"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-forest focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-forest focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
         >
-          Saltar para o conteúdo principal
+          Skip to main content
         </a>
         {children}
       </body>

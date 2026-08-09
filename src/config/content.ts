@@ -18,7 +18,7 @@ export const hero = {
 
 /* ------------------------- BARRA DE CONFIANÇA ------------------------- */
 export const trustItems = [
-  "Websites responsivos",
+  "Responsivo websites",
   "Entrega até 15 dias",
   "Funcionalidades à medida",
   "Domínio em nome do cliente",
@@ -106,7 +106,7 @@ export const caseStudy = {
     "Navegação mais clara",
     "Adaptado a telemóvel",
     "Ações mais visíveis",
-    "Contactos acessíveis",
+    "Acessível contact details",
   ],
 };
 

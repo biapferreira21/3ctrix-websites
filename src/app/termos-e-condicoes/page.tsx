@@ -1,127 +1,78 @@
 import type { Metadata } from "next";
 import { LegalLayout } from "@/components/LegalLayout";
-import { brand, contact } from "@/config/brand";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Termos e Condições",
-  description:
-    "Termos e Condições de utilização e prestação de serviços da 3C Trix Studio.",
-  robots: { index: true, follow: true },
+  title: "Terms and Conditions | 3C Trix Studio",
+  description: "Working terms for using the 3C Trix Studio website.",
+  alternates: { canonical: "/termos-e-condicoes" },
 };
 
-function H2({ children }: { children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <h2 className="font-display text-xl font-semibold text-ink">{children}</h2>
+    <section className="space-y-3">
+      <h2 className="text-xl font-semibold text-ink">{title}</h2>
+      {children}
+    </section>
   );
 }
 
-export default function TermosCondicoes() {
+export default function TermsPage() {
   return (
-    <LegalLayout title="Termos e Condições" updatedAt="julho de 2026">
+    <LegalLayout title="Terms and Conditions" updatedAt="July 2026">
       <p>
-        Os presentes Termos e Condições regulam a utilização deste website e a
-        prestação de serviços pela {brand.name}. Ao contratar os nossos
-        serviços, o cliente aceita as condições aqui descritas.
+        These working terms cover use of the {siteConfig.companyName} website.
+        Project-specific terms, scope, timing, responsibilities and payment
+        conditions should be agreed separately in writing.
       </p>
-
-      <section className="space-y-3">
-        <H2>1. Serviços</H2>
+      <Section title="1. Website information">
         <p>
-          A {brand.name} presta serviços de criação e redesign de websites, SEO
-          e manutenção para pequenos negócios. O âmbito exato de cada projeto é
-          definido em orçamento próprio, aprovado por ambas as partes antes do
-          início dos trabalhos.
+          Website content is provided for general information and does not create
+          a binding project commitment, professional guarantee or automatic
+          service relationship.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>2. Orçamento e pagamento</H2>
+      </Section>
+      <Section title="2. Services and proposals">
         <p>
-          Os preços apresentados no website são valores de referência (&ldquo;a
-          partir de&rdquo;). O orçamento final depende da dimensão, dos
-          conteúdos e das funcionalidades de cada projeto. As condições de
-          pagamento são acordadas por escrito antes do início do
-          desenvolvimento.
+          Research, content, automation and website engagements are adapted to the
+          relevant question or process. A proposal or written agreement should
+          define the final scope and commercial terms.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>3. Conteúdos fornecidos pelo cliente</H2>
+      </Section>
+      <Section title="3. Client materials and access">
         <p>
-          O cliente é responsável por fornecer os conteúdos, fotografias e
-          materiais necessários ao projeto, garantindo que detém os direitos
-          sobre os mesmos. A {brand.name} pode apoiar a escrita e reorganização
-          dos textos.
+          Clients are responsible for ensuring they have the right to provide and
+          use any content, data, images, credentials or other materials supplied
+          for a project.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>4. Prazos</H2>
+      </Section>
+      <Section title="4. Third-party systems">
         <p>
-          O prazo normal máximo de desenvolvimento é de 15 dias, contando que os
-          conteúdos e o feedback sejam entregues atempadamente. Atrasos na
-          entrega de materiais por parte do cliente podem prolongar este prazo.
+          Projects may use hosting services, APIs, software platforms and other
+          third-party systems. Their availability and terms remain subject to
+          their respective providers.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>5. Revisões</H2>
+      </Section>
+      <Section title="5. Intellectual property">
         <p>
-          Cada projeto inclui uma revisão dentro do período de desenvolvimento.
-          Alterações adicionais ou fora do âmbito inicialmente acordado podem ser
-          orçamentadas separadamente.
+          Ownership and licensing for project deliverables, source materials,
+          third-party assets and pre-existing tools should be specified in the
+          applicable project agreement.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>6. Domínio, alojamento e propriedade</H2>
+      </Section>
+      <Section title="6. Applicable terms">
         <p>
-          O domínio, o alojamento e as contas digitais ficam em nome do cliente,
-          que os paga diretamente e mantém o controlo dos seus ativos digitais.
-          Após a entrega e o pagamento integral, o cliente é titular do website
-          desenvolvido.
+          This placeholder must be reviewed and completed with the correct legal
+          entity details, applicable law, dispute provisions and professional
+          contact information before publication.
         </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>7. Manutenção</H2>
-        <p>
-          A manutenção é um serviço opcional e não obrigatório, contratado
-          separadamente quando o negócio necessita de apoio contínuo.
-        </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>8. Limitação de responsabilidade</H2>
-        <p>
-          A {brand.name} compromete-se a prestar os serviços com diligência
-          profissional. Não nos responsabilizamos por indisponibilidades
-          resultantes de serviços de terceiros (alojamento, domínio, plataformas
-          externas) fora do nosso controlo.
-        </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>9. Lei aplicável</H2>
-        <p>
-          Os presentes Termos e Condições regem-se pela lei portuguesa. Qualquer
-          litígio será resolvido nos tribunais competentes em Portugal.
-        </p>
-      </section>
-
-      <section className="space-y-3">
-        <H2>10. Contacto</H2>
-        <p>
-          Para qualquer questão sobre estes termos, contacte-nos através de{" "}
-          <a
-            href={`mailto:${contact.email}`}
-            className="font-medium text-forest underline underline-offset-2"
-          >
-            {contact.email}
-          </a>
-          .
-        </p>
-      </section>
+      </Section>
     </LegalLayout>
   );
 }

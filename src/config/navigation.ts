@@ -1,18 +1,14 @@
-/**
- * Navegação principal do site.
- * Links absolutos (começam por "/") para funcionarem a partir de
- * qualquer página. "Como funciona" é agora uma página própria.
- */
+/** Navegação da área portuguesa de Websites. */
 export const navLinks = [
-  { label: "Serviços", href: "/#servicos" },
-  { label: "Projetos", href: "/#projetos" },
-  { label: "Como funciona", href: "/como-funciona" },
-  { label: "Preços", href: "/precos" },
-  { label: "Perguntas frequentes", href: "/#faq" },
-  { label: "Contacto", href: "/#contacto" },
+  { label: "Serviços", href: "/websites#servicos" },
+  { label: "Projetos", href: "/websites#projetos" },
+  { label: "Como funciona", href: "/websites/como-funciona" },
+  { label: "Preços", href: "/websites/precos" },
+  { label: "Perguntas frequentes", href: "/websites#faq" },
+  { label: "Contacto", href: "/websites#contacto" },
 ] as const;
 
 export const primaryCta = {
   label: "Pedir análise gratuita",
-  href: "/#contacto",
+  href: "/websites#contacto",
 } as const;

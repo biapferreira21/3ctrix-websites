@@ -478,7 +478,7 @@ export function SiteImobiliaria() {
   const p = pImobiliaria;
   return (
     <Chrome pal={p} domain="casaviva.pt" photoIndex={7}>
-      <Nav pal={p} brand="Casa Viva" items={["Imóveis", "Vender"]} cta="Contactar" />
+      <Nav pal={p} brand="Casa Viva" items={["Imóveis", "Vender"]} cta="Contactoar" />
       <div className="px-2.5 pt-2">
         <span style={{ fontSize: 9.5, fontWeight: 700, lineHeight: "10px", display: "block" }}>
           Encontre a casa certa
