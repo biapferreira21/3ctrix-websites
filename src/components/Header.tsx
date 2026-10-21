@@ -12,10 +12,10 @@ import { cn } from "@/lib/cn";
 
 const studioLinks = [
   { label: "Home", href: siteConfig.urls.home, external: false },
+  { label: "Services", href: "/#business-areas", external: false },
+  { label: "Events & Media", href: "/#experience", external: false },
   { label: "Research", href: siteConfig.urls.research, external: false },
-  { label: "Automations", href: siteConfig.urls.automations, external: false },
-  { label: "Websites", href: siteConfig.urls.websites, external: false },
-  { label: "AlphaVote", href: siteConfig.urls.alphaVote, external: true },
+  { label: "About", href: "/#profile", external: false },
 ] as const;
 const websitesLinksPt = [
   { label: "Serviços", href: "/websites#servicos", external: false },

@@ -5,9 +5,10 @@ import { Logo } from "./ui/Logo";
 import { isPlaceholder, siteConfig } from "@/config/site";
 
 const footerLinks = [
+  { label: "Events & Media", href: "/#experience" },
   { label: "Research", href: siteConfig.urls.research },
-  { label: "Automations", href: siteConfig.urls.automations },
-  { label: "Websites", href: siteConfig.urls.websites },
+  { label: "Workflow Automation", href: siteConfig.urls.automations },
+  { label: "About Beatriz", href: "/#profile" },
 ] as const;
 
 export function Footer() {
@@ -89,16 +90,6 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a
-                  className="inline-flex items-center gap-1.5 text-sm text-slate hover:text-forest"
-                  href={siteConfig.urls.alphaVoteContent}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  3C Trix Content <ExternalLink size={13} aria-hidden />
-                </a>
-              </li>
-              <li>
                 <Link className="text-sm text-slate hover:text-forest" href="/#contact">
                   Contact
                 </Link>
@@ -123,7 +114,7 @@ export function Footer() {
         </div>
         <div className="relative flex flex-col gap-3 border-t border-sage/30 py-6 text-xs text-slate sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} {siteConfig.companyName}. All rights reserved.</p>
-          <p>From emerging technology to real-world implementation.</p>
+          <p>Connecting information with people and ideas.</p>
         </div>
       </Container>
     </footer>

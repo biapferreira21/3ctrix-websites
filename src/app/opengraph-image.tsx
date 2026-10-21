@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Imagem Open Graph gerada dinamicamente (sem necessidade de ficheiro).
-export const alt = "3C Trix Studio — Criação e Redesign de Websites";
+export const alt = "3C Trix — Events, Media, Research and Technology";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -50,11 +50,11 @@ export default function OpengraphImage() {
               lineHeight: 1.12,
             }}
           >
-            <span>O seu negócio merece um</span>
-            <span>website à altura.</span>
+            <span>Information, people</span>
+            <span>and ideas — connected.</span>
           </div>
           <div style={{ display: "flex", fontSize: 28, color: "#8FA38A" }}>
-            Criação e redesign de websites · Lisboa e Portugal
+            Events · Media · Research · Technology
           </div>
         </div>
       </div>

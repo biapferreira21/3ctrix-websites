@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowDown, ArrowRight, FileText, GitBranch, Layers3 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { HeroSignalFX } from "@/components/studio/HeroSignalFX";
 
 type HeroContent = {
   eyebrow: string;
@@ -56,7 +57,7 @@ export function PageHero({
             )}
           </div>
 
-          <HeroVisual variant={visual} />
+          {visual === "studio" ? <HeroSignalFX /> : <HeroVisual variant={visual} />}
         </div>
       </Container>
     </section>

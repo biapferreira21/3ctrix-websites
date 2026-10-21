@@ -7,12 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["", 1],
     ["/research", 0.9],
     ["/automations", 0.9],
-    ["/websites", 0.9],
-    ["/websites/como-funciona", 0.8],
-    ["/websites/precos", 0.8],
-    ["/websites/en", 0.8],
-    ["/websites/en/how-it-works", 0.7],
-    ["/websites/en/pricing", 0.7],
     [siteConfig.urls.privacy, 0.3],
     [siteConfig.urls.terms, 0.3],
   ] as const;

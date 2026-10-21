@@ -10,14 +10,14 @@ import { StudioContactForm } from "@/components/studio/StudioContactForm";
 import { automationsContent as content } from "@/content/automations";
 
 export const metadata: Metadata = {
-  title: "AI Automation for Business | 3C Trix Studio",
+  title: "Workflow Automation and Event Tools | 3C Trix",
   description:
-    "3C Trix Studio designs practical AI-powered workflows and internal tools that help businesses reduce repetitive work, organise information and improve processes.",
+    "Practical automations, event tools and AI-assisted workflows designed around a defined organisational or participant need.",
   alternates: { canonical: "/automations" },
   openGraph: {
-    title: "3C Trix Automations — Practical AI Implementation",
+    title: "3C Trix — Workflow Automation and Event Tools",
     description:
-      "Custom automation and AI-powered workflows designed around real business processes.",
+      "Focused tools that improve event information, participant support, research, content and operational workflows.",
     url: "/automations",
   },
 };
@@ -32,8 +32,8 @@ export default function AutomationsPage() {
         <section className="border-b-[3px] border-night bg-white py-20 sm:py-28">
           <Container>
             <SectionHeader
-              eyebrow="The operational problem"
-              title="Most businesses do not need more tools. They need better-connected processes."
+              eyebrow="The practical problem"
+              title="Better event and work experiences begin with a clearer workflow."
             />
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {content.problems.map(([title, text], index) => (

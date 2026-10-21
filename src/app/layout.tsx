@@ -19,11 +19,11 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: "3C Trix Studio | Research, AI Automation and Digital Products",
+    default: "3C Trix | Events, Media, Research and Technology",
     template: "%s",
   },
   description:
-    "3C Trix Studio researches emerging technology, communicates it clearly and applies it through products, automations, websites and practical business solutions.",
+    "3C Trix connects events, media, research and tailored digital tools to help people understand emerging technology and make better-informed decisions.",
   authors: [{ name: siteConfig.companyName }],
   creator: siteConfig.companyName,
   publisher: siteConfig.companyName,
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: siteConfig.companyName,
-    images: [{ url: "/og.png", width: 1792, height: 919, alt: "3C Trix Studio — research, content and implementation" }],
+    images: [{ url: "/og.png", width: 1792, height: 919, alt: "3C Trix — events, media, research and technology" }],
   },
   twitter: { card: "summary_large_image", images: ["/og.png"] },
   robots: { index: true, follow: true },

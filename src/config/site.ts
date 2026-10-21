@@ -9,9 +9,9 @@ export const siteConfig = {
   companyName: "3C Trix Studio",
   shortName: "3C Trix",
   founderName: "Beatriz Ferreira",
-  tagline: "We research change, communicate it and build with it.",
+  tagline: "Information, people and ideas — connected through events, media and technology.",
   positioning:
-    "3C Trix Studio researches emerging technology, communicates it clearly and applies it through real products, automations and business solutions.",
+    "3C Trix helps people and organisations understand emerging technology, get more from important events and make better-informed decisions through media, research and tailored digital tools.",
   siteUrl:
     process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://3ctrix.com",
   email:

@@ -9,18 +9,17 @@ import { SectionHeader } from "@/components/studio/SectionHeader";
 import { FAQAccordion } from "@/components/studio/FAQAccordion";
 import { StudioContactForm } from "@/components/studio/StudioContactForm";
 import { researchContent as content } from "@/content/research";
-import { researchProjects } from "@/content/researchProjects";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Technology Research and Content | 3C Trix Studio",
+  title: "Research and Information Quality | 3C Trix",
   description:
-    "Research-led articles, reports, SEO content and editorial work covering artificial intelligence, digital assets, stablecoins, payments and emerging technology.",
+    "Research and tools focused on source traceability, context, uncertainty and the quality of information used in decisions.",
   alternates: { canonical: "/research" },
   openGraph: {
-    title: "3C Trix Research & Content",
+    title: "3C Trix Research & Information Quality",
     description:
-      "Clear, credible research and editorial work for technology companies, publications and events.",
+      "Research that keeps sources, context, uncertainty and important qualifications visible.",
     url: "/research",
   },
 };
@@ -36,8 +35,8 @@ export default function ResearchPage() {
           <Container>
             <SectionHeader
               eyebrow="Research themes"
-              title="Focused on the systems reshaping technology and finance."
-              text="Our research follows how technologies move from technical development to business adoption, regulation and real-world use."
+              title="How information moves, changes and informs decisions."
+              text="The work connects emerging technology with questions of provenance, compression, uncertainty, interpretation and real-world use."
             />
             <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {content.themes.map((theme, index) => (
@@ -85,72 +84,39 @@ export default function ResearchPage() {
           </Container>
         </section>
 
-        <section id="portfolio" className="border-b-[3px] border-night bg-[#f5f1e8] py-20 sm:py-28">
+        <section id="research-directions" className="border-b-[3px] border-night bg-[#f5f1e8] py-20 sm:py-28">
           <Container>
             <SectionHeader
-              eyebrow="Portfolio"
-              title="Selected work."
-              text="Recent research-led articles published through 3C Trix Content on AlphaVote."
+              eyebrow="Questions in development"
+              title="Research directions shaping the work."
+              text="These are active lines of inquiry and product-design questions, not claims that a universal information-quality score already exists."
             />
-            <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {researchProjects.map((project) => (
-                <a
-                  key={`${project.title}-${project.category}`}
-                  href={project.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Read ${project.title} on AlphaVote`}
-                  className="group flex rounded-[1.75rem] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald/35"
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {content.directions.map(([question, exploration, aim], index) => (
+                <article
+                  key={question}
+                  className="flex min-h-[22rem] flex-col rounded-[1.75rem] border-[3px] border-night bg-white p-6 shadow-[6px_6px_0_#16180F] sm:p-8"
                 >
-                  <article className="flex min-h-[24rem] w-full flex-col rounded-[1.75rem] border-[3px] border-night bg-white p-6 shadow-[6px_6px_0_#16180F] transition-transform duration-200 group-hover:-translate-y-1 group-hover:shadow-[9px_9px_0_#16180F]">
-                    <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-dark">
-                      <span>{project.category}</span>
-                      <span>{project.year}</span>
-                    </div>
-                    <h3 className="mt-10 text-2xl font-semibold leading-tight text-ink transition-colors group-hover:text-forest">
-                      {project.title}
-                    </h3>
-                    <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-sage-dark">
-                      {project.client}
-                    </p>
-                    <p className="mt-5 text-sm leading-6 text-slate">
-                      {project.description}
-                    </p>
-                    <span className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-semibold text-forest underline underline-offset-4">
-                      Read on AlphaVote
-                      <ExternalLink
-                        size={15}
-                        aria-hidden
-                        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      />
+                  <div className="flex items-start justify-between gap-6">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.17em] text-emerald-dark">
+                      DIRECTION {String(index + 1).padStart(2, "0")}
                     </span>
-                  </article>
-                </a>
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-night bg-mint text-forest">
+                      <FileText size={18} aria-hidden />
+                    </span>
+                  </div>
+                  <h3 className="mt-9 text-2xl font-semibold leading-tight text-ink">{question}</h3>
+                  <p className="mt-5 text-sm leading-6 text-slate">{exploration}</p>
+                  <p className="mt-auto border-t-2 border-night/10 pt-6 text-sm font-semibold leading-6 text-forest">
+                    {aim}
+                  </p>
+                </article>
               ))}
-            </div>
-            <div className="mt-12 flex flex-col items-start justify-between gap-5 rounded-[1.5rem] border-[3px] border-night bg-[#dfece2] p-6 shadow-[6px_6px_0_#3E855A] sm:flex-row sm:items-center">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-dark">
-                  3C Trix Content
-                </p>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate">
-                  Explore the complete editorial archive and open every article
-                  in its interactive AlphaVote reading experience.
-                </p>
-              </div>
-              <a
-                href={siteConfig.urls.alphaVoteContent}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full border-[3px] border-night bg-emerald px-5 py-3 text-sm font-bold text-night shadow-[3px_3px_0_#16180F] transition-transform hover:-translate-y-0.5"
-              >
-                Browse all articles <ExternalLink size={15} aria-hidden />
-              </a>
             </div>
           </Container>
         </section>
 
-        <section className="border-b-[3px] border-night bg-white py-20 sm:py-28">
+        <section id="method" className="border-b-[3px] border-night bg-white py-20 sm:py-28">
           <Container>
             <SectionHeader eyebrow="Method" title="From question to publication." />
             <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -194,9 +160,6 @@ export default function ResearchPage() {
                   This creates a bridge between research, editorial content and structured audience participation.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <a href={siteConfig.urls.alphaVoteContent} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-[3px] border-night bg-emerald px-6 py-3 text-sm font-bold text-night">
-                    Read 3C Trix Content <ExternalLink size={16} aria-hidden />
-                  </a>
                   <a href={siteConfig.urls.alphaVote} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-[3px] border-night bg-white px-6 py-3 text-sm font-bold text-ink">
                     Explore AlphaVote <ExternalLink size={16} aria-hidden />
                   </a>
