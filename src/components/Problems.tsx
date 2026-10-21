@@ -41,10 +41,6 @@ export function Problems() {
 
       <Container>
         <SectionHeading eyebrow="Diagnóstico rápido" title={problems.title} />
-        <p className="mx-auto mt-4 max-w-xl text-center text-sm leading-relaxed text-slate sm:text-base">
-          Pequenos atritos acumulam-se. O resultado é um website que exige
-          esforço quando devia facilitar a decisão.
-        </p>
 
         <div className="relative mx-auto mt-14 max-w-6xl rounded-[2rem] border border-sage/25 bg-white p-4 shadow-[0_35px_90px_-45px_rgba(14,23,18,.35)] sm:p-7">
           <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">

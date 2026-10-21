@@ -52,12 +52,11 @@ export default function ComoFuncionaPage() {
                 Vamos começar pelo seu website?
               </h2>
               <p className="mt-3 text-slate">
-                Request a free review e receba as primeiras oportunidades de
-                melhoria.
+                Peça uma análise gratuita do seu website.
               </p>
               <div className="mt-6 flex justify-center gap-3">
                 <Button href="/websites#contacto" size="lg">
-                  Request a free review
+                  Pedir análise gratuita
                 </Button>
                 <Button href="/websites" variant="secondary" size="lg">
                   Voltar ao início

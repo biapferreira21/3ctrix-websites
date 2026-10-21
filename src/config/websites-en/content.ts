@@ -61,7 +61,7 @@ export const included = {
 
 /* --------------- FUNCIONALIDADES ADAPTADAS AO NEGÓCIO --------------- */
 export const businessFeatures = {
-  title: "Business-specific functionality do seu negócio.",
+  title: "Features that fit your business.",
   items: [
     "Bookings",
     "Quote requests",
@@ -127,7 +127,7 @@ export const process = {
 /* ---------------------- PROPRIEDADE E TRANSPARÊNCIA ---------------------- */
 export const ownership = {
   title: "The website is genuinely yours.",
-  text: "The domain, hosting and digital accounts remain in the client's name, with direct payment and full control of their digital assets.",
+  text: "Your domain, hosting and accounts stay in your name, with direct payment and full control.",
   points: [
     { icon: "Globe", title: "Client-owned domain", text: "The address is yours, without intermediaries." },
     { icon: "Server", title: "Client-owned hosting", text: "The hosting is registered and paid by you." },

@@ -59,13 +59,9 @@ export function BusinessFeatures() {
 
       <Container className="relative">
         <SectionHeading
-          eyebrow="Business-specific functionality"
+          eyebrow="Features"
           title={businessFeatures.title}
         />
-        <p className="mx-auto mt-4 max-w-2xl text-center text-sm leading-relaxed text-slate sm:text-base">
-          Cada módulo entra em cena quando faz sentido para o seu negócio.
-          Nada de soluções copiadas e coladas.
-        </p>
 
         <FadeIn className="relative mx-auto mt-14 max-w-6xl">
           <div className="absolute -left-3 -top-3 h-full w-full rounded-[1.8rem] border-4 border-night bg-lilac-deep sm:-left-5 sm:-top-5" />
@@ -78,11 +74,6 @@ export function BusinessFeatures() {
               sizes="(max-width: 1200px) 94vw, 1120px"
               className="h-auto w-full"
             />
-          </div>
-          <div className="relative mx-4 -mt-7 flex justify-center sm:mx-10">
-            <p className="rounded-[1.4rem] border-[3px] border-night bg-white px-5 py-3 text-center font-display text-sm font-semibold text-forest-deep shadow-[5px_5px_0_#3E855A] sm:text-base">
-              The right website connects the different parts of your business.
-            </p>
           </div>
         </FadeIn>
 
@@ -110,19 +101,6 @@ export function BusinessFeatures() {
           })}
         </Stagger>
 
-        <FadeIn className="mx-auto mt-16 max-w-3xl">
-          <div className="relative overflow-hidden rounded-[2rem] border-4 border-night bg-forest-deep px-6 py-10 text-center text-white shadow-[8px_8px_0_#9985DC] sm:px-10">
-            <span className="absolute left-6 top-4 font-display text-7xl leading-none text-gold/35" aria-hidden>
-              “
-            </span>
-            <p className="relative font-display text-2xl font-semibold leading-snug sm:text-3xl">
-              We do not only make websites look better.
-              <span className="mt-1 block text-gold-light">
-                We make them more useful.
-              </span>
-            </p>
-          </div>
-        </FadeIn>
       </Container>
     </section>
   );

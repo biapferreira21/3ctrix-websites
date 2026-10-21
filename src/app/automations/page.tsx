@@ -7,6 +7,7 @@ import { PageHero } from "@/components/studio/PageHero";
 import { SectionHeader } from "@/components/studio/SectionHeader";
 import { FAQAccordion } from "@/components/studio/FAQAccordion";
 import { StudioContactForm } from "@/components/studio/StudioContactForm";
+import { WorkflowMotion } from "@/components/studio/WorkflowMotion";
 import { automationsContent as content } from "@/content/automations";
 
 export const metadata: Metadata = {
@@ -33,13 +34,13 @@ export default function AutomationsPage() {
           <Container>
             <SectionHeader
               eyebrow="The practical problem"
-              title="Better event and work experiences begin with a clearer workflow."
+              title="Where time gets lost."
             />
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {content.problems.map(([title, text], index) => (
                 <article key={title} className="rounded-2xl border-2 border-night bg-[#f5f1e8] p-5">
                   <span className="text-[10px] font-bold tracking-[0.18em] text-emerald-dark">
-                    FRICTION {String(index + 1).padStart(2, "0")}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-5 text-lg font-semibold text-ink">{title}</h3>
                   <p className="mt-2 text-sm leading-6 text-slate">{text}</p>
@@ -53,29 +54,27 @@ export default function AutomationsPage() {
           <Container>
             <SectionHeader
               eyebrow="What we automate"
-              title="Practical automation for real business workflows."
+              title="What we can simplify."
             />
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {content.useCases.map(([title, text], index) => (
+              {content.useCases.map(([title, text]) => (
                 <article
                   key={title}
-                  className="flex min-h-64 flex-col rounded-3xl border-[3px] border-night bg-white p-6 shadow-[5px_5px_0_#8FA38A]"
+                  className="flex flex-col rounded-3xl border-[3px] border-night bg-white p-6 shadow-[5px_5px_0_#8FA38A]"
                 >
                   <GitBranch size={21} className="text-emerald-dark" aria-hidden />
                   <h3 className="mt-8 text-xl font-semibold leading-tight text-ink">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate">{text}</p>
-                  <span className="mt-auto pt-6 text-[10px] font-bold tracking-[0.18em] text-sage-dark">
-                    USE CASE {String(index + 1).padStart(2, "0")}
-                  </span>
                 </article>
               ))}
             </div>
+            <div className="mt-10"><WorkflowMotion /></div>
           </Container>
         </section>
 
         <section className="border-b-[3px] border-night bg-night py-20 text-white sm:py-28">
           <Container>
-            <SectionHeader eyebrow="Our process" title="From process review to working system." />
+            <SectionHeader eyebrow="Our process" title="From task to working tool." tone="dark" />
             <ol className="mt-14 grid gap-0 lg:grid-cols-3">
               {content.process.map(([title, text], index) => (
                 <li
@@ -99,7 +98,7 @@ export default function AutomationsPage() {
             <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
               <SectionHeader
                 eyebrow="Implementation principles"
-                title="Automation should remove friction, not create more of it."
+                title="Simple to use. Clear to hand over."
               />
               <ul className="grid gap-3 sm:grid-cols-2">
                 {content.principles.map((principle) => (
@@ -113,57 +112,13 @@ export default function AutomationsPage() {
           </Container>
         </section>
 
-        <section className="border-b-[3px] border-night bg-[#e8e0fb] py-20 sm:py-28">
-          <Container>
-            <div className="grid items-start gap-12 lg:grid-cols-[.8fr_1.2fr]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-dark">Participation feature</p>
-                <h2 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-5xl">
-                  {content.caseStudy.title}
-                </h2>
-                <p className="mt-5 text-base leading-7 text-slate">{content.caseStudy.text}</p>
-                <p className="mt-7 rounded-2xl border-2 border-night bg-[#f6dfb6] p-5 text-sm font-medium leading-6 text-ink">
-                  {content.caseStudy.note}
-                </p>
-              </div>
-              <ol className="rounded-[1.75rem] border-[3px] border-night bg-white p-6 shadow-[8px_8px_0_#16180F] sm:p-8">
-                {content.caseStudy.steps.map((step, index) => (
-                  <li key={step} className="flex gap-4 border-b border-night/20 py-4 first:pt-0 last:border-0 last:pb-0">
-                    <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald text-xs font-bold text-night">
-                      {index + 1}
-                    </span>
-                    <span className="text-sm font-medium leading-6 text-ink">{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </Container>
-        </section>
-
-        <section className="border-b-[3px] border-night bg-white py-20 sm:py-28">
-          <Container>
-            <SectionHeader
-              eyebrow="What the workflow delivers"
-              title="Less repetitive work. More useful information."
-              text="Each workflow connects the right information, people and review steps, with clear ownership and a practical handover for your team."
-            />
-            <ul className="mt-10 flex flex-wrap gap-3">
-              {content.technologies.map((technology) => (
-                <li key={technology} className="rounded-full border-2 border-night bg-mint px-4 py-2 text-sm font-semibold text-forest-deep">
-                  {technology}
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
-
         <section className="border-b-[3px] border-night bg-mint-soft py-20 sm:py-28">
           <Container>
             <div className="grid gap-12 lg:grid-cols-2">
               <div>
                 <SectionHeader
                   eyebrow="Who it is for"
-                  title="Designed for teams that have outgrown manual work."
+                  title="For teams with more to do than time to do it."
                 />
                 <ul className="mt-8 grid gap-3 sm:grid-cols-2">
                   {content.audiences.map((audience) => (
@@ -177,12 +132,11 @@ export default function AutomationsPage() {
               <div className="rounded-[1.75rem] border-[3px] border-night bg-[#f6dfb6] p-7 shadow-[8px_8px_0_#C69A44] sm:p-9">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-dark">Pricing</p>
                 <h2 className="mt-3 text-3xl font-semibold leading-tight text-ink">
-                  Every automation begins with the process.
+                  Start with your workflow.
                 </h2>
                 <p className="mt-8 text-2xl font-semibold text-forest">Custom pricing</p>
                 <p className="mt-3 text-sm leading-6 text-slate">
-                  Pricing depends on the workflow complexity, number of systems,
-                  integrations, data requirements and level of custom development.
+                  Scope, price and delivery agreed before we build.
                 </p>
                 <p className="mt-6 flex items-center gap-2 text-sm font-semibold text-ink">
                   <Check size={17} aria-hidden /> Initial process assessment

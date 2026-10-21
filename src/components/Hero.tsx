@@ -40,8 +40,7 @@ export function Hero() {
             </h1>
 
             <p className="mt-7 max-w-xl text-base leading-relaxed text-slate sm:text-lg">
-              Transformamos websites parados no tempo em experiências rápidas,
-              úteis e cheias de personalidade.
+              Criamos e renovamos websites rápidos, claros e à medida do seu negócio.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">

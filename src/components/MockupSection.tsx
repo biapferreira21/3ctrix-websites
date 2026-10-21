@@ -23,8 +23,7 @@ export function MockupSection() {
               <span className="text-gradient">qualquer ecrã.</span>
             </h2>
             <p className="mt-5 max-w-md text-slate">
-              Cada website é desenhado para telemóvel, tablet e computador —
-              rápido, acessível e pronto a converter.
+              Telemóvel, tablet ou computador. O mesmo website, sempre fácil de usar.
             </p>
           </FadeIn>
 

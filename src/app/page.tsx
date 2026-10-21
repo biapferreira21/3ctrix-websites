@@ -17,7 +17,7 @@ import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/studio/PageHero";
 import { SectionHeader } from "@/components/studio/SectionHeader";
 import { StudioContactForm } from "@/components/studio/StudioContactForm";
-import { SignalToDecision } from "@/components/studio/SignalToDecision";
+import { ResearchLens } from "@/components/studio/ResearchLens";
 import { EventAppDemo } from "@/components/studio/EventAppDemo";
 import { AlphaVoteExperiment } from "@/components/studio/AlphaVoteExperiment";
 import { homeContent } from "@/content/home";
@@ -91,10 +91,10 @@ export default function StudioHomePage() {
               {homeContent.audiences.items.map(([title, text], index) => (
                 <article
                   key={title}
-                  className="flex min-h-56 flex-col rounded-2xl border-[3px] border-night bg-white p-5 shadow-[5px_5px_0_#16180F]"
+                  className="flex flex-col rounded-2xl border-[3px] border-night bg-white p-5 shadow-[5px_5px_0_#16180F]"
                 >
                   <span className="text-[10px] font-bold tracking-[0.18em] text-emerald-dark">
-                    AUDIENCE {String(index + 1).padStart(2, "0")}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-8 text-lg font-semibold text-ink">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate">{text}</p>
@@ -113,13 +113,12 @@ export default function StudioHomePage() {
             <SectionHeader
               eyebrow="What we do"
               title="Four connected areas of work."
-              text="Events create the context. Media and research make ideas understandable. Digital tools help people participate, learn and act on what matters."
             />
             <div className="mt-14 grid gap-5 lg:grid-cols-2">
               {homeContent.areas.map((area) => (
                 <article
                   key={area.title}
-                  className="group flex min-h-[36rem] flex-col rounded-[1.75rem] border-[3px] border-night bg-white p-6 shadow-[7px_7px_0_#16180F] transition-transform hover:-translate-y-1 sm:p-8"
+                  className="group flex flex-col rounded-[1.75rem] border-[3px] border-night bg-white p-6 shadow-[7px_7px_0_#16180F] transition-transform hover:-translate-y-1 sm:p-8"
                 >
                   <div className="flex items-start justify-between gap-6">
                     <span className="text-xs font-bold tracking-[0.18em] text-emerald-dark">
@@ -168,29 +167,7 @@ export default function StudioHomePage() {
 
         <section id="event-tools" className="border-b-[3px] border-night bg-white py-20 sm:py-28">
           <Container>
-            <div className="grid gap-12 lg:grid-cols-[.85fr_1.15fr]">
-              <SectionHeader
-                eyebrow={homeContent.eventTools.eyebrow}
-                title={homeContent.eventTools.title}
-                text={homeContent.eventTools.text}
-              />
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-                {homeContent.eventTools.stages.map(([stage, text], index) => (
-                  <article
-                    key={stage}
-                    className="rounded-2xl border-[3px] border-night bg-[#f5f1e8] p-6 shadow-[5px_5px_0_#8FA38A]"
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald text-xs font-bold text-night">
-                        {index + 1}
-                      </span>
-                      <h3 className="text-xl font-semibold text-ink">{stage} the event</h3>
-                    </div>
-                    <p className="mt-4 text-sm leading-6 text-slate">{text}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
+            <SectionHeader eyebrow={homeContent.eventTools.eyebrow} title={homeContent.eventTools.title} text={homeContent.eventTools.text} />
             <EventAppDemo />
           </Container>
         </section>
@@ -210,14 +187,6 @@ export default function StudioHomePage() {
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
-                <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {homeContent.alphaVote.cardTypes.map(([title, text]) => (
-                    <article key={title} className="rounded-2xl border border-white/25 bg-white/5 p-4">
-                      <h3 className="text-sm font-semibold text-white">{title}</h3>
-                      <p className="mt-2 text-xs leading-5 text-white/60">{text}</p>
-                    </article>
-                  ))}
-                </div>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <a
                     href={siteConfig.urls.alphaVote}
@@ -225,7 +194,7 @@ export default function StudioHomePage() {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-6 py-3 text-sm font-bold text-night"
                   >
-                    Explore the AlphaVote experiment <ExternalLink size={16} aria-hidden />
+                    Open AlphaVote <ExternalLink size={16} aria-hidden />
                   </a>
                   <a href="https://alphavote.app/help/why.html" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 px-2 py-3 text-sm font-semibold text-white underline underline-offset-4">Why it exists <ExternalLink size={14} aria-hidden /></a>
                 </div>
@@ -240,8 +209,7 @@ export default function StudioHomePage() {
           <Container>
             <SectionHeader
               eyebrow="Selected events"
-              title="Connecting with the people shaping what comes next."
-              text="Beatriz has been an ambassador for these AI, technology and digital-asset events."
+              title="Events Beatriz has represented."
             />
             <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {homeContent.experience.map((organisation) => (
@@ -261,11 +229,9 @@ export default function StudioHomePage() {
           </Container>
         </section>
 
-        <SignalToDecision content={homeContent.informationSystem} />
-
         <section id="information-quality" className="border-b-[3px] border-night bg-[#e8e0fb] py-20 sm:py-28">
           <Container>
-            <div className="grid gap-12 lg:grid-cols-[.95fr_1.05fr]">
+            <div>
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-dark">
                   {homeContent.informationQuality.eyebrow}
@@ -278,43 +244,10 @@ export default function StudioHomePage() {
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
-                <blockquote className="mt-7 rounded-2xl border-[3px] border-night bg-[#f6dfb6] p-5 text-base font-semibold leading-7 text-ink shadow-[4px_4px_0_#C69A44]">
-                  “{homeContent.profile.motivation}”
-                </blockquote>
-                <div className="mt-8 rounded-2xl border-[3px] border-night bg-white p-6 shadow-[5px_5px_0_#C69A44]">
-                  <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-dark">
-                    Questions guiding the work
-                  </h3>
-                  <ul className="mt-5 space-y-3">
-                    {homeContent.informationQuality.questions.map((question) => (
-                      <li key={question} className="flex gap-3 text-sm leading-6 text-slate">
-                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-lilac-deep" />
-                        {question}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-dark">
-                  Information theory as a design lens
-                </p>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  {homeContent.informationQuality.concepts.map(([title, text], index) => (
-                    <article
-                      key={title}
-                      className="min-h-48 rounded-2xl border-[3px] border-night bg-white p-5 shadow-[5px_5px_0_#16180F]"
-                    >
-                      <span className="text-[10px] font-bold tracking-[0.18em] text-emerald-dark">
-                        CONCEPT {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <h3 className="mt-7 text-xl font-semibold text-ink">{title}</h3>
-                      <p className="mt-3 text-sm leading-6 text-slate">{text}</p>
-                    </article>
-                  ))}
-                </div>
               </div>
             </div>
+            <div className="mt-10"><ResearchLens /></div>
+            <Link href="/research" className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-forest underline underline-offset-4">Explore Research <ArrowRight size={16} aria-hidden /></Link>
           </Container>
         </section>
 
@@ -345,14 +278,6 @@ export default function StudioHomePage() {
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
-                <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {homeContent.profile.journey.map(([title, text]) => (
-                    <article key={title} className="rounded-2xl border-2 border-night bg-white p-4">
-                      <h3 className="text-sm font-bold text-ink">{title}</h3>
-                      <p className="mt-2 text-xs leading-5 text-slate">{text}</p>
-                    </article>
-                  ))}
-                </div>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <a
                     href={siteConfig.social.linkedin}
@@ -374,27 +299,9 @@ export default function StudioHomePage() {
           </Container>
         </section>
 
-        <section className="border-b-[3px] border-night bg-white py-20 sm:py-28">
-          <Container>
-            <SectionHeader
-              eyebrow="How 3C Trix works"
-              title="Clear about evidence, purpose and human judgement."
-            />
-            <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-              {homeContent.principles.map((principle) => (
-                <article key={principle.title} className="border-t-[3px] border-night pt-5">
-                  <Check size={20} className="text-emerald-dark" aria-hidden />
-                  <h3 className="mt-5 text-xl font-semibold text-ink">{principle.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate">{principle.text}</p>
-                </article>
-              ))}
-            </div>
-          </Container>
-        </section>
-
         <StudioContactForm
-          title="What event, idea or workflow are you trying to improve?"
-          text="Tell us about the audience, event, research question or practical challenge you are working on."
+          title="What are you working on?"
+          text="Tell us what you need. We’ll take it from there."
           submitLabel="Start a conversation"
           source="Home enquiry"
           fields={[

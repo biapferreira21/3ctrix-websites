@@ -18,7 +18,7 @@ export const hero = {
 
 /* ------------------------- BARRA DE CONFIANÇA ------------------------- */
 export const trustItems = [
-  "Responsivo websites",
+  "Adaptado a todos os ecrãs",
   "Entrega até 15 dias",
   "Funcionalidades à medida",
   "Domínio em nome do cliente",
@@ -106,7 +106,7 @@ export const caseStudy = {
     "Navegação mais clara",
     "Adaptado a telemóvel",
     "Ações mais visíveis",
-    "Acessível contact details",
+    "Contactos acessíveis",
   ],
 };
 
@@ -127,7 +127,7 @@ export const process = {
 /* ---------------------- PROPRIEDADE E TRANSPARÊNCIA ---------------------- */
 export const ownership = {
   title: "O website é verdadeiramente seu.",
-  text: "Domínio, alojamento e contas digitais ficam sempre em nome do cliente, que os paga diretamente e mantém o controlo dos seus ativos.",
+  text: "Domínio, alojamento e contas ficam em seu nome, com pagamento direto e controlo total.",
   points: [
     { icon: "Globe", title: "Domínio do cliente", text: "O endereço é seu, sem intermediários." },
     { icon: "Server", title: "Alojamento do cliente", text: "O espaço é registado e pago por si." },

@@ -4,20 +4,17 @@ export const homeContent = {
   hero: {
     eyebrow: "Events. Media. Research. Technology.",
     title:
-      "Connecting important ideas with people, events and better-informed decisions.",
+      "Research, media and tools for better events.",
     text:
-      "3C Trix works with events and startups in AI, technology and crypto. We combine media, research and tailored digital tools to help people understand emerging technology and get more from the conversations shaping it.",
+      "For events and startups in AI, technology and crypto.",
     primary: { label: "Explore our work", href: "#business-areas" },
     secondary: { label: "Start a conversation", href: "#contact" },
-    note: siteConfig.tagline,
   },
   evolution: {
     eyebrow: "Our mission",
-    title: "Make information more useful before, during and after important events.",
+    title: "Make the conversation count.",
     paragraphs: [
-      "Events bring together people, ideas, companies and decision-makers. The conversations held there can influence what founders, leaders and institutions understand, decide and build next.",
-      "3C Trix contributes to that chain by helping audiences prepare for important discussions, follow complex ideas and continue the conversation after an event.",
-      "The ambition is simple: connect trustworthy information with people and ideas through media, research and carefully designed technology.",
+      "Important ideas deserve more than a moment on stage. We help people understand them, take part and carry them forward.",
     ],
     stages: [
       {
@@ -39,15 +36,15 @@ export const homeContent = {
   },
   audiences: {
     eyebrow: "Who we work with",
-    title: "For people shaping — and trying to understand — emerging technology.",
+    title: "Events. Startups. Curious people.",
     text:
-      "3C Trix is designed for organisations and participants who need more than promotion: they need context, useful participation and information they can act on responsibly.",
+      "Across AI, technology and crypto.",
     items: [
-      ["Event organisers", "AI, technology, crypto and other high-impact events seeking stronger content and participant experiences."],
-      ["Startups", "AI, technology and crypto teams looking for research-led content, product reviews or event collaboration."],
-      ["Event participants", "People who want to understand what they can learn, ask and take away from an event."],
-      ["Media & content partners", "Publications and teams seeking thoughtful interviews, coverage, explainers and reviews."],
-      ["Organisations", "Teams exploring practical workflow automation or information-reliability tools."],
+      ["Event organisers", "Content and participant experiences."],
+      ["Startups", "Research, reviews and event collaboration."],
+      ["Event participants", "Context, questions and useful takeaways."],
+      ["Media partners", "Interviews, explainers and coverage."],
+      ["Organisations", "Better workflows and clearer information."],
     ],
   },
   areas: [
@@ -55,14 +52,11 @@ export const homeContent = {
       index: "01",
       title: "Events, Media & Content",
       description:
-        "Ambassador work, event coverage, interviews, previews, recaps, explainers and evidence-aware content for AI, technology and crypto audiences.",
+        "Bring your event and its ideas to the right audience.",
       points: [
-        "Represent and promote selected events as an ambassador",
-        "Create content before, during and after an event",
-        "Interview founders, speakers, builders and participants",
-        "Write previews, recaps, explainers and newsletters",
-        "Review technology products through hands-on testing",
-        "Clearly disclose ambassador, sponsored or commissioned work",
+        "Ambassador work and event coverage",
+        "Interviews, explainers and newsletters",
+        "Hands-on product reviews",
       ],
       cta: "See selected experience",
       href: "#experience",
@@ -73,14 +67,11 @@ export const homeContent = {
       index: "02",
       title: "Event Websites & Apps",
       description:
-        "Tailored digital experiences that help participants prepare, navigate sessions, share perspectives and continue learning after an event.",
+        "A useful companion before, during and after the conference.",
       points: [
-        "Agenda, speakers, sessions and venue information",
-        "Participant guides, resources and event content",
-        "Personalised session or topic suggestions",
-        "Questions, surveys, polls and voting cards",
-        "Participant perspectives and structured engagement",
-        "Post-event resources, summaries and follow-up",
+        "Agendas, speakers and venue guides",
+        "Questions, polls and participation",
+        "Resources and follow-up",
       ],
       cta: "Explore the event app experience",
       href: "#event-tools",
@@ -91,14 +82,11 @@ export const homeContent = {
       index: "03",
       title: "Workflow Automation",
       description:
-        "Practical automations and AI-assisted workflows for defined event, research, content and operational needs — with human judgement kept where it matters.",
+        "Spend less time on repeat tasks and scattered information.",
       points: [
-        "Identify repetitive or fragmented processes",
-        "Design focused automations and AI-assisted workflows",
-        "Build tools or agents for a defined need",
-        "Support event information and participant workflows",
-        "Test tools in the real process",
-        "Keep human approval where judgement is required",
+        "Connect research and content workflows",
+        "Build focused tools and automations",
+        "Keep people in control of key decisions",
       ],
       cta: "Explore Automations",
       href: siteConfig.urls.automations,
@@ -109,14 +97,11 @@ export const homeContent = {
       index: "04",
       title: "Research & Information Quality",
       description:
-        "Research, explainers and tools focused on source traceability, context, uncertainty and the reliability of information used in decisions.",
+        "Understand complex topics and the evidence behind them.",
       points: [
-        "Show where claims and information came from",
-        "Link sources, dates, speakers, sessions and documents",
-        "Reveal missing context and conflicting sources",
-        "Separate evidence, interpretation and opinion",
-        "Make uncertainty and unresolved questions visible",
-        "Compare how claims and positions change over time",
+        "Articles, reports and briefings",
+        "Visible sources and important context",
+        "Clear limits and open questions",
       ],
       cta: "Explore Research",
       href: siteConfig.urls.research,
@@ -126,11 +111,10 @@ export const homeContent = {
   ],
   alphaVote: {
     eyebrow: "An independent experiment · AlphaVote",
-    title: "What do you think before you see what everyone else thinks?",
+    title: "Your view. Before the crowd’s.",
     paragraphs: [
-      "Beatriz designed AlphaVote to explore a question: can a social experience encourage independent judgement instead of following the crowd? Participants commit a view before seeing collective results, then explore reasoning and counterarguments.",
-      "The motivation is to make room for reflection, uncertainty and learning in a feed that often rewards popularity. It is an experiment in how interface design shapes thinking.",
-      "Its voting cards offer one possible participation feature for a conference app: ask a question, capture an independent response, then open the discussion. Each event app has its own agenda, speakers, resources and participant journey.",
+      "Beatriz created AlphaVote to make room for independent thinking in a feed driven by popularity. Answer first, then compare perspectives.",
+      "Its voting cards are one feature that can inspire participation in an event app. Try the experiment here.",
     ],
     cardTypes: [
       ["Agree / disagree / unsure", "Capture a position without forcing false certainty."],
@@ -143,9 +127,9 @@ export const homeContent = {
   },
   eventTools: {
     eyebrow: "Event apps and tools",
-    title: "Designed around the participant journey, not around generic features.",
+    title: "Your event. In their pocket.",
     text:
-      "An event website or app can support preparation, participation and follow-up. Every feature is selected for the event’s objectives, audience and information needs; prototypes and future integrations are labelled clearly.",
+      "Explore a simple conference app, built around the people using it.",
     stages: [
       ["Before", "Help participants understand the themes, speakers, sessions and questions worth bringing."],
       ["During", "Provide practical information, resources, questions, voting cards and ways to share perspectives."],
@@ -211,10 +195,9 @@ export const homeContent = {
   },
   informationQuality: {
     eyebrow: "Information quality",
-    title: "Better decisions start with information that keeps its source and context.",
+    title: "Keep the source. Keep the meaning.",
     paragraphs: [
-      "3C Trix is interested in what happens to information as it is collected, transmitted, summarised, shared and used. A short summary can be useful, but it can also remove evidence, caveats, disagreement or the conditions that made a statement meaningful.",
-      "The goal is not to produce a universal truth score. It is to improve traceability, preserve important context and make uncertainty easier to see before people use information in a decision.",
+      "A useful summary keeps the evidence and its limits visible. Here’s a small example.",
     ],
     questions: [
       "What context is lost when complex information becomes a short summary?",
@@ -235,11 +218,11 @@ export const homeContent = {
   },
   profile: {
     eyebrow: "About the founder",
-    title: "Beatriz works where product, research, media and events meet.",
+    title: "Meet Beatriz Ferreira.",
     paragraphs: [
-      "Beatriz Ferreira is a product professional, researcher, founder and media contributor interested in AI, technology, crypto and the ways these fields affect people, business and society.",
-      "Her experience in product management helps her understand how technology is built and used. Research helps her examine evidence and ask better questions. Media and event work help her explain ideas and meet the people shaping them. 3C Trix brings these perspectives together through services, experiments and practical tools.",
-      "She has a background in applied mathematics and a master’s degree in accounting, taxation and finance.",
+      "Founder, researcher and media contributor, with product management experience at Repsol and research experience at The Block.",
+      "She brings these perspectives together at 3C Trix to help people understand technology and make better-informed decisions.",
+      "Her background includes applied mathematics and a master’s degree in accounting, taxation and finance.",
     ],
     motivation:
       "Beatriz is motivated by understanding how technology shapes society and how the quality of information shapes what people believe, decide and build.",

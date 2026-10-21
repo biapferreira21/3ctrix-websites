@@ -19,12 +19,11 @@ export function MockupSection() {
               The finished website
             </p>
             <h2 className="font-display text-3xl font-semibold leading-[1.08] text-ink sm:text-[2.6rem]">
-              Impecável em{" "}
-              <span className="text-gradient">qualquer ecrã.</span>
+              Made for{" "}
+              <span className="text-gradient">every screen.</span>
             </h2>
             <p className="mt-5 max-w-md text-slate">
-              Cada website é desenhado para telemóvel, tablet e computador —
-              rápido, acessível e pronto a converter.
+              Phone, tablet or desktop. The same website, easy to use everywhere.
             </p>
           </FadeIn>
 
