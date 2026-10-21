@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { ArrowRight, Bookmark, CalendarDays, Check, ChevronRight, Clock3, FileText, MapPin, MessageSquareText, MousePointer2, Pause, Play, Search, ThumbsUp, Users, Wifi } from "lucide-react";
 import { conferenceSessions as sessions } from "@/content/interactiveDemos";
+import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 
 const views = [
   { label: "Build your agenda", short: "Agenda", icon: CalendarDays, title: "Find your next conversation.", text: "Search the programme, filter by topic and tap a bookmark to create your own agenda.", hint: "Try saving a session", task: "saved", tone: "bg-mint" },
@@ -27,7 +28,7 @@ export function EventAppDemo() {
   const root = useRef<HTMLDivElement>(null);
   const screen = useRef<HTMLDivElement>(null);
   const visible = useInView(root, { amount: 0.2 });
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
   const [view, setView] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [saved, setSaved] = useState<string[]>([]);
@@ -48,7 +49,7 @@ export function EventAppDemo() {
   const [notice, setNotice] = useState("");
 
   useEffect(() => {
-    if (!playing || reduceMotion !== false || !visible) return;
+    if (!playing || reduceMotion || !visible) return;
     const timer = window.setInterval(() => setView((current) => (current + 1) % views.length), 7500);
     return () => window.clearInterval(timer);
   }, [playing, reduceMotion, visible]);
@@ -96,7 +97,7 @@ export function EventAppDemo() {
           </div>
           <div className="mt-6 min-h-24"><p className="text-base font-semibold text-ink">{current.title}</p><p className="mt-2 max-w-md text-sm leading-6 text-slate">{current.text}</p></div>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-            <button type="button" onClick={() => setPlaying(!playing)} disabled={reduceMotion !== false} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-forest underline underline-offset-4 disabled:no-underline disabled:opacity-70">{playing && !reduceMotion ? <Pause size={14} aria-hidden /> : <Play size={14} aria-hidden />}{reduceMotion ? "Choose a view above" : playing ? "Pause walkthrough" : "Play walkthrough"}</button>
+            <button type="button" onClick={() => setPlaying(!playing)} disabled={reduceMotion} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-forest underline underline-offset-4 disabled:no-underline disabled:opacity-70">{playing && !reduceMotion ? <Pause size={14} aria-hidden /> : <Play size={14} aria-hidden />}{reduceMotion ? "Choose a view above" : playing ? "Pause walkthrough" : "Play walkthrough"}</button>
             <span className="rounded-full border border-night/30 bg-white px-3 py-2 text-[10px] font-semibold text-forest">{tasks.length} / 5 features tried</span>
           </div>
         </div>

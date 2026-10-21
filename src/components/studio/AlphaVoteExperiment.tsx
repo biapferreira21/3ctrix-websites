@@ -1,10 +1,11 @@
 "use client";
 
 import { useId, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowDown, ArrowRight, ArrowUp, BookOpen, Check, ChevronLeft, ChevronRight, CircleHelp, Gauge, Layers3, LockKeyhole, Minus, MousePointer2, Plus, RotateCcw, SlidersHorizontal, TrendingUp } from "lucide-react";
 import { experimentCards, type CardFormat, type ExperimentCard } from "@/content/interactiveDemos";
 import { allocatePoint, moveRankedItem } from "@/lib/demoInteractions";
+import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 
 const formats = [
   { id: "opinion", label: "Take a position", icon: CircleHelp },
@@ -20,7 +21,7 @@ const actionClass = "inline-flex min-h-11 min-w-11 items-center justify-center g
 export function AlphaVoteExperiment() {
   const [format, setFormat] = useState<CardFormat>("opinion");
   const [index, setIndex] = useState(0);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
   const cards = experimentCards[format];
   const card = cards[index];
 
@@ -61,7 +62,7 @@ export function AlphaVoteExperiment() {
 
 function ExperimentQuestion({ card, format, onNext }: { card: ExperimentCard; format: CardFormat; onNext: () => void }) {
   const id = useId();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
   const [choice, setChoice] = useState("");
   const [confidence, setConfidence] = useState(50);
   const [confidenceTouched, setConfidenceTouched] = useState(false);
