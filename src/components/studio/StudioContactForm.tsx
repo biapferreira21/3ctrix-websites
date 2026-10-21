@@ -95,10 +95,6 @@ export function StudioContactForm({
             {title}
           </h2>
           <p className="mt-5 max-w-md text-base leading-7 text-slate">{text}</p>
-          <p className="mt-8 rounded-2xl border-2 border-night bg-[#f6dfb6] p-5 text-sm leading-6 text-slate shadow-[5px_5px_0_#C69A44]">
-            Tell us what you need and which service you are interested in.
-            Required fields are marked with an asterisk.
-          </p>
         </div>
 
         <form
