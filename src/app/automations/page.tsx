@@ -117,7 +117,7 @@ export default function AutomationsPage() {
           <Container>
             <div className="grid items-start gap-12 lg:grid-cols-[.8fr_1.2fr]">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-dark">Internal case study</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-dark">Participation feature</p>
                 <h2 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-5xl">
                   {content.caseStudy.title}
                 </h2>
@@ -143,9 +143,9 @@ export default function AutomationsPage() {
         <section className="border-b-[3px] border-night bg-white py-20 sm:py-28">
           <Container>
             <SectionHeader
-              eyebrow="Technology"
-              title="Built with the tools that fit the process."
-              text="We are tool-agnostic. The technology is selected according to the workflow, existing systems, required control and long-term maintainability."
+              eyebrow="What the workflow delivers"
+              title="Less repetitive work. More useful information."
+              text="Each workflow connects the right information, people and review steps, with clear ownership and a practical handover for your team."
             />
             <ul className="mt-10 flex flex-wrap gap-3">
               {content.technologies.map((technology) => (

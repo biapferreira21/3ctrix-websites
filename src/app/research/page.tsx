@@ -36,7 +36,7 @@ export default function ResearchPage() {
             <SectionHeader
               eyebrow="Research themes"
               title="How information moves, changes and informs decisions."
-              text="The work connects emerging technology with questions of provenance, compression, uncertainty, interpretation and real-world use."
+              text="The work connects emerging technology with questions of source traceability, compression, uncertainty, interpretation and real-world use."
             />
             <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {content.themes.map((theme, index) => (
@@ -154,10 +154,10 @@ export default function ResearchPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-dark">Research + participation</p>
                 <h2 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-5xl">Research does not have to end at publication.</h2>
                 <p className="mt-6 text-base leading-7 text-slate">
-                  Through AlphaVote, complex technology topics can become interactive questions, comparisons and debates.
+                  Beatriz created AlphaVote as an experiment in independent judgement: form a view before seeing the group response, then consider other arguments.
                 </p>
                 <p className="mt-4 text-base leading-7 text-slate">
-                  This creates a bridge between research, editorial content and structured audience participation.
+                  That question connects her research interests with interface design, learning and thoughtful participation. Voting cards can also inspire a single feature within a conference app.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <a href={siteConfig.urls.alphaVote} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-[3px] border-night bg-white px-6 py-3 text-sm font-bold text-ink">

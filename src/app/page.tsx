@@ -18,6 +18,8 @@ import { PageHero } from "@/components/studio/PageHero";
 import { SectionHeader } from "@/components/studio/SectionHeader";
 import { StudioContactForm } from "@/components/studio/StudioContactForm";
 import { SignalToDecision } from "@/components/studio/SignalToDecision";
+import { EventAppDemo } from "@/components/studio/EventAppDemo";
+import { AlphaVoteExperiment } from "@/components/studio/AlphaVoteExperiment";
 import { homeContent } from "@/content/home";
 import { siteConfig } from "@/config/site";
 
@@ -189,6 +191,7 @@ export default function StudioHomePage() {
                 ))}
               </div>
             </div>
+            <EventAppDemo />
           </Container>
         </section>
 
@@ -222,39 +225,13 @@ export default function StudioHomePage() {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-6 py-3 text-sm font-bold text-night"
                   >
-                    View AlphaVote prototype <ExternalLink size={16} aria-hidden />
+                    Explore the AlphaVote experiment <ExternalLink size={16} aria-hidden />
                   </a>
+                  <a href="https://alphavote.app/help/why.html" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 px-2 py-3 text-sm font-semibold text-white underline underline-offset-4">Why it exists <ExternalLink size={14} aria-hidden /></a>
                 </div>
               </div>
 
-              {/* TODO: replace this text treatment only when the verified AlphaVote logo is supplied. */}
-              <div
-                aria-label="AlphaVote product interface concept"
-                className="rounded-[2rem] border-2 border-white/50 bg-[#123626] p-5 shadow-[9px_9px_0_#3E855A] sm:p-7"
-              >
-                <div className="flex items-center justify-between gap-3 border-b border-white/20 pb-4">
-                  <span className="text-xl font-semibold">AlphaVote concept</span>
-                  <span className="rounded-full bg-emerald px-3 py-1 text-[10px] font-bold tracking-wider text-night">
-                    OPINION FIRST
-                  </span>
-                </div>
-                <div className="mt-8 rounded-2xl bg-white p-5 text-night">
-                  <p className="text-xs font-bold uppercase tracking-wider text-emerald-dark">
-                    Question · vote · reflect
-                  </p>
-                  <p className="mt-4 text-xl font-semibold leading-snug">
-                    A simple event card designed to reveal questions, priorities and perspectives.
-                  </p>
-                  <div className="mt-6 grid grid-cols-2 gap-3">
-                    <span className="rounded-xl border-2 border-night bg-mint p-3 text-center text-xs font-bold">
-                      Share a view
-                    </span>
-                    <span className="rounded-xl border-2 border-night bg-[#e8e0fb] p-3 text-center text-xs font-bold">
-                      Compare perspectives
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <AlphaVoteExperiment />
             </div>
           </Container>
         </section>
@@ -262,9 +239,9 @@ export default function StudioHomePage() {
         <section id="experience" className="border-b-[3px] border-night bg-[#f5f1e8] py-20 sm:py-28">
           <Container>
             <SectionHeader
-              eyebrow="Selected experience"
-              title="Work across research, media and technology events."
-              text="Roles are described conservatively so that research, writing and event-related work remain clearly distinguished."
+              eyebrow="Selected events"
+              title="Connecting with the people shaping what comes next."
+              text="Beatriz has been an ambassador for these AI, technology and digital-asset events."
             />
             <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {homeContent.experience.map((organisation) => (
@@ -277,6 +254,10 @@ export default function StudioHomePage() {
                 </li>
               ))}
             </ul>
+            <div className="mt-6 flex flex-col gap-3 rounded-2xl border-2 border-night bg-[#e8e0fb] p-5 sm:flex-row sm:items-center sm:gap-6">
+              <span className="text-sm font-semibold text-ink">Emergence · The Block</span>
+              <p className="text-sm leading-6 text-slate">Beatriz also supported Emergence while working as a researcher at The Block.</p>
+            </div>
           </Container>
         </section>
 
@@ -426,7 +407,7 @@ export default function StudioHomePage() {
               label: "Area of interest",
               type: "select",
               required: true,
-              options: ["Events & Media", "Event Website or App", "Research & Information Quality", "Workflow Automation", "AlphaVote Prototype", "Other"],
+              options: ["Events, Media & Content", "Event Websites & Apps", "Research & Information Quality", "Workflow Automation", "Website Creation or Redesign"],
             },
             { name: "message", label: "Message", type: "textarea", required: true },
           ]}

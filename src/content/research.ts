@@ -31,10 +31,8 @@ export const researchContent = {
   ],
   experience: [
     ["The Big Whale", "Technology and crypto writing covering markets, regulation and financial infrastructure."],
-    ["European Blockchain Convention Barcelona", "Editorial and event-related content around digital assets and industry developments."],
-    ["Digital Assets Forum London", "Event-related content focused on institutional digital assets and financial infrastructure."],
     ["Stablecoin Insider", "Articles and research content on stablecoins, payments and blockchain-based infrastructure."],
-    ["The Block", "Research experience within the digital-assets industry."],
+    ["The Block", "Researcher in digital assets; supported Emergence while working with the research team."],
   ],
   directions: [
     [
@@ -50,7 +48,7 @@ export const researchContent = {
     [
       "Can context travel with a claim?",
       "Study how source, date, speaker and original conditions can remain visible as information moves between media and tools.",
-      "Design aim: provenance that survives copying, sharing and reuse.",
+      "Design aim: source history that survives copying, sharing and reuse.",
     ],
     [
       "Did the event create information gain?",
@@ -68,7 +66,7 @@ export const researchContent = {
   ],
   principles: [
     "Sources close to factual claims",
-    "Provenance that remains visible",
+    "Source history that remains visible",
     "Clear separation between evidence, interpretation and opinion",
     "Uncertainty and disagreement shown honestly",
     "Important caveats preserved in summaries",
@@ -78,7 +76,7 @@ export const researchContent = {
   faq: [
     ["What does information quality mean here?", "It means making sources, dates, context, uncertainty and important qualifications easier to inspect before information is used."],
     ["Does 3C Trix determine what is true?", "No. Research and tools can improve traceability and reveal missing context, but they do not guarantee truth or replace human judgement."],
-    ["How does information theory inform the work?", "It provides a lens for thinking about compression, information loss, uncertainty, information gain, provenance and change over time."],
+    ["How does information theory inform the work?", "It provides a lens for thinking about compression, information loss, uncertainty, information gain, source traceability and change over time."],
     ["Can you cover events?", "Yes. Work can include previews, interviews, session summaries, daily coverage, explainers and post-event reports."],
     ["Can research become part of an event app?", "Yes. Research can inform participant guides, session context, voting cards, resource libraries and post-event follow-up."],
     ["Do you provide sources?", "Yes. Sources can be included in the appropriate format, prioritising primary and authoritative material where available."],
