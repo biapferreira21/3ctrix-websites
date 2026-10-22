@@ -3,13 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Box,
-  Check,
   ExternalLink,
-  FileSearch,
-  GitBranch,
   Linkedin,
-  MousePointer2,
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -20,6 +15,8 @@ import { StudioContactForm } from "@/components/studio/StudioContactForm";
 import { ResearchLens } from "@/components/studio/ResearchLens";
 import { EventAppDemo } from "@/components/studio/EventAppDemo";
 import { AlphaVoteExperiment } from "@/components/studio/AlphaVoteExperiment";
+import { ServiceExplorer } from "@/components/studio/ServiceExplorer";
+import { FounderPerspectives } from "@/components/studio/FounderPerspectives";
 import { homeContent } from "@/content/home";
 import { siteConfig } from "@/config/site";
 
@@ -80,30 +77,6 @@ export default function StudioHomePage() {
           </Container>
         </section>
 
-        <section className="border-b-[3px] border-night bg-[#f6dfb6] py-20 sm:py-28">
-          <Container>
-            <SectionHeader
-              eyebrow={homeContent.audiences.eyebrow}
-              title={homeContent.audiences.title}
-              text={homeContent.audiences.text}
-            />
-            <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-              {homeContent.audiences.items.map(([title, text], index) => (
-                <article
-                  key={title}
-                  className="flex flex-col rounded-2xl border-[3px] border-night bg-white p-5 shadow-[5px_5px_0_#16180F]"
-                >
-                  <span className="text-[10px] font-bold tracking-[0.18em] text-emerald-dark">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-8 text-lg font-semibold text-ink">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate">{text}</p>
-                </article>
-              ))}
-            </div>
-          </Container>
-        </section>
-
         <section
           id="business-areas"
           className="relative overflow-hidden border-b-[3px] border-night bg-mint-soft py-20 sm:py-28"
@@ -111,57 +84,10 @@ export default function StudioHomePage() {
           <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
           <Container className="relative">
             <SectionHeader
-              eyebrow="What we do"
-              title="Four connected areas of work."
+              eyebrow="Services · AI, technology & crypto"
+              title="What do you need to make happen?"
             />
-            <div className="mt-14 grid gap-5 lg:grid-cols-2">
-              {homeContent.areas.map((area) => (
-                <article
-                  key={area.title}
-                  className="group flex flex-col rounded-[1.75rem] border-[3px] border-night bg-white p-6 shadow-[7px_7px_0_#16180F] transition-transform hover:-translate-y-1 sm:p-8"
-                >
-                  <div className="flex items-start justify-between gap-6">
-                    <span className="text-xs font-bold tracking-[0.18em] text-emerald-dark">
-                      AREA {area.index}
-                    </span>
-                    <AreaIcon theme={area.theme} />
-                  </div>
-                  <h3 className="mt-10 max-w-md text-3xl font-semibold leading-tight text-ink">
-                    {area.title}
-                  </h3>
-                  <p className="mt-4 max-w-lg text-sm leading-7 text-slate sm:text-base">
-                    {area.description}
-                  </p>
-                  <ul className="mt-7 space-y-3 border-t-2 border-night/10 pt-6">
-                    {area.points.map((point) => (
-                      <li key={point} className="flex gap-3 text-sm leading-6 text-slate">
-                        <Check className="mt-0.5 shrink-0 text-emerald-dark" size={16} aria-hidden />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-8">
-                    {area.external ? (
-                      <a
-                        href={area.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 font-semibold text-forest underline decoration-2 underline-offset-4"
-                      >
-                        {area.cta} <ExternalLink size={16} aria-hidden />
-                      </a>
-                    ) : (
-                      <Link
-                        href={area.href}
-                        className="inline-flex items-center gap-2 font-semibold text-forest underline decoration-2 underline-offset-4"
-                      >
-                        {area.cta} <ArrowRight size={16} aria-hidden />
-                      </Link>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
+            <ServiceExplorer />
           </Container>
         </section>
 
@@ -273,11 +199,9 @@ export default function StudioHomePage() {
                 <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight text-ink sm:text-5xl">
                   {homeContent.profile.title}
                 </h2>
-                <div className="mt-6 space-y-4 text-base leading-7 text-slate">
-                  {homeContent.profile.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
+                <p className="mt-6 text-base leading-7 text-slate">Product, research, media and events — brought together at 3C Trix.</p>
+                <FounderPerspectives />
+                <p className="mt-6 text-sm leading-6 text-slate">{homeContent.profile.paragraphs[2]}</p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <a
                     href={siteConfig.social.linkedin}
@@ -322,21 +246,5 @@ export default function StudioHomePage() {
       </main>
       <Footer />
     </>
-  );
-}
-
-function AreaIcon({ theme }: { theme: string }) {
-  const Icon =
-    theme === "research"
-      ? FileSearch
-      : theme === "automation"
-        ? GitBranch
-        : theme === "event-tools"
-          ? MousePointer2
-          : Box;
-  return (
-    <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-night bg-mint text-forest">
-      <Icon size={22} aria-hidden />
-    </span>
   );
 }

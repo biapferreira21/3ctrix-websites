@@ -4,7 +4,7 @@ export const researchContent = {
     title: "Clear research. Visible sources.",
     text:
       "Articles, interviews and briefings on AI, technology and digital finance. Sources, context and open questions stay visible.",
-    primary: { label: "Discuss a research project", href: "#contact" },
+    primary: { label: "Explore research services", href: "#research-services" },
     secondary: { label: "Explore the method", href: "#method" },
   },
   themes: [

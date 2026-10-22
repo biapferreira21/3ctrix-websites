@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, Check, FileText } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Container } from "@/components/ui/Container";
@@ -9,6 +9,7 @@ import { SectionHeader } from "@/components/studio/SectionHeader";
 import { FAQAccordion } from "@/components/studio/FAQAccordion";
 import { StudioContactForm } from "@/components/studio/StudioContactForm";
 import { ResearchLens } from "@/components/studio/ResearchLens";
+import { ServiceExplorer } from "@/components/studio/ServiceExplorer";
 import { researchContent as content } from "@/content/research";
 
 export const metadata: Metadata = {
@@ -47,18 +48,10 @@ export default function ResearchPage() {
           </Container>
         </section>
 
-        <section className="border-b-[3px] border-night bg-mint-soft py-20 sm:py-28">
+        <section id="research-services" className="border-b-[3px] border-night bg-mint-soft py-20 sm:py-28">
           <Container>
-            <SectionHeader eyebrow="Services" title="What we can create for you." />
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {content.services.map(([title, text]) => (
-                <article key={title} className="rounded-3xl border-[3px] border-night bg-white p-6 shadow-[5px_5px_0_#8FA38A]">
-                  <FileText size={20} className="text-emerald-dark" aria-hidden />
-                  <h3 className="mt-7 text-xl font-semibold text-ink">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate">{text}</p>
-                </article>
-              ))}
-            </div>
+            <SectionHeader eyebrow="Research & editorial services" title="Start with what you need to explain." />
+            <ServiceExplorer research />
           </Container>
         </section>
 
@@ -131,7 +124,7 @@ export default function ResearchPage() {
           </Container>
         </section>
 
-        <section className="border-b-[3px] border-night bg-[#f6dfb6] py-20 sm:py-28">
+        <section id="engagements" className="border-b-[3px] border-night bg-[#f6dfb6] py-20 sm:py-28">
           <Container>
             <div className="grid gap-12 lg:grid-cols-[1fr_.9fr]">
               <div>

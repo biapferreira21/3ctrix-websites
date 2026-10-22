@@ -7,8 +7,8 @@ export const homeContent = {
       "Research, media and tools for better events.",
     text:
       "For events and startups in AI, technology and crypto.",
-    primary: { label: "Explore our work", href: "#business-areas" },
-    secondary: { label: "Start a conversation", href: "#contact" },
+    primary: { label: "Find the right service", href: "#business-areas" },
+    secondary: { label: "Try the event app", href: "#event-tools" },
   },
   evolution: {
     eyebrow: "Our mission",

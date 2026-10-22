@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { getServiceContactPreset, serviceSelectionEvent } from "@/content/servicePaths";
 
 export type StudioField = {
   name: string;
@@ -29,6 +30,20 @@ export function StudioContactForm({
   const [values, setValues] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    function selectService(event: Event) {
+      const detail: unknown = (event as CustomEvent).detail;
+      const serviceId = detail && typeof detail === "object" && "serviceId" in detail ? detail.serviceId : null;
+      const preset = getServiceContactPreset(serviceId, source);
+      if (!preset) return;
+      const field = fields.find((item) => item.name === preset.field);
+      if (!field || (field.type === "select" && !field.options?.includes(preset.value))) return;
+      setValues((current) => ({ ...current, [preset.field]: preset.value }));
+    }
+    window.addEventListener(serviceSelectionEvent, selectService);
+    return () => window.removeEventListener(serviceSelectionEvent, selectService);
+  }, [fields, source]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
