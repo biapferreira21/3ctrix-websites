@@ -4,13 +4,23 @@ import { getServiceContactPreset, researchPaths, servicePaths } from "../src/con
 
 test("every home service has a distinct goal and maps to the existing enquiry options", () => {
   const allowed = ["Events, Media & Content", "Event Websites & Apps", "Research & Information Quality", "Workflow Automation"];
-  assert.equal(new Set(servicePaths.map((item) => item.id)).size, 5);
+  assert.equal(new Set(servicePaths.map((item) => item.id)).size, 6);
   for (const service of servicePaths) {
     assert.deepEqual(getServiceContactPreset(service.id, "Home enquiry"), { field: "interest", value: service.contact });
     assert.ok(allowed.includes(service.contact));
     assert.equal(service.stages.length, 3);
     assert.equal(service.deliverables.length, 3);
   }
+});
+
+test("simple event websites remain distinct from participant apps and preserve their contact route", () => {
+  const website = servicePaths.find((item) => item.id === "event-website");
+  const app = servicePaths.find((item) => item.id === "event-app");
+  assert.ok(website);
+  assert.ok(app);
+  assert.notEqual(website.theme, app.theme);
+  assert.deepEqual(getServiceContactPreset(website.id, "Home enquiry"), { field: "interest", value: "Event Websites & Apps" });
+  assert.deepEqual(getServiceContactPreset("editorial", "Research enquiry"), { field: "format", value: "Educational blog & social content" });
 });
 
 test("research selections prefill the format, not personal details or a message", () => {

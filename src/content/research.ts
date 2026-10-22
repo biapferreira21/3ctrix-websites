@@ -3,7 +3,7 @@ export const researchContent = {
     eyebrow: "Research & Information Quality",
     title: "Clear research. Visible sources.",
     text:
-      "Articles, interviews and briefings on AI, technology and digital finance. Sources, context and open questions stay visible.",
+      "Research, educational blog posts and social content on AI, technology and digital finance. From speaker interviews to industry explainers — with sources and context kept visible.",
     primary: { label: "Explore research services", href: "#research-services" },
     secondary: { label: "Explore the method", href: "#method" },
   },
@@ -18,7 +18,7 @@ export const researchContent = {
     ["Articles & briefings", "Explain a complex topic with evidence and clear takeaways."],
     ["Interviews & event coverage", "Conversations, previews and reports from the people in the room."],
     ["Research reports", "Go deeper into a question and check the claims behind it."],
-    ["Editorial support", "Choose topics, plan a series and turn research into useful content."],
+    ["Educational content & SEO", "Speaker interviews, news of the week and industry explainers for blogs and social media, linked to event discovery and ticket booking."],
   ],
   experience: [
     ["The Big Whale", "Technology and crypto writing."],
@@ -66,6 +66,9 @@ export const researchContent = {
     ["Does 3C Trix determine what is true?", "No. Research and tools can improve traceability and reveal missing context, but they do not guarantee truth or replace human judgement."],
     ["How does information theory inform the work?", "It provides a lens for thinking about compression, information loss, uncertainty, information gain, source traceability and change over time."],
     ["Can you cover events?", "Yes. Work can include previews, interviews, session summaries, daily coverage, explainers and post-event reports."],
+    ["Can you create educational content for our blog and socials?", "Yes. Formats include interviews with speakers, news of the week, industry concept explainers and event recaps, adapted for your blog and social channels."],
+    ["How do content and SEO support ticket sales?", "The aim is to answer relevant audience questions, make event content easier to discover and give interested readers clear links to the event and ticket booking. SEO and content support that journey; they do not guarantee search rankings or sales."],
+    ["Can we start with a simple event website rather than an app?", "Yes. A focused website can present the event, speakers, programme and educational content, with clear links to your ticket-booking page. A participant app is a separate, optional project."],
     ["Can research become part of an event app?", "Yes. Research can inform participant guides, session context, voting cards, resource libraries and post-event follow-up."],
     ["Do you provide sources?", "Yes. Sources can be included in the appropriate format, prioritising primary and authoritative material where available."],
   ],

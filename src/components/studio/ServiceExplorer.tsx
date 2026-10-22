@@ -2,13 +2,13 @@
 
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDown, ArrowRight, Check, ClipboardCheck, FileSearch, FileText, Hand, Layers3, Mic2, MousePointer2, Smartphone, Workflow } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, ClipboardCheck, FileSearch, FileText, Hand, Layers3, LayoutTemplate, Mic2, MousePointer2, Smartphone, Ticket, Workflow } from "lucide-react";
 import { servicePaths, researchPaths, serviceSelectionEvent, type ServicePath } from "@/content/servicePaths";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { cn } from "@/lib/cn";
 
-const icons = { media: Mic2, review: ClipboardCheck, app: Smartphone, workflow: Workflow, research: FileSearch };
-const tones = { media: "bg-[#f6dfb6]", review: "bg-[#e8e0fb]", app: "bg-[#dfece2]", workflow: "bg-[#E3EBE1]", research: "bg-[#e8e0fb]" };
+const icons = { media: Mic2, review: ClipboardCheck, app: Smartphone, workflow: Workflow, research: FileSearch, website: LayoutTemplate };
+const tones = { media: "bg-[#f6dfb6]", review: "bg-[#e8e0fb]", app: "bg-[#dfece2]", workflow: "bg-[#E3EBE1]", research: "bg-[#e8e0fb]", website: "bg-[#f6dfb6]" };
 
 export function ServiceExplorer({ research = false }: { research?: boolean }) {
   const paths: readonly ServicePath[] = research ? researchPaths : servicePaths;
@@ -144,6 +144,24 @@ function ServicePreview({ service, stage, setStage, reducedMotion }: {
 // These small diagrams illustrate the kind of work, not product results or data.
 // All movement is finite and triggered by a visitor's choice.
 function ServiceSignal({ theme, stage, reducedMotion }: { theme: ServicePath["theme"]; stage: number; reducedMotion: boolean }) {
+  if (theme === "website") {
+    return (
+      <div aria-hidden className="my-4 overflow-hidden rounded-xl border-2 border-night bg-mint-soft">
+        <div className="flex items-center gap-1 border-b border-night/20 bg-white px-3 py-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-forest" /><span className="h-1.5 w-1.5 rounded-full bg-gold" /><span className="h-1.5 w-1.5 rounded-full bg-lilac-deep" />
+          <span className="ml-auto text-[9px] font-semibold text-forest">EVENT WEBSITE · EXAMPLE</span>
+        </div>
+        <div className="grid grid-cols-[1fr_auto] items-center gap-3 p-3">
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold text-forest">{stage === 0 ? "A question. A useful post." : stage === 1 ? "Speakers. Ideas. Reasons to attend." : "Ready to join the conversation?"}</p>
+            <motion.div initial={reducedMotion ? false : { scaleX: .2 }} animate={{ scaleX: 1 }} transition={{ duration: reducedMotion ? 0 : .4 }} className="mt-2 h-1.5 w-4/5 origin-left rounded bg-sage-light" />
+            <div className="mt-1.5 h-1.5 w-3/5 rounded bg-sage-light/60" />
+          </div>
+          <motion.span initial={reducedMotion ? false : { scale: .9 }} animate={{ scale: 1 }} transition={{ duration: reducedMotion ? 0 : .3 }} className={cn("inline-flex items-center gap-1 rounded-full border-2 border-night px-2 py-2 text-[9px] font-bold", stage === 2 ? "bg-forest text-white shadow-[2px_2px_0_#8FA38A]" : "bg-white text-forest")}><Ticket size={12} />View tickets</motion.span>
+        </div>
+      </div>
+    );
+  }
   if (theme === "media") {
     return (
       <div aria-hidden className="my-4 flex h-16 items-center gap-4 rounded-xl bg-mint-soft px-4">

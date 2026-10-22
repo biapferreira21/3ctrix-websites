@@ -1,19 +1,19 @@
-// Service descriptions come from Beatriz's positioning brief. The previews describe
+// Service descriptions come from Beatriz's brief and her service clarifications. The previews describe
 // possible project scope, not completed client work or ready-made product features.
 export const servicePaths = [
   {
-    id: "event-content", label: "Cover my event", category: "Events, media & content",
-    title: "Before the doors open. After the room empties.",
-    description: "Ambassador work, interviews and content that help people understand what your event is about.",
+    id: "event-content", label: "Create event content", category: "Educational content · blogs, socials & SEO",
+    title: "Give people a reason to learn. And a reason to attend.",
+    description: "Educational blog posts and social content that explain your industry and your event — with SEO and clear routes to ticket booking.",
     audience: "For event organisers & media partners",
-    deliverables: ["Event previews", "Speaker & founder interviews", "Recaps, explainers & newsletters"],
-    note: "Ambassador, sponsored and commissioned work is disclosed.",
+    deliverables: ["Ambassador work, speaker interviews & coverage", "News of the week & industry concept explainers", "SEO-led blog posts & content for social media"],
+    note: "Designed to support discovery and ticket sales, not guarantee them. Ambassador, sponsored and commissioned work is disclosed.",
     link: { label: "See Beatriz’s event experience", href: "#experience" },
     contact: "Events, Media & Content", theme: "media",
     stages: [
-      { label: "Before", title: "Give people a reason to attend", detail: "Event preview", items: ["Themes worth exploring", "People to hear from", "Questions to bring"] },
+      { label: "Before", title: "Turn curiosity into a reason to attend", detail: "Educational blogs & socials", items: ["Speaker interviews", "News of the week", "Industry concepts, explained"] },
       { label: "During", title: "Bring the conversation closer", detail: "Interviews & coverage", items: ["Founders & speakers", "Ideas from the sessions", "Participant perspectives"] },
-      { label: "After", title: "Keep the useful ideas moving", detail: "Recap & follow-up", items: ["Key takeaways", "Explainers & sources", "What to explore next"] },
+      { label: "After", title: "Keep the useful ideas discoverable", detail: "Recap, search & follow-up", items: ["Educational recaps & sources", "SEO-led blog posts", "Social posts & next-event ticket links"] },
     ],
   },
   {
@@ -76,6 +76,21 @@ export const servicePaths = [
       { label: "Explain", title: "A clear, inspectable result", detail: "Article, report or briefing", items: ["Evidence", "Interpretation", "Open questions"] },
     ],
   },
+  {
+    id: "event-website", label: "Build a simple event website", category: "Event websites · content to tickets",
+    title: "Make the event worth exploring. Make tickets easy to find.",
+    description: "Simple, visually engaging websites that present your event, bring educational content together and guide interested visitors to ticket booking.",
+    audience: "For event organisers & conference teams",
+    deliverables: ["A clear, engaging event website", "Speaker, programme & educational content pages", "SEO-led content structure & ticket-booking links"],
+    note: "A focused event website can be a project on its own; an app is not required. Ticket-sales and search-ranking outcomes are not guaranteed.",
+    link: { label: "Explore the event app as an optional next step", href: "#event-tools" },
+    contact: "Event Websites & Apps", theme: "website",
+    stages: [
+      { label: "Discover", title: "Connect useful content to the event", detail: "Search, blog & social content", items: ["Questions your audience brings", "Educational posts & interviews", "Links to the event website"] },
+      { label: "Explore", title: "Show why this event matters", detail: "Content-led event website", items: ["A clear event introduction", "Speakers, topics & programme", "Helpful, visually engaging content"] },
+      { label: "Book", title: "Give interest a clear next step", detail: "Ticket-booking journey", items: ["Visible ticket calls to action", "Clear event details", "Links to your ticket-booking page"] },
+    ],
+  },
 ] as const;
 
 export const researchPaths = [
@@ -88,14 +103,15 @@ export const researchPaths = [
     contact: "Research report", link: { label: "Try the information-quality example", href: "#research-directions" },
   },
   {
-    ...servicePaths[4], id: "editorial", label: "Plan a content series", category: "Editorial support", title: "Turn a subject into a useful series.",
-    description: "Topic planning and ongoing research-led content for publications, events and technology teams.",
-    deliverables: ["Topic & audience planning", "Article series or newsletters", "Ongoing research-led editorial support"],
-    contact: "Editorial support", link: { label: "Discuss scope & format", href: "#engagements" },
+    ...servicePaths[4], id: "editorial", label: "Create blog & social content", category: "Educational content & SEO", title: "Help people understand the industry — and why to attend.",
+    description: "Educational content for event blogs and social channels: speaker interviews, news of the week and industry concept explainers. SEO-led planning connects useful posts to event discovery and ticket booking.",
+    deliverables: ["Speaker interviews & news of the week", "Industry concept explainers for blogs & socials", "SEO-led content planning & ticket calls to action"],
+    note: "Content is designed to support discovery and ticket sales; search rankings and sales are not guaranteed. Sponsored or commissioned work is disclosed.",
+    contact: "Educational blog & social content", link: { label: "Discuss scope & format", href: "#engagements" },
     stages: [
-      { label: "Plan", title: "Choose the questions worth covering", detail: "Editorial direction", items: ["Audience needs", "Themes & angles", "Formats & scope"] },
-      { label: "Research", title: "Build each piece on evidence", detail: "Content development", items: ["Source material", "People to interview", "Useful context"] },
-      { label: "Publish", title: "Give the series a clear thread", detail: "Editorial content", items: ["Articles & explainers", "Newsletters", "Sources & follow-up"] },
+      { label: "Plan", title: "Start with what people want to understand", detail: "Audience & SEO planning", items: ["Audience questions & search intent", "Industry themes & concepts", "Blog & social content plan"] },
+      { label: "Create", title: "Teach something worth coming for", detail: "Educational content", items: ["Interviews with speakers", "News of the week", "Clear industry concept explainers"] },
+      { label: "Connect", title: "Link the learning to the event", detail: "Content to ticket booking", items: ["Search-friendly blog structure", "Social posts linked to useful content", "Clear calls to explore the event & book"] },
     ],
   },
 ] as const;

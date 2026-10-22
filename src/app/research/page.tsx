@@ -139,7 +139,7 @@ export default function ResearchPage() {
                 </a>
               </div>
               <ul className="grid gap-3 sm:grid-cols-2">
-                {["Individual article", "Multi-article series", "Report", "Event content package", "Ongoing editorial support", "Research and SEO package"].map((format) => (
+                {["Articles & research reports", "Speaker interviews", "News of the week", "Industry concept explainers", "Blog & social content series", "SEO-led event content"].map((format) => (
                   <li key={format} className="flex items-center gap-3 rounded-2xl border-2 border-night bg-white p-4 text-sm font-medium text-ink">
                     <Check size={17} className="text-emerald-dark" aria-hidden /> {format}
                   </li>
