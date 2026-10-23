@@ -11,7 +11,7 @@ export type StoryMoment = {
   linkLayout?: "list";
   resourceNote?: string;
   eventRole?: "Ambassador" | "Attendee";
-  image: { src: string; thumbnail: string; alt: string; width: number; height: number };
+  image: { src: string; thumbnail: string; alt: string; width: number; height: number; crop?: { x: number; y: number; width: number; height: number } };
 };
 
 export type StoryChapter = {
@@ -83,7 +83,7 @@ export const storyChapters: readonly StoryChapter[] = [
         group: "Student initiatives",
         text: "Even during a demanding degree, I made time for initiatives outside my coursework. In addition to KPMG, I took part in the university ambassador and summer internship programmes at BNP Paribas.",
         caption: "Wearing my KPMG ambassador hoodie; the BNP Paribas programmes were a separate experience.",
-        image: { src: "/about/kpmg-ambassador.webp", thumbnail: "/about/kpmg-ambassador-thumb.webp", alt: "Beatriz Ferreira wearing a purple KPMG ambassador hoodie.", width: 899, height: 1599 },
+        image: { src: "/about/kpmg-ambassador.webp", thumbnail: "/about/kpmg-ambassador-thumb.webp", alt: "Beatriz Ferreira wearing a purple KPMG ambassador hoodie.", width: 899, height: 1599, crop: { x: 140, y: 390, width: 420, height: 530 } },
       },
       {
         id: "iseg-yes",
@@ -324,7 +324,7 @@ export const storyChapters: readonly StoryChapter[] = [
     highlights: [
       { title: "Pricing · Early 2025", text: "I joined Repsol’s trainee programme in early 2025, starting in pricing while I was finishing my master’s degree." },
       { title: "Product · Since September 2025", text: "Since September 2025, I’ve been Product Manager for the My Repsol app. I love the combination of product management and a digital, consumer-facing product." },
-      { title: "Automations & AI agents", text: "I’ve also developed automations and built AI agents in the platforms we use at work, supporting our day-to-day activities." },
+      { title: "Automations & AI agents", text: "I’ve also developed automations and built AI agents using Microsoft Copilot and Atlassian Rovo, supporting our day-to-day activities." },
     ],
     moments: [
       {
@@ -368,7 +368,7 @@ export const storyChapters: readonly StoryChapter[] = [
         title: "Product meets technology.",
         label: "Since September 2025 · My Repsol Product Manager",
         group: "My Repsol",
-        text: "Since September 2025, I’ve been Product Manager for the My Repsol app, where I work today. It brings together two things I love: product management and a digital, consumer-facing product. I’ve also developed automations and built AI agents to help with our everyday work.",
+        text: "Since September 2025, I’ve been Product Manager for the My Repsol app, where I work today. It brings together two things I love: product management and a digital, consumer-facing product. I’ve also developed automations and built AI agents using Microsoft Copilot and Atlassian Rovo to help with our everyday work.",
         caption: "A supplied screenshot of My Repsol. It illustrates the app, not a claim that I designed or built every feature shown.",
         resourceNote: "Original app interface in Portuguese. Offers and balances shown are part of the captured screen, not current promotions.",
         image: { src: "/about/my-repsol-app.webp", thumbnail: "/about/my-repsol-app-thumb.webp", alt: "A screenshot of the My Repsol app home screen in Portuguese, showing its consumer services and navigation.", width: 1044, height: 2000 },
@@ -406,8 +406,8 @@ export const storyChapters: readonly StoryChapter[] = [
         label: "Kickboxing",
         group: "Kickboxing",
         text: "A little later, I fell in love with martial arts again and took up kickboxing. I’m still practising it today, alongside taekwondo.",
-        caption: "A training photograph shared by Arena Lisboa, shown here in the Instagram screenshot I kept.",
-        image: { src: "/about/kickboxing-training.webp", thumbnail: "/about/kickboxing-training-thumb.webp", alt: "An Instagram screenshot of a kickboxing training photograph shared by Arena Lisboa.", width: 899, height: 2000 },
+        caption: "A cropped view of a training photograph shared by Arena Lisboa.",
+        image: { src: "/about/kickboxing-training.webp", thumbnail: "/about/kickboxing-training-thumb.webp", alt: "Beatriz Ferreira practising a kick at training, in a photograph shared by Arena Lisboa.", width: 899, height: 2000, crop: { x: 0, y: 319, width: 899, height: 830 } },
       },
       {
         id: "kickboxing-training-group",

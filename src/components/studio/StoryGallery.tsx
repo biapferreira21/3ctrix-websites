@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, Download, Expand, ExternalLink, Hand, X } from "lucide-react";
-import type { StoryChapter, StoryLink } from "@/content/about";
+import type { StoryChapter, StoryLink, StoryMoment } from "@/content/about";
 import { moveStoryIndex, storyGroupStarts, storyIndexFromKey } from "@/lib/storyNavigation";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { cn } from "@/lib/cn";
@@ -145,7 +145,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
                 <span className="relative block h-[min(56svh,28rem)] min-h-64 overflow-hidden rounded-[.8rem] sm:h-[30rem]">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.span key={moment.id} className="absolute inset-0 block" initial={reducedMotion ? false : { opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }} exit={reducedMotion ? undefined : { opacity: 0, x: -10 }} transition={{ duration: reducedMotion ? 0 : .22 }}>
-                      <Image src={moment.image.src} alt={moment.image.alt} fill sizes="(max-width: 1024px) 90vw, 580px" priority={chapterIndex === 0 && momentIndex === 0} className="object-contain" />
+                      <StoryImage image={moment.image} sizes="(max-width: 1024px) 90vw, 580px" priority={chapterIndex === 0 && momentIndex === 0} />
                     </motion.span>
                   </AnimatePresence>
                 </span>
@@ -174,7 +174,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
                   {chapter.moments.map((item, index) => (
                     <button key={item.id} ref={(node) => { thumbnailButtons.current[index] = node; }} type="button" role="tab" id={`${id}-photo-${index}`} aria-selected={momentIndex === index} aria-controls={`${id}-story`} tabIndex={momentIndex === index ? 0 : -1} onClick={() => chooseMoment(index)} aria-label={`Image ${index + 1}: ${item.title}`}
                       className={cn("relative h-20 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-mint-soft", momentIndex === index ? "border-forest ring-2 ring-forest ring-offset-2" : "border-night/25 opacity-60 transition-opacity hover:opacity-100")}>
-                      <Image src={item.image.thumbnail} alt="" fill sizes="64px" className="object-contain" loading="lazy" />
+                      <StoryImage image={{ ...item.image, src: item.image.thumbnail, alt: "" }} sizes="64px" />
                     </button>
                   ))}
                 </div>
@@ -193,7 +193,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
           <p id={`${id}-viewer-title`} className="text-sm font-semibold">{moment.title}</p>
           <button type="button" ref={closeButton} aria-label="Close photo viewer" onClick={() => setExpanded(false)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-night bg-white text-forest"><X size={19} aria-hidden /></button>
         </div>
-        {expanded && <div className="relative h-[65dvh] w-full rounded-xl bg-white"><Image src={moment.image.src} alt={moment.image.alt} fill sizes="95vw" className="object-contain" /></div>}
+        {expanded && <div className="relative h-[65dvh] w-full rounded-xl bg-white"><StoryImage image={moment.image} sizes="95vw" /></div>}
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <p className="text-xs text-slate">{moment.caption} · {momentIndex + 1} / {chapter.moments.length}</p>
           <div className="flex gap-2" role="group" aria-label="Enlarged photo navigation">
@@ -204,6 +204,18 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
       </dialog>
     </div>
   );
+}
+
+function StoryImage({ image, sizes, priority = false }: { image: StoryMoment["image"]; sizes: string; priority?: boolean }) {
+  const clipId = useId().replace(/:/g, "");
+  if (!image.crop) return <Image src={image.src} alt={image.alt} fill sizes={sizes} priority={priority} className="object-contain" />;
+  const { x, y, width, height } = image.crop;
+  // A viewport crop only: the supplied photograph is never regenerated or retouched.
+  // Apply the same frame to the main view, thumbnail and enlarged viewer.
+  return <svg viewBox={`${x} ${y} ${width} ${height}`} preserveAspectRatio="xMidYMid meet" role={image.alt ? "img" : undefined} aria-label={image.alt || undefined} aria-hidden={!image.alt || undefined} focusable="false" className="absolute inset-0 h-full w-full overflow-hidden">
+    <defs><clipPath id={clipId}><rect x={x} y={y} width={width} height={height} /></clipPath></defs>
+    <image href={image.src} width={image.width} height={image.height} clipPath={`url(#${clipId})`} />
+  </svg>;
 }
 
 function StoryResourceLink({ link, compact = false, block = false }: { link: StoryLink; compact?: boolean; block?: boolean }) {

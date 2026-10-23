@@ -119,8 +119,24 @@ test("Repsol story preserves trainee and product chronology without inventing ou
   assert.match(product.text, /automations and built AI agents/);
   assert.match(product.caption, /not a claim that I designed or built every feature/);
   assert.equal(repsol.results, undefined);
-  assert.ok(!JSON.stringify(repsol).includes("Microsoft"));
-  assert.ok(!JSON.stringify(repsol).includes("Rovo"));
+  assert.match(product.text, /Microsoft Copilot and Atlassian Rovo/);
+  assert.match(repsol.highlights[2].text, /Microsoft Copilot and Atlassian Rovo/);
+});
+
+test("requested crops preserve source assets and stay within the supplied image bounds", () => {
+  const moments = storyChapters.flatMap((chapter) => chapter.moments);
+  const kpmg = moments.find((moment) => moment.id === "kpmg-ambassador");
+  const kickboxing = moments.find((moment) => moment.id === "kickboxing-training");
+  assert.equal(kpmg.image.src, "/about/kpmg-ambassador.webp");
+  assert.equal(kickboxing.image.src, "/about/kickboxing-training.webp");
+  assert.deepEqual(kpmg.image.crop, { x: 140, y: 390, width: 420, height: 530 });
+  assert.deepEqual(kickboxing.image.crop, { x: 0, y: 319, width: 899, height: 830 });
+  for (const moment of [kpmg, kickboxing]) {
+    const crop = moment.image.crop;
+    assert.ok(crop.x >= 0 && crop.y >= 0 && crop.width > 0 && crop.height > 0);
+    assert.ok(crop.x + crop.width <= moment.image.width);
+    assert.ok(crop.y + crop.height <= moment.image.height);
+  }
 });
 
 test("keyboard controls work without capturing unrelated keys", () => {
