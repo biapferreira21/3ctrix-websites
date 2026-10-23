@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Container } from "@/components/ui/Container";
 import { StoryGallery } from "@/components/studio/StoryGallery";
+import { PersonalProjects } from "@/components/studio/PersonalProjects";
 import { storyChapters } from "@/content/about";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function AboutPage() {
               <p className="mt-6 max-w-xl text-base leading-8 text-slate">I’m Beatriz Ferreira, founder of 3C Trix. I work across product, research, media and events. This is a more personal side of my story, told in photographs and short chapters.</p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <a href="#my-story" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-[3px] border-night bg-night px-5 py-3 text-sm font-bold text-white shadow-[3px_3px_0_#8FA38A]">Explore my story <ArrowDown size={16} aria-hidden /></a>
+                <a href="#projects" className="inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-night bg-white px-5 py-3 text-sm font-bold text-forest">See my projects <ArrowDown size={16} aria-hidden /></a>
                 <Link href="/#profile" className="inline-flex min-h-12 items-center gap-2 px-3 py-3 text-sm font-semibold text-forest underline underline-offset-4">My work & background <ArrowRight size={16} aria-hidden /></Link>
               </div>
             </div>
@@ -53,6 +55,8 @@ export default function AboutPage() {
             <StoryGallery chapters={storyChapters} />
           </Container>
         </section>
+
+        <PersonalProjects />
 
         <section className="bg-[#f5f1e8] py-10 sm:py-14">
           <Container className="flex flex-wrap items-center justify-between gap-5">
