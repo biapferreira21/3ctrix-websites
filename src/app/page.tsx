@@ -202,7 +202,18 @@ export default function StudioHomePage() {
                 <p className="mt-6 text-base leading-7 text-slate">Product, research, media and events — brought together at 3C Trix.</p>
                 <FounderPerspectives />
                 <p className="mt-6 text-sm leading-6 text-slate">{homeContent.profile.paragraphs[2]}</p>
-                <Link href="/about" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-forest underline underline-offset-4">Read my story, in photographs <ArrowRight size={16} aria-hidden /></Link>
+                <Link
+                  href="/about"
+                  className="group mt-8 flex min-h-28 w-full items-center justify-between gap-5 rounded-3xl border-[3px] border-night bg-forest px-6 py-6 text-white shadow-[6px_6px_0_#BFA9F2] transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[8px_10px_0_#BFA9F2] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-forest motion-reduce:transform-none motion-reduce:transition-none sm:px-8 sm:py-7"
+                >
+                  <span>
+                    <span className="block text-2xl font-bold tracking-tight sm:text-3xl">Read my story</span>
+                    <span className="mt-2 block text-sm leading-6 text-white/80 sm:text-base">The person behind 3C Trix, in photographs.</span>
+                  </span>
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-lilac text-night sm:h-14 sm:w-14">
+                    <ArrowRight className="h-6 w-6 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none sm:h-7 sm:w-7" aria-hidden />
+                  </span>
+                </Link>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <a
                     href={siteConfig.social.linkedin}
