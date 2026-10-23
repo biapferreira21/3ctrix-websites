@@ -139,6 +139,29 @@ test("requested crops preserve source assets and stay within the supplied image 
   }
 });
 
+test("community story keeps membership separate from the upcoming fellowship", () => {
+  const community = storyChapters.find((chapter) => chapter.id === "community-and-whats-next");
+  assert.ok(community);
+  assert.equal(community.moments.length, 4);
+  assert.deepEqual(storyGroupStarts(community.moments), [
+    { label: "YEC Portugal", index: 0 },
+    { label: "Next: San Francisco", index: 3 },
+  ]);
+  assert.match(community.moments[0].text, /February 2025/);
+  assert.match(community.moments[0].text, /several of its monthly dinners/);
+  for (const moment of community.moments.slice(0, 3)) {
+    assert.equal(moment.links[0].href, "https://pt.linkedin.com/company/yec-portugal");
+    assert.equal(moment.eventRole, undefined);
+  }
+  const upcoming = community.moments[3];
+  assert.equal(upcoming.label, "Upcoming · November 2026");
+  assert.match(upcoming.text, /heading to San Francisco for the Silicon Valley Fellowship/);
+  assert.match(upcoming.text, /the next page of this story/);
+  assert.match(upcoming.caption, /not a photograph from my trip/);
+  assert.equal(upcoming.links[0].href, "https://www.siliconvalleyfellowship.com/");
+  assert.equal(upcoming.eventRole, undefined);
+});
+
 test("keyboard controls work without capturing unrelated keys", () => {
   assert.equal(storyIndexFromKey("ArrowRight", 0, 60), 1);
   assert.equal(storyIndexFromKey("ArrowLeft", 0, 60), 0);
