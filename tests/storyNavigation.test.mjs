@@ -26,7 +26,29 @@ test("chapter shortcuts preserve first-occurrence order and jump to the first ph
     { label: "Kickboxing", index: 2 },
     { label: "Taekwondo", index: 6 },
     { label: "Running", index: 7 },
+    { label: "Puzzles", index: 9 },
+    { label: "Reading", index: 10 },
+    { label: "Theatre", index: 12 },
+    { label: "Nature", index: 13 },
+    { label: "Appreciating the day", index: 14 },
   ]);
+});
+
+test("new personal photographs distinguish free-time reading from university study", () => {
+  const university = storyChapters.find((chapter) => chapter.id === "university-and-initiatives");
+  assert.equal(university.moments.length, 9);
+  assert.equal(university.moments[2].id, "iseg-study-desk");
+  assert.equal(university.moments[2].group, "Studying");
+  const freeTime = storyChapters.find((chapter) => chapter.id === "sport-and-free-time");
+  assert.equal(freeTime.moments.length, 15);
+  assert.deepEqual(freeTime.moments.slice(9).map((moment) => moment.id), ["puzzles-free-time", "reading-philosophy", "reading-mathematics", "childhood-theatre", "nature-resilience", "childhood-appreciating-the-day"]);
+  assert.match(freeTime.introduction, /philosophy and the social sciences/);
+  assert.match(freeTime.moments[13].text, /lessons in resilience/);
+  assert.match(freeTime.moments[14].text, /as a child/);
+  for (const moment of freeTime.moments.slice(9)) {
+    assert.equal(moment.eventRole, undefined);
+    assert.equal(moment.image.crop, undefined);
+  }
 });
 
 test("university results distinguish admission, degree grades and thesis, with a readable original PDF", () => {
