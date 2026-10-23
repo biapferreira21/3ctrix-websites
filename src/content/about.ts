@@ -24,7 +24,8 @@ export type StoryChapter = {
 };
 
 // Add new moments to a chapter, or add another chapter. Only supplied stories and
-// photographs belong here; no inferred ages, dates, achievements or motivations.
+// photographs and clearly attributed publication assets belong here; no inferred
+// ages, dates, achievements or motivations.
 export const storyChapters: readonly StoryChapter[] = [
   {
     id: "university-and-initiatives",
@@ -121,6 +122,64 @@ export const storyChapters: readonly StoryChapter[] = [
         text: "A moment to mark the degrees I had worked towards, from Applied Mathematics to Accounting, Taxation and Corporate Finance — after the studying, the student initiatives and the thesis.",
         caption: "Graduation at ISEG.",
         image: { src: "/about/iseg-graduation.webp", thumbnail: "/about/iseg-graduation-thumb.webp", alt: "Beatriz Ferreira wearing a red graduation gown outside ISEG.", width: 1200, height: 1600 },
+      },
+    ],
+  },
+  {
+    id: "crypto-research",
+    title: "Crypto research & publications",
+    eyebrow: "International collaborations",
+    introduction: "I’ve worked as a crypto researcher with international companies, writing about DeFi and stablecoins. Along the way, research also brought me closer to the events where the industry meets.",
+    topics: ["The Block", "The Big Whale", "Stablecoin Insider", "DeFi", "EBC Barcelona", "DAF London"],
+    moments: [
+      {
+        id: "the-block-emergence",
+        title: "Research, and behind the scenes.",
+        label: "The Block · Crypto research",
+        group: "The Block",
+        text: "I worked as a crypto researcher for The Block. During that time, I also helped organise Emergence in Prague — a chance to contribute beyond research and support the work behind an industry event.",
+        caption: "The Emergence team in Prague.",
+        image: { src: "/about/emergence-team-prague.webp", thumbnail: "/about/emergence-team-prague-thumb.webp", alt: "A group photograph of the Emergence team on a stage beneath the event name.", width: 310, height: 207 },
+      },
+      {
+        id: "the-big-whale-defi",
+        title: "Writing about DeFi.",
+        label: "The Big Whale · Client publications",
+        group: "The Big Whale",
+        text: "For The Big Whale, I produced several publications focused on decentralised finance (DeFi) for its clients. This was another part of my work researching and writing about crypto assets for an international audience.",
+        caption: "Official promotional image from The Big Whale, used to identify the company; it does not show a specific publication I authored.",
+        links: [{ label: "Visit The Big Whale", href: "https://www.thebigwhale.io/" }],
+        image: { src: "/about/the-big-whale-research.webp", thumbnail: "/about/the-big-whale-research-thumb.webp", alt: "Official The Big Whale promotional image showing its digital platform and publications on a laptop.", width: 1200, height: 630 },
+      },
+      {
+        id: "stablecoin-insider-year-end",
+        title: "Bringing the research together.",
+        label: "Stablecoin Insider · 2025 year-end report",
+        group: "Stablecoin Insider",
+        text: "At Stablecoin Insider, I contributed to publications and to The 2025 Stablecoin Year-End Report. The report took a great deal of work, bringing together research and contributions from the team and multiple partners.",
+        caption: "The original report cover, including the participating partners’ logos.",
+        links: [{ label: "Explore the report & get a copy", href: "https://stablecoininsider.org/2025-stablecoin-year-end-report/" }],
+        resourceNote: "66 pages · English · Report access through Stablecoin Insider’s official page.",
+        image: { src: "/about/stablecoin-year-end-2025.webp", thumbnail: "/about/stablecoin-year-end-2025-thumb.webp", alt: "Cover of The 2025 Stablecoin Year-End Report by Stablecoin Insider, dated December 2025, with partner logos.", width: 990, height: 1400 },
+      },
+      {
+        id: "stablecoin-insider-credits",
+        title: "A collaborative publication.",
+        label: "Stablecoin Insider · Research & authorship",
+        group: "Stablecoin Insider",
+        text: "The report credits me as a Crypto Research Analyst, alongside the Stablecoin Insider team and partners. Its chapters bring together the market landscape, regulation, use cases, comparisons and an outlook for 2026.",
+        caption: "The original overview and credits page. The publication is a collective work, not a solo-authored report.",
+        links: [{ label: "View the official report page", href: "https://stablecoininsider.org/2025-stablecoin-year-end-report/" }],
+        image: { src: "/about/stablecoin-report-credits.webp", thumbnail: "/about/stablecoin-report-credits-thumb.webp", alt: "Overview page crediting Beatriz Ferreira as Crypto Research Analyst together with the Stablecoin Insider team and partners.", width: 990, height: 1400 },
+      },
+      {
+        id: "research-to-events-ebc-daf",
+        title: "Where research met the room.",
+        label: "EBC Barcelona & DAF London",
+        group: "Into events",
+        text: "I also did research for EBC Barcelona and DAF London. These collaborations were part of how I began attending more events — a bridge from researching the industry to being present in the rooms where it comes together.",
+        caption: "At European Blockchain Convention in Barcelona. DAF London was a separate research collaboration.",
+        image: { src: "/about/ebc-barcelona-research.webp", thumbnail: "/about/ebc-barcelona-research-thumb.webp", alt: "Beatriz Ferreira at European Blockchain Convention in front of the event’s sponsor backdrop.", width: 1080, height: 1440 },
       },
     ],
   },

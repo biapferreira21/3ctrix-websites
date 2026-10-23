@@ -55,6 +55,25 @@ test("university initiatives keep distinct roles and an external example article
   assert.ok(club.links[0].href.startsWith("https://www.linkedin.com/posts/novablockchainclub_"));
 });
 
+test("research collaborations lead into events without implying solo report authorship", () => {
+  const research = storyChapters.find((chapter) => chapter.id === "crypto-research");
+  assert.ok(research);
+  assert.deepEqual(storyGroupStarts(research.moments), [
+    { label: "The Block", index: 0 },
+    { label: "The Big Whale", index: 1 },
+    { label: "Stablecoin Insider", index: 2 },
+    { label: "Into events", index: 4 },
+  ]);
+  assert.match(research.moments[0].text, /helped organise Emergence in Prague/);
+  assert.match(research.moments[1].text, /decentralised finance \(DeFi\)/);
+  assert.match(research.moments[1].caption, /does not show a specific publication I authored/);
+  assert.match(research.moments[3].text, /alongside the Stablecoin Insider team and partners/);
+  assert.equal(research.moments[2].links[0].href, "https://stablecoininsider.org/2025-stablecoin-year-end-report/");
+  assert.match(research.moments[4].text, /EBC Barcelona and DAF London/);
+  assert.match(research.moments[4].caption, /DAF London was a separate research collaboration/);
+  assert.equal(existsSync(new URL("../public/about/stablecoin-insider-year-end-report-2025.pdf", import.meta.url)), false);
+});
+
 test("keyboard controls work without capturing unrelated keys", () => {
   assert.equal(storyIndexFromKey("ArrowRight", 0, 60), 1);
   assert.equal(storyIndexFromKey("ArrowLeft", 0, 60), 0);
