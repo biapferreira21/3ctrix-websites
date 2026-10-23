@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { existsSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { moveStoryIndex, storyGroupStarts, storyIndexFromKey } from "../src/lib/storyNavigation.ts";
 import { storyChapters } from "../src/content/about.ts";
 
@@ -19,12 +19,40 @@ test("photo navigation stops at either edge, including larger future chapters", 
 test("chapter shortcuts preserve first-occurrence order and jump to the first photo of each part", () => {
   assert.deepEqual(storyGroupStarts([{ group: "A" }, {}, { group: "A" }, { group: "B" }, { group: "B" }]), [{ label: "A", index: 0 }, { label: "B", index: 3 }]);
   assert.deepEqual(storyGroupStarts([]), []);
-  assert.deepEqual(storyGroupStarts(storyChapters[0].moments), [
+  const sports = storyChapters.find((chapter) => chapter.id === "sport-and-free-time");
+  assert.ok(sports);
+  assert.deepEqual(storyGroupStarts(sports.moments), [
     { label: "Early years", index: 0 },
     { label: "Kickboxing", index: 2 },
     { label: "Taekwondo", index: 6 },
     { label: "Running", index: 7 },
   ]);
+});
+
+test("university results distinguish admission, degree grades and thesis, with a readable original PDF", () => {
+  const university = storyChapters.find((chapter) => chapter.id === "university-and-initiatives");
+  assert.ok(university);
+  assert.deepEqual(university.results, [
+    { label: "Admission score", value: "19.1 / 20" },
+    { label: "MAEG · Final grade", value: "17 / 20" },
+    { label: "Master’s · Final grade", value: "17 / 20" },
+    { label: "Thesis grade", value: "18 / 20" },
+  ]);
+  const thesis = university.moments.find((moment) => moment.id === "masters-thesis");
+  assert.ok(thesis);
+  assert.equal(thesis.links.length, 2);
+  assert.equal(thesis.links[0].href, thesis.links[1].href);
+  assert.equal(thesis.links[1].download, true);
+  const pdf = readFileSync(new URL(`../public${thesis.links[0].href}`, import.meta.url));
+  assert.equal(pdf.subarray(0, 5).toString(), "%PDF-");
+  assert.equal(pdf.length, 1168772);
+});
+
+test("university initiatives keep distinct roles and an external example article", () => {
+  const university = storyChapters.find((chapter) => chapter.id === "university-and-initiatives");
+  assert.deepEqual(university.highlights.map((item) => item.title), ["KPMG & BNP Paribas", "ISEG YES", "Nova Blockchain Club"]);
+  const club = university.highlights.find((item) => item.title === "Nova Blockchain Club");
+  assert.ok(club.links[0].href.startsWith("https://www.linkedin.com/posts/novablockchainclub_"));
 });
 
 test("keyboard controls work without capturing unrelated keys", () => {

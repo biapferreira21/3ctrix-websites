@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BookOpen, Expand, Hand, X } from "lucide-react";
-import type { StoryChapter } from "@/content/about";
+import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, Download, Expand, ExternalLink, Hand, X } from "lucide-react";
+import type { StoryChapter, StoryLink } from "@/content/about";
 import { moveStoryIndex, storyGroupStarts, storyIndexFromKey } from "@/lib/storyNavigation";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { cn } from "@/lib/cn";
@@ -101,6 +101,29 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
           </div>
         </div>
 
+        {chapter.results && (
+          <dl className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label="Academic results">
+            {chapter.results.map((result) => <div key={result.label} className="rounded-2xl border-2 border-night bg-white p-4"><dt className="text-[10px] font-bold uppercase tracking-[.1em] text-forest">{result.label}</dt><dd className="mt-2 text-2xl font-semibold text-ink">{result.value}</dd></div>)}
+          </dl>
+        )}
+
+        {chapter.highlights && (
+          <div className="mb-8">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[.15em] text-forest">University roles · select to explore</p>
+            <div className="grid items-start gap-3 lg:grid-cols-3">
+              {chapter.highlights.map((highlight) => (
+                <details key={highlight.title} name={`${id}-roles`} className="group rounded-2xl border-2 border-night bg-white">
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-4 py-3 text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden">{highlight.title}<ChevronDown size={16} aria-hidden className="shrink-0 text-forest transition-transform group-open:rotate-180" /></summary>
+                  <div className="border-t border-night/10 px-4 pb-4 pt-3">
+                    <p className="text-sm leading-7 text-slate">{highlight.text}</p>
+                    {highlight.links && <div className="mt-3 flex flex-wrap gap-3">{highlight.links.map((link) => <StoryResourceLink key={link.href} link={link} compact />)}</div>}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="overflow-hidden rounded-[1.75rem] border-[3px] border-night bg-white shadow-[7px_7px_0_#16180F]" data-story-gallery>
           <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-night bg-[#f5f1e8] px-4 py-3 sm:px-6">
             <p className="flex items-center gap-2 text-xs font-semibold text-forest"><Hand size={15} aria-hidden /> Choose a photo. Read its story.</p>
@@ -137,6 +160,8 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
                     <h4 className="mt-5 max-w-sm text-3xl font-semibold leading-tight text-ink sm:text-4xl">{moment.title}</h4>
                     <p className="mt-6 max-w-md text-base leading-8 text-slate">{moment.text}</p>
                     <p className="mt-5 text-xs leading-6 text-slate">{moment.caption}</p>
+                    {moment.links && <div className="mt-5 flex flex-wrap gap-3">{moment.links.map((link) => <StoryResourceLink key={`${link.href}-${link.label}`} link={link} />)}</div>}
+                    {moment.resourceNote && <p className="mt-3 text-xs leading-6 text-slate">{moment.resourceNote}</p>}
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -177,4 +202,11 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
       </dialog>
     </div>
   );
+}
+
+function StoryResourceLink({ link, compact = false }: { link: StoryLink; compact?: boolean }) {
+  const Icon = link.download ? Download : ExternalLink;
+  return <a href={link.href} download={link.download || undefined} target={link.download ? undefined : "_blank"} rel={link.download ? undefined : "noopener noreferrer"} className={cn("inline-flex min-h-11 items-center justify-center gap-2 text-xs font-semibold", compact ? "text-forest underline underline-offset-4" : "rounded-full border-2 border-night bg-white px-4 py-2 text-forest transition-colors hover:bg-mint")}>
+    {link.label}<Icon size={14} aria-hidden className="shrink-0" />
+  </a>;
 }

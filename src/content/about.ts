@@ -1,3 +1,5 @@
+export type StoryLink = { label: string; href: string; download?: boolean };
+
 export type StoryMoment = {
   id: string;
   title: string;
@@ -5,6 +7,8 @@ export type StoryMoment = {
   group?: string;
   text: string;
   caption: string;
+  links?: readonly StoryLink[];
+  resourceNote?: string;
   image: { src: string; thumbnail: string; alt: string; width: number; height: number };
 };
 
@@ -14,12 +18,112 @@ export type StoryChapter = {
   eyebrow: string;
   introduction: string;
   topics: readonly string[];
+  results?: readonly { label: string; value: string }[];
+  highlights?: readonly { title: string; text: string; links?: readonly StoryLink[] }[];
   moments: readonly StoryMoment[];
 };
 
 // Add new moments to a chapter, or add another chapter. Only supplied stories and
 // photographs belong here; no inferred ages, dates, achievements or motivations.
 export const storyChapters: readonly StoryChapter[] = [
+  {
+    id: "university-and-initiatives",
+    title: "University & initiatives",
+    eyebrow: "ISEG · From 2020",
+    introduction: "Applied Mathematics helped shape how I think: critically, and through problem-solving. University was also an intense period of studying, student initiatives and early professional experiences, followed by a master’s degree at ISEG.",
+    topics: ["Applied Mathematics · MAEG", "KPMG", "BNP Paribas", "ISEG YES", "Nova Blockchain Club", "Master’s & thesis"],
+    results: [
+      { label: "Admission score", value: "19.1 / 20" },
+      { label: "MAEG · Final grade", value: "17 / 20" },
+      { label: "Master’s · Final grade", value: "17 / 20" },
+      { label: "Thesis grade", value: "18 / 20" },
+    ],
+    highlights: [
+      { title: "KPMG & BNP Paribas", text: "During my bachelor’s degree, I was a university ambassador for KPMG and then completed a summer internship there. I also participated in both the ambassador and summer internship programmes at BNP Paribas." },
+      { title: "ISEG YES", text: "I was Director of the Human Resources Department at ISEG YES, a university club." },
+      { title: "Nova Blockchain Club", text: "I was Director of the Content Department at Nova Blockchain Club. This was where my interest in writing about blockchain and crypto assets began.", links: [{ label: "Read an example article on LinkedIn", href: "https://www.linkedin.com/posts/novablockchainclub_moneylaundering-cryptocurrency-kyc-activity-7127638460709879808-DBxl" }] },
+    ],
+    moments: [
+      {
+        id: "iseg-first-year-2020",
+        title: "ISEG, 2020.",
+        label: "Applied Mathematics · MAEG",
+        group: "Starting ISEG",
+        text: "In 2020, I joined ISEG to study Applied Mathematics, with an admission score of 19.1 out of 20. It was where I began to structure the way I think through critical thinking and problem-solving. I completed MAEG with a final grade of 17 out of 20.",
+        caption: "At the beginning of my ISEG journey.",
+        image: { src: "/about/iseg-first-year-2020.webp", thumbnail: "/about/iseg-first-year-2020-thumb.webp", alt: "Beatriz Ferreira wearing an ISEG T-shirt and holding a Welcome to ISEG badge.", width: 1500, height: 2000 },
+      },
+      {
+        id: "iseg-exam-studying",
+        title: "The work behind the degree.",
+        label: "Bachelor’s degree · Exam preparation",
+        group: "Studying",
+        text: "This was a difficult and intense period, and I spent a great deal of time studying. These are the materials I was working through for my exams around Christmas — a glimpse of how much studying filled those years.",
+        caption: "Exam materials beside the Christmas tree.",
+        image: { src: "/about/iseg-exam-studying.webp", thumbnail: "/about/iseg-exam-studying-thumb.webp", alt: "Folders filled with study notes beside a decorated Christmas tree.", width: 1080, height: 1920 },
+      },
+      {
+        id: "kpmg-ambassador-group",
+        title: "Learning beyond lectures.",
+        label: "KPMG · University ambassador",
+        group: "Student initiatives",
+        text: "Alongside my studies, I became a KPMG ambassador at my university. I later completed a summer internship with KPMG, adding an early professional experience to my university years.",
+        caption: "With the KPMG ambassador group.",
+        image: { src: "/about/kpmg-ambassador-group.webp", thumbnail: "/about/kpmg-ambassador-group-thumb.webp", alt: "A group of KPMG university ambassadors wearing purple ambassador hoodies.", width: 1080, height: 1080 },
+      },
+      {
+        id: "kpmg-ambassador",
+        title: "Making room for more.",
+        label: "Ambassador programmes & summer internships",
+        group: "Student initiatives",
+        text: "Even during a demanding degree, I made time for initiatives outside my coursework. In addition to KPMG, I took part in the university ambassador and summer internship programmes at BNP Paribas.",
+        caption: "Wearing my KPMG ambassador hoodie; the BNP Paribas programmes were a separate experience.",
+        image: { src: "/about/kpmg-ambassador.webp", thumbnail: "/about/kpmg-ambassador-thumb.webp", alt: "Beatriz Ferreira wearing a purple KPMG ambassador hoodie.", width: 899, height: 1599 },
+      },
+      {
+        id: "iseg-yes",
+        title: "Taking on a role in student life.",
+        label: "ISEG YES · Human Resources Director",
+        group: "Student initiatives",
+        text: "I was Director of the Human Resources Department at ISEG YES. I also led the Content Department at Nova Blockchain Club, where I began writing about blockchain and crypto assets.",
+        caption: "Speaking beside the ISEG YES banner.",
+        links: [{ label: "Read an example of my Nova Blockchain Club writing", href: "https://www.linkedin.com/posts/novablockchainclub_moneylaundering-cryptocurrency-kyc-activity-7127638460709879808-DBxl" }],
+        image: { src: "/about/iseg-yes.webp", thumbnail: "/about/iseg-yes-thumb.webp", alt: "Beatriz Ferreira speaking in a university room beside an ISEG YES banner.", width: 1080, height: 1551 },
+      },
+      {
+        id: "masters-thesis",
+        title: "Researching ICO underpricing.",
+        label: "Master’s dissertation · June 2025",
+        group: "Master’s & thesis",
+        text: "For my master’s in Accounting, Taxation and Corporate Finance at ISEG, I wrote “An Essay on Underpricing in ICOs”. The dissertation examines underpricing and financing through token offerings. It received a grade of 18 out of 20.",
+        caption: "The cover of my original dissertation.",
+        resourceNote: "Original PDF in Portuguese, with an English abstract · 56 pages.",
+        links: [
+          { label: "Open thesis (PDF)", href: "/about/beatriz-ferreira-masters-thesis.pdf" },
+          { label: "Download thesis", href: "/about/beatriz-ferreira-masters-thesis.pdf", download: true },
+        ],
+        image: { src: "/about/masters-thesis-cover.webp", thumbnail: "/about/masters-thesis-cover-thumb.webp", alt: "Cover of Beatriz Pereira Ferreira’s master’s dissertation, Ensaio sobre o Underpricing em ICOs, dated June 2025.", width: 990, height: 1400 },
+      },
+      {
+        id: "iseg-diploma",
+        title: "Completing my master’s.",
+        label: "ISEG · Accounting, Taxation & Corporate Finance",
+        group: "Graduation",
+        text: "After Applied Mathematics, I completed my master’s in Accounting, Taxation and Corporate Finance at ISEG, with a final grade of 17 out of 20.",
+        caption: "At ISEG, holding a diploma folder.",
+        image: { src: "/about/iseg-diploma.webp", thumbnail: "/about/iseg-diploma-thumb.webp", alt: "Beatriz Ferreira holding a diploma folder outside ISEG.", width: 1500, height: 2000 },
+      },
+      {
+        id: "iseg-graduation",
+        title: "The diplomas, after the work.",
+        label: "Graduation · ISEG",
+        group: "Graduation",
+        text: "A moment to mark the degrees I had worked towards, from Applied Mathematics to Accounting, Taxation and Corporate Finance — after the studying, the student initiatives and the thesis.",
+        caption: "Graduation at ISEG.",
+        image: { src: "/about/iseg-graduation.webp", thumbnail: "/about/iseg-graduation-thumb.webp", alt: "Beatriz Ferreira wearing a red graduation gown outside ISEG.", width: 1200, height: 1600 },
+      },
+    ],
+  },
   {
     id: "sport-and-free-time",
     title: "Sport & free time",

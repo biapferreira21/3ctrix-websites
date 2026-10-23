@@ -17,6 +17,7 @@
 
 # Local copies of personal story photographs; publish only optimised versions.
 /.story-originals/
+/tmp/pdfs/
 
 # ficheiros de ambiente
 .env
