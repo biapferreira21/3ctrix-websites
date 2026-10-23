@@ -118,7 +118,7 @@ export default function ResearchPage() {
                 <p className="mt-6 text-base leading-7 text-slate">
                   Beatriz brings together research, product management and media experience across AI, technology and digital finance.
                 </p>
-                <a href="/#profile" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-forest underline underline-offset-4">About Beatriz <ArrowRight size={15} aria-hidden /></a>
+                <a href="/about" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-forest underline underline-offset-4">About Beatriz <ArrowRight size={15} aria-hidden /></a>
               </div>
             </div>
           </Container>

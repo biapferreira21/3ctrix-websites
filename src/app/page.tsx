@@ -202,6 +202,7 @@ export default function StudioHomePage() {
                 <p className="mt-6 text-base leading-7 text-slate">Product, research, media and events — brought together at 3C Trix.</p>
                 <FounderPerspectives />
                 <p className="mt-6 text-sm leading-6 text-slate">{homeContent.profile.paragraphs[2]}</p>
+                <Link href="/about" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-forest underline underline-offset-4">Read my story, in photographs <ArrowRight size={16} aria-hidden /></Link>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <a
                     href={siteConfig.social.linkedin}

@@ -8,7 +8,7 @@ const footerLinks = [
   { label: "Events & Media", href: "/#experience" },
   { label: "Research", href: siteConfig.urls.research },
   { label: "Workflow Automation", href: siteConfig.urls.automations },
-  { label: "About Beatriz", href: "/#profile" },
+  { label: "About Beatriz", href: "/about" },
 ] as const;
 
 export function Footer() {

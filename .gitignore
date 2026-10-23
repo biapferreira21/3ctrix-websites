@@ -15,6 +15,9 @@
 # produção
 /build
 
+# Local copies of personal story photographs; publish only optimised versions.
+/.story-originals/
+
 # ficheiros de ambiente
 .env
 .env*.local

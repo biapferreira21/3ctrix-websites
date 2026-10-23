@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["", 1],
     ["/research", 0.9],
     ["/automations", 0.9],
+    ["/about", 0.8],
     [siteConfig.urls.privacy, 0.3],
     [siteConfig.urls.terms, 0.3],
   ] as const;
