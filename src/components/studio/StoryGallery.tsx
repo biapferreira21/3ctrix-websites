@@ -5,7 +5,7 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, BookOpen, Expand, Hand, X } from "lucide-react";
 import type { StoryChapter } from "@/content/about";
-import { moveStoryIndex, storyIndexFromKey } from "@/lib/storyNavigation";
+import { moveStoryIndex, storyGroupStarts, storyIndexFromKey } from "@/lib/storyNavigation";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { cn } from "@/lib/cn";
 
@@ -17,6 +17,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
   const dialog = useRef<HTMLDialogElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const thumbnailButtons = useRef<(HTMLButtonElement | null)[]>([]);
+  const thumbnailStrip = useRef<HTMLDivElement>(null);
   const id = useId();
   const chapter = chapters[chapterIndex];
   const moment = chapter?.moments[momentIndex];
@@ -36,6 +37,19 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
     }
   }, [expanded]);
 
+  useEffect(() => {
+    const strip = thumbnailStrip.current;
+    const thumbnail = thumbnailButtons.current[momentIndex];
+    if (!strip || !thumbnail) return;
+    const railBounds = strip.getBoundingClientRect();
+    const photoBounds = thumbnail.getBoundingClientRect();
+    const delta = photoBounds.left < railBounds.left + 4
+      ? photoBounds.left - railBounds.left - 4
+      : photoBounds.right > railBounds.right - 4 ? photoBounds.right - railBounds.right + 4 : 0;
+    // Keep the selected thumbnail visible without moving the page vertically.
+    if (delta) strip.scrollBy({ left: delta, behavior: reducedMotion ? "auto" : "smooth" });
+  }, [chapterIndex, momentIndex, reducedMotion]);
+
   if (!chapter || !moment) return null;
 
   function chooseMoment(index: number) {
@@ -54,12 +68,12 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
     chooseMoment(next);
     if (focusThumbnail) {
       thumbnailButtons.current[next]?.focus({ preventScroll: true });
-      thumbnailButtons.current[next]?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reducedMotion ? "instant" : "smooth" });
     }
   }
 
   const previousDisabled = momentIndex === 0;
   const nextDisabled = momentIndex === chapter.moments.length - 1;
+  const groups = storyGroupStarts(chapter.moments);
   const controlClass = "inline-flex min-h-11 items-center justify-center gap-2 rounded-full border-2 border-night px-4 py-2 text-xs font-bold transition-colors disabled:cursor-default disabled:opacity-35";
 
   return (
@@ -93,6 +107,13 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
             <span className="font-mono text-[11px] font-bold text-slate" aria-live="polite" aria-atomic="true">Photo {momentIndex + 1} of {chapter.moments.length}</span>
           </div>
 
+          {groups.length > 1 && (
+            <div role="group" aria-label="Jump to part of this chapter" className="flex flex-wrap items-center gap-2 border-b border-night/15 px-4 py-3 sm:px-6">
+              <span className="mr-1 text-[10px] font-bold uppercase tracking-[.12em] text-forest">Jump to</span>
+              {groups.map((group) => <button key={group.label} type="button" aria-pressed={moment.group === group.label} onClick={() => chooseMoment(group.index)} className={cn("min-h-11 rounded-full border-2 border-night px-3 py-2 text-xs font-semibold transition-colors", moment.group === group.label ? "bg-night text-white" : "bg-white text-forest hover:bg-mint")}>{group.label}</button>)}
+            </div>
+          )}
+
           <div role="tabpanel" id={`${id}-story`} aria-labelledby={`${id}-photo-${momentIndex}`} tabIndex={0} onKeyDown={(event) => navigateWithKeys(event)} className="grid lg:grid-cols-[1.05fr_.95fr]">
             <div className="relative min-w-0 border-b-2 border-night bg-mint-soft p-4 sm:p-6 lg:border-b-0 lg:border-r-2">
               <div aria-hidden className="bg-grid absolute inset-0 opacity-50" />
@@ -122,7 +143,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
 
               <div className="mt-8 border-t-2 border-night/10 pt-5 lg:mt-auto lg:pt-6">
                 <p className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.15em] text-forest"><BookOpen size={14} aria-hidden /> Photographs in this chapter</p>
-                <div role="tablist" aria-label={`${chapter.title} photographs`} className="flex gap-3 overflow-x-auto p-1 pb-3" onKeyDown={(event) => navigateWithKeys(event, true)}>
+                <div ref={thumbnailStrip} role="tablist" aria-label={`${chapter.title} photographs`} className="flex gap-3 overflow-x-auto p-1 pb-3" onKeyDown={(event) => navigateWithKeys(event, true)}>
                   {chapter.moments.map((item, index) => (
                     <button key={item.id} ref={(node) => { thumbnailButtons.current[index] = node; }} type="button" role="tab" id={`${id}-photo-${index}`} aria-selected={momentIndex === index} aria-controls={`${id}-story`} tabIndex={momentIndex === index ? 0 : -1} onClick={() => chooseMoment(index)} aria-label={`Photo ${index + 1}: ${item.title}`}
                       className={cn("relative h-20 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-mint-soft", momentIndex === index ? "border-forest ring-2 ring-forest ring-offset-2" : "border-night/25 opacity-60 transition-opacity hover:opacity-100")}>

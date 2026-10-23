@@ -12,3 +12,12 @@ export function storyIndexFromKey(key: string, current: number, count: number) {
   if (key === "End") return Math.max(0, count - 1);
   return null;
 }
+
+export function storyGroupStarts(moments: readonly { group?: string }[]) {
+  const seen = new Set<string>();
+  return moments.flatMap((moment, index) => {
+    if (!moment.group || seen.has(moment.group)) return [];
+    seen.add(moment.group);
+    return [{ label: moment.group, index }];
+  });
+}

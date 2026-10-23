@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { existsSync, statSync } from "node:fs";
-import { moveStoryIndex, storyIndexFromKey } from "../src/lib/storyNavigation.ts";
+import { moveStoryIndex, storyGroupStarts, storyIndexFromKey } from "../src/lib/storyNavigation.ts";
 import { storyChapters } from "../src/content/about.ts";
 
 test("photo navigation stops at either edge, including larger future chapters", () => {
-  for (const count of [1, 2, 60]) {
+  for (const count of [1, 2, 9, 60]) {
     assert.equal(moveStoryIndex(0, -1, count), 0);
     assert.equal(moveStoryIndex(count - 1, 1, count), count - 1);
     assert.equal(moveStoryIndex(0, 100, count), count - 1);
@@ -14,6 +14,17 @@ test("photo navigation stops at either edge, including larger future chapters", 
   assert.equal(moveStoryIndex(15, 1, 60), 16);
   assert.equal(moveStoryIndex(0, 1, 0), 0);
   assert.equal(moveStoryIndex(NaN, 1, 2), 1);
+});
+
+test("chapter shortcuts preserve first-occurrence order and jump to the first photo of each part", () => {
+  assert.deepEqual(storyGroupStarts([{ group: "A" }, {}, { group: "A" }, { group: "B" }, { group: "B" }]), [{ label: "A", index: 0 }, { label: "B", index: 3 }]);
+  assert.deepEqual(storyGroupStarts([]), []);
+  assert.deepEqual(storyGroupStarts(storyChapters[0].moments), [
+    { label: "Early years", index: 0 },
+    { label: "Kickboxing", index: 2 },
+    { label: "Taekwondo", index: 6 },
+    { label: "Running", index: 7 },
+  ]);
 });
 
 test("keyboard controls work without capturing unrelated keys", () => {
