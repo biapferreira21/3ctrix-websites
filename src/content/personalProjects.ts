@@ -11,8 +11,6 @@ export type PersonalProject = {
 };
 
 // Copy is grounded in the public READMEs reviewed on 23 October 2026.
-// Keep the Content Hub's relationship to AlphaVote explicit: it is an extension,
-// not an unrelated product or a second implementation of the voting platform.
 export const personalProjects: PersonalProject[] = [
   {
     id: "alphavote",
@@ -45,16 +43,6 @@ export const personalProjects: PersonalProject[] = [
     repository: "https://github.com/biapferreira21/master-ai-research-roadmap",
     readmeSha: "d2376c02bb76410d811723de20bf781bf97d6db8",
   },
-  {
-    id: "content-hub",
-    title: "3C Trix Content Hub",
-    category: "Editorial workflow · AlphaVote extension",
-    summary: "I extended AlphaVote with a sourced article archive and an AI-assisted editorial workflow: from an article to a balanced debate and an editable social draft, with human approval.",
-    features: ["Searchable articles with visible sources", "Article-to-Debate cards with shared voting", "AI suggestions and a human-controlled publishing flow"],
-    repository: "https://github.com/biapferreira21/3ctrix-content-hub",
-    readmeSha: "5e10436b26ef14048e853e4e666b48e3fd12f424",
-    action: { label: "Read the Content Hub", href: "https://alphavote.app/3CTrix-content/" },
-  },
 ];
 
 export const projectPreviewFlows = {
@@ -62,10 +50,5 @@ export const projectPreviewFlows = {
     { title: "Foundations", detail: "Start with programming and mathematical foundations. The roadmap makes prerequisites part of the learning path.", items: ["Programming", "Mathematics", "Prerequisites"] },
     { title: "Machine learning", detail: "Move through university lessons with their videos, readings and assignments, while keeping track of personal progress.", items: ["University lessons", "Original resources", "Study progress"] },
     { title: "Research", detail: "Connect study to papers, concepts and a dedicated Information Theory × AI path. Keep bookmarks and personal notes together.", items: ["Papers & concepts", "Information theory", "Personal notes"] },
-  ],
-  "content-hub": [
-    { title: "Sources", detail: "Begin with source material and write a structured article. Original sources remain visible to the reader.", items: ["Named sources", "Structured article", "Public reader"] },
-    { title: "Debate", detail: "AI can suggest a neutral question and balanced options. A human reviews the proposal before publishing a real AlphaVote Debate card.", items: ["AI proposal", "Human review", "Shared voting"] },
-    { title: "Approval", detail: "Generate an editable LinkedIn draft for final human approval. Nothing is posted automatically to LinkedIn.", items: ["Editable draft", "Final approval", "Manual publication"] },
   ],
 } as const;

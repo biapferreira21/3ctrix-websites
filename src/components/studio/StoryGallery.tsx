@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, Download, Expand, ExternalLink, Hand, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, ChevronDown, Download, Expand, ExternalLink, X } from "lucide-react";
 import type { StoryChapter, StoryLink, StoryMoment } from "@/content/about";
-import { moveStoryIndex, storyGroupStarts, storyIndexFromKey } from "@/lib/storyNavigation";
+import { moveStoryIndex, storyIndexFromKey } from "@/lib/storyNavigation";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { cn } from "@/lib/cn";
 
@@ -16,191 +16,91 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
   const reducedMotion = useReducedMotionPreference();
   const dialog = useRef<HTMLDialogElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
-  const thumbnailButtons = useRef<(HTMLButtonElement | null)[]>([]);
-  const thumbnailStrip = useRef<HTMLDivElement>(null);
+  const chapterContent = useRef<HTMLDivElement>(null);
   const id = useId();
   const chapter = chapters[chapterIndex];
   const moment = chapter?.moments[momentIndex];
 
   useEffect(() => {
     const element = dialog.current;
-    if (!element) return;
-    if (expanded) {
-      const previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      element.showModal();
-      closeButton.current?.focus();
-      return () => {
-        element.close();
-        document.body.style.overflow = previousOverflow;
-      };
-    }
+    if (!element || !expanded) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    element.showModal();
+    closeButton.current?.focus();
+    return () => { element.close(); document.body.style.overflow = previousOverflow; };
   }, [expanded]);
 
-  useEffect(() => {
-    const strip = thumbnailStrip.current;
-    const thumbnail = thumbnailButtons.current[momentIndex];
-    if (!strip || !thumbnail) return;
-    const railBounds = strip.getBoundingClientRect();
-    const photoBounds = thumbnail.getBoundingClientRect();
-    const delta = photoBounds.left < railBounds.left + 4
-      ? photoBounds.left - railBounds.left - 4
-      : photoBounds.right > railBounds.right - 4 ? photoBounds.right - railBounds.right + 4 : 0;
-    // Keep the selected thumbnail visible without moving the page vertically.
-    if (delta) strip.scrollBy({ left: delta, behavior: reducedMotion ? "auto" : "smooth" });
-  }, [chapterIndex, momentIndex, reducedMotion]);
-
   if (!chapter || !moment) return null;
-
-  function chooseMoment(index: number) {
-    setMomentIndex(moveStoryIndex(index, 0, chapter.moments.length));
+  function chooseChapter(index: number) {
+    setChapterIndex(index); setMomentIndex(0);
+    chapterContent.current?.scrollIntoView({ block: "start", behavior: reducedMotion ? "auto" : "smooth" });
   }
-
-  function move(direction: number) {
-    setMomentIndex((current) => moveStoryIndex(current, direction, chapter.moments.length));
-  }
-
-  function navigateWithKeys(event: KeyboardEvent<HTMLElement>, focusThumbnail = false) {
+  function move(direction: number) { setMomentIndex((current) => moveStoryIndex(current, direction, chapter.moments.length)); }
+  function navigateWithKeys(event: KeyboardEvent<HTMLElement>) {
+    // Native selects and links keep their own keyboard behaviour.
+    if ((event.target as HTMLElement).closest("select, button, a, input, summary")) return;
     const next = storyIndexFromKey(event.key, momentIndex, chapter.moments.length);
     if (next === null) return;
-    event.preventDefault();
-    event.stopPropagation();
-    chooseMoment(next);
-    if (focusThumbnail) {
-      thumbnailButtons.current[next]?.focus({ preventScroll: true });
-    }
+    event.preventDefault(); setMomentIndex(next);
   }
-
   const previousDisabled = momentIndex === 0;
   const nextDisabled = momentIndex === chapter.moments.length - 1;
-  const groups = storyGroupStarts(chapter.moments);
-  const controlClass = "inline-flex min-h-11 items-center justify-center gap-2 rounded-full border-2 border-night px-4 py-2 text-xs font-bold transition-colors disabled:cursor-default disabled:opacity-35";
+  const controlClass = "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-night/25 transition-colors disabled:cursor-default disabled:opacity-30";
 
   return (
-    <div>
-      <nav aria-label="Story chapters" className="sticky top-[5.25rem] z-30 mb-8 flex gap-3 overflow-x-auto bg-mint-soft/95 py-3 pr-2 backdrop-blur-sm">
-        {chapters.map((item, index) => (
-          <button key={item.id} type="button" aria-pressed={chapterIndex === index} aria-controls={`${id}-chapter`} onClick={() => { setChapterIndex(index); setMomentIndex(0); }}
-            className={cn("inline-flex min-h-12 shrink-0 items-center gap-3 whitespace-nowrap rounded-full border-2 border-night px-5 py-3 text-sm font-semibold", chapterIndex === index ? "bg-night text-white shadow-[3px_3px_0_#8FA38A]" : "bg-white text-ink hover:bg-mint")}>
-            <span className="text-[10px] opacity-60">{String(index + 1).padStart(2, "0")}</span>{item.title}
-          </button>
-        ))}
+    <div className="grid items-start gap-8 lg:grid-cols-[190px_minmax(0,1fr)] lg:gap-10">
+      <nav aria-label="Story chapters" className="sticky top-[5.25rem] z-20 bg-mint-soft py-2 lg:top-28 lg:bg-transparent lg:py-0">
+        <div className="lg:hidden"><label htmlFor={`${id}-chapter-select`} className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-forest">Choose a chapter</label><select id={`${id}-chapter-select`} value={chapterIndex} onChange={(event) => chooseChapter(Number(event.target.value))} className="min-h-12 w-full rounded-xl border border-night/30 bg-white px-3 text-sm font-semibold text-forest">{chapters.map((item, index) => <option value={index} key={item.id}>{String(index + 1).padStart(2, "0")} / {item.title}</option>)}</select></div>
+        <ol className="hidden space-y-1 border-l border-night/20 lg:block">
+          {chapters.map((item, index) => <li key={item.id} className="relative"><button type="button" aria-current={chapterIndex === index ? "step" : undefined} aria-controls={`${id}-chapter`} onClick={() => chooseChapter(index)} className={cn("relative w-full py-4 pl-5 pr-2 text-left text-sm leading-6 transition-colors", chapterIndex === index ? "font-semibold text-forest" : "text-slate hover:text-forest")}><span className="mb-1 block font-mono text-[10px] opacity-60">0{index + 1}</span>{item.title}{chapterIndex === index && <motion.span layoutId={`${id}-chapter-indicator`} transition={{ type: "spring", stiffness: 250, damping: 28, duration: reducedMotion ? 0 : undefined }} aria-hidden className="absolute -left-[2px] top-3 bottom-3 w-[3px] rounded-full bg-forest" />}</button></li>)}
+        </ol>
       </nav>
 
-      <div id={`${id}-chapter`}>
-        <div className="mb-8 grid gap-5 lg:grid-cols-[1fr_1.15fr] lg:items-end">
-          <div>
-            {chapter.identityImage && <Image src={chapter.identityImage.src} alt={chapter.identityImage.alt} width={64} height={64} className="mb-4 rounded-full border-2 border-night bg-white" />}
+      <div ref={chapterContent} id={`${id}-chapter`} className="min-w-0 scroll-mt-[12rem] lg:scroll-mt-24">
+        <motion.div key={chapter.id} initial={reducedMotion ? false : { opacity: 0, y: 22, filter: "blur(5px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: reducedMotion ? 0 : .65, ease: [.22, 1, .36, 1] }}>
+          <div className="mb-6">
             <p className="text-[10px] font-bold uppercase tracking-[.18em] text-forest">{chapter.eyebrow}</p>
             <h3 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-4xl">{chapter.title}</h3>
-          </div>
-          <div>
-            <p className="max-w-xl text-sm leading-7 text-slate">{chapter.introduction}</p>
-            <ul aria-label="Topics in this chapter" className="mt-4 flex flex-wrap gap-2">
-              {chapter.topics.map((topic) => <li key={topic} className="rounded-full border border-night/25 bg-white px-3 py-1 text-[11px] font-semibold text-forest">{topic}</li>)}
-            </ul>
-          </div>
-        </div>
-
-        {chapter.results && (
-          <dl className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label="Academic results">
-            {chapter.results.map((result) => <div key={result.label} className="rounded-2xl border-2 border-night bg-white p-4"><dt className="text-[10px] font-bold uppercase tracking-[.1em] text-forest">{result.label}</dt><dd className="mt-2 text-2xl font-semibold text-ink">{result.value}</dd></div>)}
-          </dl>
-        )}
-
-        {chapter.highlights && (
-          <div className="mb-8">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[.15em] text-forest">{chapter.highlightsLabel ?? "University roles · select to explore"}</p>
-            <div className="grid items-start gap-3 lg:grid-cols-3">
-              {chapter.highlights.map((highlight) => (
-                <details key={highlight.title} name={`${id}-roles`} className="group rounded-2xl border-2 border-night bg-white">
-                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-4 py-3 text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden">{highlight.title}<ChevronDown size={16} aria-hidden className="shrink-0 text-forest transition-transform group-open:rotate-180" /></summary>
-                  <div className="border-t border-night/10 px-4 pb-4 pt-3">
-                    <p className="text-sm leading-7 text-slate">{highlight.text}</p>
-                    {highlight.links && <div className="mt-3 flex flex-wrap gap-3">{highlight.links.map((link) => <StoryResourceLink key={link.href} link={link} compact />)}</div>}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="overflow-hidden rounded-[1.75rem] border-[3px] border-night bg-white shadow-[7px_7px_0_#16180F]" data-story-gallery>
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-night bg-[#f5f1e8] px-4 py-3 sm:px-6">
-            <p className="flex items-center gap-2 text-xs font-semibold text-forest"><Hand size={15} aria-hidden /> Choose an image. Read its story.</p>
-            <span className="font-mono text-[11px] font-bold text-slate" aria-live="polite" aria-atomic="true">Image {momentIndex + 1} of {chapter.moments.length}</span>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate">{chapter.introduction}</p>
           </div>
 
-          {groups.length > 1 && (
-            <div role="group" aria-label="Jump to part of this chapter" className="flex flex-wrap items-center gap-2 border-b border-night/15 px-4 py-3 sm:px-6">
-              <span className="mr-1 text-[10px] font-bold uppercase tracking-[.12em] text-forest">Jump to</span>
-              {groups.map((group) => <button key={group.label} type="button" aria-pressed={moment.group === group.label} onClick={() => chooseMoment(group.index)} className={cn("min-h-11 rounded-full border-2 border-night px-3 py-2 text-xs font-semibold transition-colors", moment.group === group.label ? "bg-night text-white" : "bg-white text-forest hover:bg-mint")}>{group.label}</button>)}
-            </div>
-          )}
-
-          <div role="tabpanel" id={`${id}-story`} aria-labelledby={`${id}-photo-${momentIndex}`} tabIndex={0} onKeyDown={(event) => navigateWithKeys(event)} className="grid lg:grid-cols-[1.05fr_.95fr]">
-            <div className="relative min-w-0 border-b-2 border-night bg-mint-soft p-4 sm:p-6 lg:border-b-0 lg:border-r-2">
-              <div aria-hidden className="bg-grid absolute inset-0 opacity-50" />
-              <button type="button" onClick={() => setExpanded(true)} aria-label={`Enlarge image: ${moment.title}`} className="relative block w-full rounded-2xl border-2 border-night bg-white shadow-[4px_4px_0_#8FA38A]">
-                <span className="relative block h-[min(56svh,28rem)] min-h-64 overflow-hidden rounded-[.8rem] sm:h-[30rem]">
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.span key={moment.id} className="absolute inset-0 block" initial={reducedMotion ? false : { opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }} exit={reducedMotion ? undefined : { opacity: 0, x: -10 }} transition={{ duration: reducedMotion ? 0 : .22 }}>
-                      <StoryImage image={moment.image} sizes="(max-width: 1024px) 90vw, 580px" priority={chapterIndex === 0 && momentIndex === 0} />
-                    </motion.span>
-                  </AnimatePresence>
-                </span>
-                <span className="absolute bottom-3 right-3 inline-flex min-h-10 items-center gap-2 rounded-full border-2 border-night bg-white/95 px-3 py-2 text-[10px] font-bold text-forest"><Expand size={13} aria-hidden /> Enlarge image</span>
-              </button>
-            </div>
-
-            <div className="flex min-w-0 flex-col p-6 sm:p-9">
-              <div className="min-h-48" aria-live="polite" aria-atomic="true">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div key={moment.id} initial={reducedMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={reducedMotion ? undefined : { opacity: 0 }} transition={{ duration: reducedMotion ? 0 : .2 }}>
-                    {moment.eventRole && <p className={cn("mb-4 inline-flex rounded-full border-2 border-night px-3 py-1 text-xs font-bold", moment.eventRole === "Ambassador" ? "bg-mint text-forest" : "bg-paper text-ink")}>{moment.eventRole} · 3C Trix founder</p>}
-                    <p className="text-[10px] font-bold uppercase tracking-[.18em] text-forest">{moment.label}</p>
-                    <h4 className="mt-5 max-w-sm text-3xl font-semibold leading-tight text-ink sm:text-4xl">{moment.title}</h4>
-                    <p className="mt-6 max-w-md text-base leading-8 text-slate">{moment.text}</p>
-                    <p className="mt-5 text-xs leading-6 text-slate">{moment.caption}</p>
-                    {moment.links && <div className={cn("mt-5 gap-3", moment.linkLayout === "list" ? "grid" : "flex flex-wrap")}>{moment.links.map((link) => <StoryResourceLink key={`${link.href}-${link.label}`} link={link} block={moment.linkLayout === "list"} />)}</div>}
-                    {moment.resourceNote && <p className="mt-3 text-xs leading-6 text-slate">{moment.resourceNote}</p>}
-                  </motion.div>
-                </AnimatePresence>
+          <div className="overflow-hidden rounded-3xl border border-night/25 bg-white shadow-[0_16px_44px_#0e17120c]" data-story-gallery>
+            <div role="region" aria-label={`Photo story: ${moment.title}`} tabIndex={0} onKeyDown={navigateWithKeys} className="grid xl:grid-cols-[1fr_1fr]">
+              <div className="relative min-w-0 bg-[#e4e9df] p-4 sm:p-5">
+                <button type="button" onClick={() => setExpanded(true)} aria-label={`Enlarge image: ${moment.title}`} className="relative block w-full overflow-hidden rounded-2xl bg-white">
+                  <span className="relative block h-[min(52svh,26rem)] min-h-64 sm:h-[28rem]">
+                    <motion.span key={moment.id} className="absolute inset-0 block" initial={reducedMotion ? false : { opacity: 0, scale: 1.055 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reducedMotion ? 0 : .8, ease: [.22, 1, .36, 1] }}><StoryImage image={moment.image} sizes="(max-width: 1280px) 90vw, 460px" priority={chapterIndex === 0 && momentIndex === 0} /></motion.span>
+                  </span><span className="absolute bottom-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-forest"><Expand size={16} aria-hidden /></span>
+                </button>
               </div>
-
-              <div className="mt-8 border-t-2 border-night/10 pt-5 lg:mt-auto lg:pt-6">
-                <p className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.15em] text-forest"><BookOpen size={14} aria-hidden /> Images in this chapter</p>
-                <div ref={thumbnailStrip} role="tablist" aria-label={`${chapter.title} images`} className="flex gap-3 overflow-x-auto p-1 pb-3" onKeyDown={(event) => navigateWithKeys(event, true)}>
-                  {chapter.moments.map((item, index) => (
-                    <button key={item.id} ref={(node) => { thumbnailButtons.current[index] = node; }} type="button" role="tab" id={`${id}-photo-${index}`} aria-selected={momentIndex === index} aria-controls={`${id}-story`} tabIndex={momentIndex === index ? 0 : -1} onClick={() => chooseMoment(index)} aria-label={`Image ${index + 1}: ${item.title}`}
-                      className={cn("relative h-20 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-mint-soft", momentIndex === index ? "border-forest ring-2 ring-forest ring-offset-2" : "border-night/25 opacity-60 transition-opacity hover:opacity-100")}>
-                      <StoryImage image={{ ...item.image, src: item.image.thumbnail, alt: "" }} sizes="64px" />
-                    </button>
-                  ))}
-                </div>
-                <div className="mt-3 flex items-center justify-between gap-3" role="group" aria-label="Photo navigation">
-                  <button type="button" onClick={() => move(-1)} disabled={previousDisabled} className={cn(controlClass, "bg-white text-forest hover:bg-mint")}><ArrowLeft size={15} aria-hidden />Previous</button>
-                  <button type="button" onClick={() => move(1)} disabled={nextDisabled} className={cn(controlClass, "bg-night text-white hover:bg-forest")}>Next<ArrowRight size={15} aria-hidden /></button>
-                </div>
+              <div className="flex min-w-0 flex-col justify-center p-5 sm:p-7">
+                <motion.div key={moment.id} aria-live="polite" aria-atomic="true" initial={reducedMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : .5, delay: reducedMotion ? 0 : .1 }}>
+                  {moment.eventRole && <p className="mb-3 text-xs font-bold text-forest">{moment.eventRole} · 3C Trix founder</p>}
+                  <p className="text-[10px] font-bold uppercase tracking-[.14em] text-forest">{moment.label}</p><h4 className="mt-4 text-2xl font-semibold leading-tight text-ink sm:text-3xl">{moment.title}</h4><p className="mt-4 text-sm leading-7 text-slate">{moment.text}</p><p className="mt-4 text-[11px] leading-6 text-slate">{moment.caption}</p>
+                  {moment.links && <div className="mt-4 grid gap-1">{moment.links.map((link) => <StoryResourceLink key={`${link.href}-${link.label}`} link={link} />)}</div>}
+                  {moment.resourceNote && <p className="mt-3 text-xs leading-6 text-slate">{moment.resourceNote}</p>}
+                </motion.div>
               </div>
             </div>
+            <div className="flex items-end gap-3 border-t border-night/15 p-4 sm:px-5" role="group" aria-label="Photo navigation">
+              <div className="min-w-0 flex-1"><label htmlFor={`${id}-photo-select`} className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-forest">Photo {momentIndex + 1} / {chapter.moments.length}</label><select id={`${id}-photo-select`} value={momentIndex} onChange={(event) => setMomentIndex(Number(event.target.value))} className="min-h-11 w-full truncate rounded-lg border border-night/20 bg-paper px-2 text-xs text-ink">{chapter.moments.map((item, index) => <option key={item.id} value={index}>{index + 1}. {item.group ? `${item.group} — ` : ""}{item.title}</option>)}</select></div>
+              <button type="button" aria-label="Previous photo" onClick={() => move(-1)} disabled={previousDisabled} className={cn(controlClass, "bg-white text-forest hover:bg-mint")}><ArrowLeft size={17} aria-hidden /></button><button type="button" aria-label="Next photo" onClick={() => move(1)} disabled={nextDisabled} className={cn(controlClass, "bg-night text-white hover:bg-forest")}><ArrowRight size={17} aria-hidden /></button>
+            </div>
+            <motion.div aria-hidden className="h-[3px] origin-left bg-forest" initial={false} animate={{ scaleX: (momentIndex + 1) / chapter.moments.length }} transition={{ duration: reducedMotion ? 0 : .45 }} />
           </div>
-        </div>
+
+          {(chapter.results || chapter.highlights) && <details key={chapter.id} className="group mt-6 border-y border-night/20"><summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-forest [&::-webkit-details-marker]:hidden">Details & milestones<ChevronDown size={16} aria-hidden className="transition-transform duration-300 group-open:rotate-180" /></summary><div className="pb-6">
+            {chapter.results && <dl aria-label="Academic results" className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">{chapter.results.map((result) => <div key={result.label}><dt className="text-[10px] font-bold text-forest">{result.label}</dt><dd className="mt-1 text-xl font-semibold">{result.value}</dd></div>)}</dl>}
+            <div className="grid gap-5 sm:grid-cols-2">{chapter.highlights?.map((highlight) => <div key={highlight.title}><h4 className="text-sm font-semibold text-ink">{highlight.title}</h4><p className="mt-2 text-xs leading-6 text-slate">{highlight.text}</p>{highlight.links?.map((link) => <StoryResourceLink key={link.href} link={link} />)}</div>)}</div>
+          </div></details>}
+        </motion.div>
       </div>
 
-      <dialog ref={dialog} aria-labelledby={`${id}-viewer-title`} onCancel={() => setExpanded(false)} onClose={() => setExpanded(false)} onClick={(event) => { if (event.target === event.currentTarget) setExpanded(false); }} onKeyDown={(event) => navigateWithKeys(event)} className="fixed inset-0 m-auto w-[calc(100%-1.5rem)] max-w-5xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-2xl border-[3px] border-night bg-paper p-4 text-ink shadow-2xl backdrop:bg-night/90 sm:p-6">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <p id={`${id}-viewer-title`} className="text-sm font-semibold">{moment.title}</p>
-          <button type="button" ref={closeButton} aria-label="Close photo viewer" onClick={() => setExpanded(false)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-night bg-white text-forest"><X size={19} aria-hidden /></button>
-        </div>
-        {expanded && <div className="relative h-[65dvh] w-full rounded-xl bg-white"><StoryImage image={moment.image} sizes="95vw" /></div>}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-slate">{moment.caption} · {momentIndex + 1} / {chapter.moments.length}</p>
-          <div className="flex gap-2" role="group" aria-label="Enlarged photo navigation">
-            <button type="button" aria-label="Previous enlarged photo" disabled={previousDisabled} onClick={() => move(-1)} className={cn(controlClass, "bg-white text-forest")}><ArrowLeft size={15} aria-hidden />Previous</button>
-            <button type="button" aria-label="Next enlarged photo" disabled={nextDisabled} onClick={() => move(1)} className={cn(controlClass, "bg-night text-white")}>Next<ArrowRight size={15} aria-hidden /></button>
-          </div>
-        </div>
+      <dialog ref={dialog} aria-labelledby={`${id}-viewer-title`} onCancel={() => setExpanded(false)} onClose={() => setExpanded(false)} onClick={(event) => { if (event.target === event.currentTarget) setExpanded(false); }} className="fixed inset-0 m-auto max-h-[calc(100dvh-1.5rem)] w-[calc(100%-1.5rem)] max-w-5xl overflow-y-auto rounded-2xl border border-night bg-paper p-4 text-ink shadow-2xl backdrop:bg-night/90 sm:p-6">
+        <div className="mb-4 flex items-center justify-between gap-4"><p id={`${id}-viewer-title`} className="text-sm font-semibold">{moment.title}</p><button type="button" ref={closeButton} aria-label="Close photo viewer" onClick={() => setExpanded(false)} className={cn(controlClass, "bg-white text-forest")}><X size={19} aria-hidden /></button></div>
+        {expanded && <div className="relative h-[65dvh] w-full rounded-xl bg-white" tabIndex={0} onKeyDown={navigateWithKeys}><StoryImage image={moment.image} sizes="95vw" /></div>}
+        <div className="mt-4 flex items-center justify-between gap-3"><p className="text-xs text-slate">{momentIndex + 1} / {chapter.moments.length}</p><div className="flex gap-2"><button type="button" aria-label="Previous enlarged photo" disabled={previousDisabled} onClick={() => move(-1)} className={cn(controlClass, "bg-white text-forest")}><ArrowLeft size={16} aria-hidden /></button><button type="button" aria-label="Next enlarged photo" disabled={nextDisabled} onClick={() => move(1)} className={cn(controlClass, "bg-night text-white")}><ArrowRight size={16} aria-hidden /></button></div></div>
       </dialog>
     </div>
   );
@@ -210,17 +110,10 @@ function StoryImage({ image, sizes, priority = false }: { image: StoryMoment["im
   const clipId = useId().replace(/:/g, "");
   if (!image.crop) return <Image src={image.src} alt={image.alt} fill sizes={sizes} priority={priority} className="object-contain" />;
   const { x, y, width, height } = image.crop;
-  // A viewport crop only: the supplied photograph is never regenerated or retouched.
-  // Apply the same frame to the main view, thumbnail and enlarged viewer.
-  return <svg viewBox={`${x} ${y} ${width} ${height}`} preserveAspectRatio="xMidYMid meet" role={image.alt ? "img" : undefined} aria-label={image.alt || undefined} aria-hidden={!image.alt || undefined} focusable="false" className="absolute inset-0 h-full w-full overflow-hidden">
-    <defs><clipPath id={clipId}><rect x={x} y={y} width={width} height={height} /></clipPath></defs>
-    <image href={image.src} width={image.width} height={image.height} clipPath={`url(#${clipId})`} />
-  </svg>;
+  return <svg viewBox={`${x} ${y} ${width} ${height}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={image.alt} focusable="false" className="absolute inset-0 h-full w-full overflow-hidden"><defs><clipPath id={clipId}><rect x={x} y={y} width={width} height={height} /></clipPath></defs><image href={image.src} width={image.width} height={image.height} clipPath={`url(#${clipId})`} /></svg>;
 }
 
-function StoryResourceLink({ link, compact = false, block = false }: { link: StoryLink; compact?: boolean; block?: boolean }) {
+function StoryResourceLink({ link }: { link: StoryLink }) {
   const Icon = link.download ? Download : ExternalLink;
-  return <a href={link.href} download={link.download || undefined} target={link.download ? undefined : "_blank"} rel={link.download ? undefined : "noopener noreferrer"} className={cn("inline-flex min-h-11 items-center gap-2 text-xs font-semibold", block ? "justify-between rounded-2xl border-2 border-night bg-white px-4 py-3 text-left leading-6 text-forest transition-colors hover:bg-mint" : compact ? "justify-center text-forest underline underline-offset-4" : "justify-center rounded-full border-2 border-night bg-white px-4 py-2 text-forest transition-colors hover:bg-mint")}>
-    {link.label}<Icon size={14} aria-hidden className="shrink-0" />
-  </a>;
+  return <a href={link.href} download={link.download || undefined} target={link.download ? undefined : "_blank"} rel={link.download ? undefined : "noopener noreferrer"} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold leading-6 text-forest underline underline-offset-4">{link.label}<Icon size={13} aria-hidden className="shrink-0" /></a>;
 }
