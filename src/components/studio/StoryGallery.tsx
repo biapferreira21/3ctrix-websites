@@ -64,7 +64,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
 
   return (
     <div>
-      <nav aria-label="Story chapters" className="mb-8 flex flex-wrap gap-3">
+      <nav aria-label="Story chapters" className="sticky top-[5.25rem] z-30 mb-8 flex flex-wrap gap-3 bg-mint-soft/95 py-3 backdrop-blur-sm">
         {chapters.map((item, index) => (
           <button key={item.id} type="button" aria-pressed={chapterIndex === index} aria-controls={`${id}-chapter`} onClick={() => { setChapterIndex(index); setMomentIndex(0); }}
             className={cn("inline-flex min-h-12 items-center gap-3 rounded-full border-2 border-night px-5 py-3 text-sm font-semibold", chapterIndex === index ? "bg-night text-white shadow-[3px_3px_0_#8FA38A]" : "bg-white text-ink hover:bg-mint")}>
