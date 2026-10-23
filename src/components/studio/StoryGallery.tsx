@@ -78,10 +78,10 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
 
   return (
     <div>
-      <nav aria-label="Story chapters" className="sticky top-[5.25rem] z-30 mb-8 flex flex-wrap gap-3 bg-mint-soft/95 py-3 backdrop-blur-sm">
+      <nav aria-label="Story chapters" className="sticky top-[5.25rem] z-30 mb-8 flex gap-3 overflow-x-auto bg-mint-soft/95 py-3 pr-2 backdrop-blur-sm">
         {chapters.map((item, index) => (
           <button key={item.id} type="button" aria-pressed={chapterIndex === index} aria-controls={`${id}-chapter`} onClick={() => { setChapterIndex(index); setMomentIndex(0); }}
-            className={cn("inline-flex min-h-12 items-center gap-3 rounded-full border-2 border-night px-5 py-3 text-sm font-semibold", chapterIndex === index ? "bg-night text-white shadow-[3px_3px_0_#8FA38A]" : "bg-white text-ink hover:bg-mint")}>
+            className={cn("inline-flex min-h-12 shrink-0 items-center gap-3 whitespace-nowrap rounded-full border-2 border-night px-5 py-3 text-sm font-semibold", chapterIndex === index ? "bg-night text-white shadow-[3px_3px_0_#8FA38A]" : "bg-white text-ink hover:bg-mint")}>
             <span className="text-[10px] opacity-60">{String(index + 1).padStart(2, "0")}</span>{item.title}
           </button>
         ))}
@@ -90,6 +90,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
       <div id={`${id}-chapter`}>
         <div className="mb-8 grid gap-5 lg:grid-cols-[1fr_1.15fr] lg:items-end">
           <div>
+            {chapter.identityImage && <Image src={chapter.identityImage.src} alt={chapter.identityImage.alt} width={64} height={64} className="mb-4 rounded-full border-2 border-night bg-white" />}
             <p className="text-[10px] font-bold uppercase tracking-[.18em] text-forest">{chapter.eyebrow}</p>
             <h3 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-4xl">{chapter.title}</h3>
           </div>
@@ -126,8 +127,8 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
 
         <div className="overflow-hidden rounded-[1.75rem] border-[3px] border-night bg-white shadow-[7px_7px_0_#16180F]" data-story-gallery>
           <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-night bg-[#f5f1e8] px-4 py-3 sm:px-6">
-            <p className="flex items-center gap-2 text-xs font-semibold text-forest"><Hand size={15} aria-hidden /> Choose a photo. Read its story.</p>
-            <span className="font-mono text-[11px] font-bold text-slate" aria-live="polite" aria-atomic="true">Photo {momentIndex + 1} of {chapter.moments.length}</span>
+            <p className="flex items-center gap-2 text-xs font-semibold text-forest"><Hand size={15} aria-hidden /> Choose an image. Read its story.</p>
+            <span className="font-mono text-[11px] font-bold text-slate" aria-live="polite" aria-atomic="true">Image {momentIndex + 1} of {chapter.moments.length}</span>
           </div>
 
           {groups.length > 1 && (
@@ -140,7 +141,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
           <div role="tabpanel" id={`${id}-story`} aria-labelledby={`${id}-photo-${momentIndex}`} tabIndex={0} onKeyDown={(event) => navigateWithKeys(event)} className="grid lg:grid-cols-[1.05fr_.95fr]">
             <div className="relative min-w-0 border-b-2 border-night bg-mint-soft p-4 sm:p-6 lg:border-b-0 lg:border-r-2">
               <div aria-hidden className="bg-grid absolute inset-0 opacity-50" />
-              <button type="button" onClick={() => setExpanded(true)} aria-label={`Enlarge photograph: ${moment.title}`} className="relative block w-full rounded-2xl border-2 border-night bg-white shadow-[4px_4px_0_#8FA38A]">
+              <button type="button" onClick={() => setExpanded(true)} aria-label={`Enlarge image: ${moment.title}`} className="relative block w-full rounded-2xl border-2 border-night bg-white shadow-[4px_4px_0_#8FA38A]">
                 <span className="relative block h-[min(56svh,28rem)] min-h-64 overflow-hidden rounded-[.8rem] sm:h-[30rem]">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.span key={moment.id} className="absolute inset-0 block" initial={reducedMotion ? false : { opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }} exit={reducedMotion ? undefined : { opacity: 0, x: -10 }} transition={{ duration: reducedMotion ? 0 : .22 }}>
@@ -148,7 +149,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
                     </motion.span>
                   </AnimatePresence>
                 </span>
-                <span className="absolute bottom-3 right-3 inline-flex min-h-10 items-center gap-2 rounded-full border-2 border-night bg-white/95 px-3 py-2 text-[10px] font-bold text-forest"><Expand size={13} aria-hidden /> Enlarge photo</span>
+                <span className="absolute bottom-3 right-3 inline-flex min-h-10 items-center gap-2 rounded-full border-2 border-night bg-white/95 px-3 py-2 text-[10px] font-bold text-forest"><Expand size={13} aria-hidden /> Enlarge image</span>
               </button>
             </div>
 
@@ -156,21 +157,22 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
               <div className="min-h-48" aria-live="polite" aria-atomic="true">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div key={moment.id} initial={reducedMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={reducedMotion ? undefined : { opacity: 0 }} transition={{ duration: reducedMotion ? 0 : .2 }}>
+                    {moment.eventRole && <p className={cn("mb-4 inline-flex rounded-full border-2 border-night px-3 py-1 text-xs font-bold", moment.eventRole === "Ambassador" ? "bg-mint text-forest" : "bg-paper text-ink")}>{moment.eventRole} · 3C Trix founder</p>}
                     <p className="text-[10px] font-bold uppercase tracking-[.18em] text-forest">{moment.label}</p>
                     <h4 className="mt-5 max-w-sm text-3xl font-semibold leading-tight text-ink sm:text-4xl">{moment.title}</h4>
                     <p className="mt-6 max-w-md text-base leading-8 text-slate">{moment.text}</p>
                     <p className="mt-5 text-xs leading-6 text-slate">{moment.caption}</p>
-                    {moment.links && <div className="mt-5 flex flex-wrap gap-3">{moment.links.map((link) => <StoryResourceLink key={`${link.href}-${link.label}`} link={link} />)}</div>}
+                    {moment.links && <div className={cn("mt-5 gap-3", moment.linkLayout === "list" ? "grid" : "flex flex-wrap")}>{moment.links.map((link) => <StoryResourceLink key={`${link.href}-${link.label}`} link={link} block={moment.linkLayout === "list"} />)}</div>}
                     {moment.resourceNote && <p className="mt-3 text-xs leading-6 text-slate">{moment.resourceNote}</p>}
                   </motion.div>
                 </AnimatePresence>
               </div>
 
               <div className="mt-8 border-t-2 border-night/10 pt-5 lg:mt-auto lg:pt-6">
-                <p className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.15em] text-forest"><BookOpen size={14} aria-hidden /> Photographs in this chapter</p>
-                <div ref={thumbnailStrip} role="tablist" aria-label={`${chapter.title} photographs`} className="flex gap-3 overflow-x-auto p-1 pb-3" onKeyDown={(event) => navigateWithKeys(event, true)}>
+                <p className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.15em] text-forest"><BookOpen size={14} aria-hidden /> Images in this chapter</p>
+                <div ref={thumbnailStrip} role="tablist" aria-label={`${chapter.title} images`} className="flex gap-3 overflow-x-auto p-1 pb-3" onKeyDown={(event) => navigateWithKeys(event, true)}>
                   {chapter.moments.map((item, index) => (
-                    <button key={item.id} ref={(node) => { thumbnailButtons.current[index] = node; }} type="button" role="tab" id={`${id}-photo-${index}`} aria-selected={momentIndex === index} aria-controls={`${id}-story`} tabIndex={momentIndex === index ? 0 : -1} onClick={() => chooseMoment(index)} aria-label={`Photo ${index + 1}: ${item.title}`}
+                    <button key={item.id} ref={(node) => { thumbnailButtons.current[index] = node; }} type="button" role="tab" id={`${id}-photo-${index}`} aria-selected={momentIndex === index} aria-controls={`${id}-story`} tabIndex={momentIndex === index ? 0 : -1} onClick={() => chooseMoment(index)} aria-label={`Image ${index + 1}: ${item.title}`}
                       className={cn("relative h-20 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-mint-soft", momentIndex === index ? "border-forest ring-2 ring-forest ring-offset-2" : "border-night/25 opacity-60 transition-opacity hover:opacity-100")}>
                       <Image src={item.image.thumbnail} alt="" fill sizes="64px" className="object-contain" loading="lazy" />
                     </button>
@@ -204,9 +206,9 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
   );
 }
 
-function StoryResourceLink({ link, compact = false }: { link: StoryLink; compact?: boolean }) {
+function StoryResourceLink({ link, compact = false, block = false }: { link: StoryLink; compact?: boolean; block?: boolean }) {
   const Icon = link.download ? Download : ExternalLink;
-  return <a href={link.href} download={link.download || undefined} target={link.download ? undefined : "_blank"} rel={link.download ? undefined : "noopener noreferrer"} className={cn("inline-flex min-h-11 items-center justify-center gap-2 text-xs font-semibold", compact ? "text-forest underline underline-offset-4" : "rounded-full border-2 border-night bg-white px-4 py-2 text-forest transition-colors hover:bg-mint")}>
+  return <a href={link.href} download={link.download || undefined} target={link.download ? undefined : "_blank"} rel={link.download ? undefined : "noopener noreferrer"} className={cn("inline-flex min-h-11 items-center gap-2 text-xs font-semibold", block ? "justify-between rounded-2xl border-2 border-night bg-white px-4 py-3 text-left leading-6 text-forest transition-colors hover:bg-mint" : compact ? "justify-center text-forest underline underline-offset-4" : "justify-center rounded-full border-2 border-night bg-white px-4 py-2 text-forest transition-colors hover:bg-mint")}>
     {link.label}<Icon size={14} aria-hidden className="shrink-0" />
   </a>;
 }

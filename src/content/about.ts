@@ -8,7 +8,9 @@ export type StoryMoment = {
   text: string;
   caption: string;
   links?: readonly StoryLink[];
+  linkLayout?: "list";
   resourceNote?: string;
+  eventRole?: "Ambassador" | "Attendee";
   image: { src: string; thumbnail: string; alt: string; width: number; height: number };
 };
 
@@ -18,6 +20,7 @@ export type StoryChapter = {
   eyebrow: string;
   introduction: string;
   topics: readonly string[];
+  identityImage?: { src: string; alt: string };
   results?: readonly { label: string; value: string }[];
   highlights?: readonly { title: string; text: string; links?: readonly StoryLink[] }[];
   moments: readonly StoryMoment[];
@@ -175,11 +178,138 @@ export const storyChapters: readonly StoryChapter[] = [
       {
         id: "research-to-events-ebc-daf",
         title: "Where research met the room.",
-        label: "EBC Barcelona & DAF London",
+        label: "EBC & DAF · Research and writing",
         group: "Into events",
-        text: "I also did research for EBC Barcelona and DAF London. These collaborations were part of how I began attending more events — a bridge from researching the industry to being present in the rooms where it comes together.",
-        caption: "At European Blockchain Convention in Barcelona. DAF London was a separate research collaboration.",
-        image: { src: "/about/ebc-barcelona-research.webp", thumbnail: "/about/ebc-barcelona-research-thumb.webp", alt: "Beatriz Ferreira at European Blockchain Convention in front of the event’s sponsor backdrop.", width: 1080, height: 1440 },
+        text: "I also did research for EBC Barcelona and DAF London. These four pieces are examples of my work for DAF, published on the European Blockchain Convention website. These collaborations also became a bridge into attending more industry events.",
+        caption: "A visual index of the writing linked here, not an original publication cover.",
+        linkLayout: "list",
+        links: [
+          { label: "Where Institutional Digital Asset Budgets Are Flowing in 2026", href: "https://eblockchainconvention.com/where-institutional-digital-asset-budgets-are-flowing-in-2026/" },
+          { label: "Digital Assets Forum Expands to Two Days", href: "https://eblockchainconvention.com/digital-assets-forum-expands-to-two-days/" },
+          { label: "How Sponsors Can Maximize ROI at Industry Events", href: "https://eblockchainconvention.com/sponsor-roi-industry-events-daf-2026/" },
+          { label: "How Leading Financial Institutions Evaluate Digital Asset Infrastructure Partners", href: "https://eblockchainconvention.com/how-leading-financial-institutions-evaluate-digital-asset-infrastructure-partners/" },
+        ],
+        image: { src: "/about/daf-research-publications.svg", thumbnail: "/about/daf-research-publications-thumb.webp", alt: "Editorial index of four DAF articles covering budgets, event communications, sponsor ROI and infrastructure partners.", width: 960, height: 1200 },
+      },
+    ],
+  },
+  {
+    id: "events-as-a-founder",
+    title: "Events as a founder",
+    eyebrow: "3C Trix · AI, crypto & technology",
+    introduction: "I attended these events as the founder of 3C Trix: five as an ambassador, and others as an attendee. This became another part of my work alongside research — being present at industry events, in different cities and across different fields.",
+    topics: ["Ambassador roles", "Conference attendance", "3C Trix founder"],
+    identityImage: { src: "/about/founder-event-brand.webp", alt: "3C Trix Studio logo supplied by Beatriz Ferreira." },
+    moments: [
+      {
+        id: "ebc-barcelona-ambassador",
+        title: "EBC Barcelona.",
+        label: "Barcelona · Event ambassador",
+        group: "EBC Barcelona",
+        eventRole: "Ambassador",
+        text: "I was an ambassador for European Blockchain Convention in Barcelona and attended as the founder of 3C Trix. Alongside my research collaboration with EBC, this was part of how I began going to more industry events.",
+        caption: "At European Blockchain Convention in Barcelona.",
+        image: { src: "/about/ebc-barcelona-research.webp", thumbnail: "/about/ebc-barcelona-research-thumb.webp", alt: "Beatriz Ferreira at European Blockchain Convention in Barcelona, in front of the event backdrop.", width: 1080, height: 1440 },
+      },
+      {
+        id: "daf-london-ambassador",
+        title: "DAF London.",
+        label: "London · Event ambassador",
+        group: "DAF London",
+        eventRole: "Ambassador",
+        text: "I was also an ambassador for DAF London and attended as the founder of 3C Trix. Like EBC Barcelona, DAF was both a research collaboration and part of the beginning of my wider involvement in events.",
+        caption: "An original editorial illustration of London, not an event photograph or official DAF artwork.",
+        image: { src: "/about/daf-london-illustration.svg", thumbnail: "/about/daf-london-illustration-thumb.webp", alt: "Editorial illustration for DAF London, with a London bridge and connected nodes; not an event photograph.", width: 960, height: 1200 },
+      },
+      {
+        id: "proof-of-talk-ambassador",
+        title: "Proof of Talk, Paris.",
+        label: "Paris · Event ambassador",
+        group: "Proof of Talk",
+        eventRole: "Ambassador",
+        text: "I was an ambassador for Proof of Talk in Paris, attending as the founder of 3C Trix. This is the ambassador artwork featuring my name and the 3CTrix code.",
+        caption: "My supplied Proof of Talk ambassador artwork. The dates and code belong to that edition, not a current ticket offer.",
+        image: { src: "/about/proof-of-talk-ambassador.webp", thumbnail: "/about/proof-of-talk-ambassador-thumb.webp", alt: "Proof of Talk ambassador artwork featuring Beatriz Ferreira, the 3CTrix code and the Paris event dates in June 2026.", width: 1024, height: 1280 },
+      },
+      {
+        id: "proof-of-talk-founder-pass",
+        title: "A pass with my founder title.",
+        label: "Proof of Talk · In person",
+        group: "Proof of Talk",
+        eventRole: "Ambassador",
+        text: "My Proof of Talk pass identifies me as 3C Trix Founder. A small keepsake from being there in person, alongside my ambassador role.",
+        caption: "My Proof of Talk pass, with the 3C Trix founder title.",
+        image: { src: "/about/proof-of-talk-founder-pass.webp", thumbnail: "/about/proof-of-talk-founder-pass-thumb.webp", alt: "A Proof of Talk pass bearing Beatriz Ferreira’s name and the title 3C Trix Founder.", width: 1080, height: 1920 },
+      },
+      {
+        id: "ai-summit-barcelona-ambassador",
+        title: "AI Summit Barcelona.",
+        label: "Barcelona · Event ambassador",
+        group: "AI Summit Barcelona",
+        eventRole: "Ambassador",
+        text: "My ambassador roles also extended into AI. I was an ambassador for AI Summit Barcelona and attended the event as the founder of 3C Trix.",
+        caption: "Outside AI Summit Barcelona.",
+        image: { src: "/about/ai-summit-barcelona.webp", thumbnail: "/about/ai-summit-barcelona-thumb.webp", alt: "Beatriz Ferreira standing beside the large AI Summit Barcelona event lettering.", width: 1600, height: 1225 },
+      },
+      {
+        id: "ai-summit-barcelona-founder-pass",
+        title: "Representing 3C Trix.",
+        label: "AI Summit Barcelona · Founder pass",
+        group: "AI Summit Barcelona",
+        eventRole: "Ambassador",
+        text: "The event badge lists my role as Founder and my company as 3CTRIX. The badge is an attendance pass; my ambassador role was a separate part of my involvement.",
+        caption: "My AI Summit Barcelona attendance badge.",
+        image: { src: "/about/ai-summit-barcelona-pass.webp", thumbnail: "/about/ai-summit-barcelona-pass-thumb.webp", alt: "AI Summit Barcelona badge bearing Beatriz Ferreira’s name, Founder title and 3CTRIX company name.", width: 1199, height: 2000 },
+      },
+      {
+        id: "lisbon-ai-week-ambassador",
+        title: "Lisbon AI Week.",
+        label: "Lisbon · Event ambassador",
+        group: "Lisbon AI Week",
+        eventRole: "Ambassador",
+        text: "I was an ambassador for Lisbon AI Week too, attending as the founder of 3C Trix. It is another part of my involvement in AI events, alongside the crypto and technology conferences.",
+        caption: "An original editorial illustration of Lisbon, not an event photograph or official Lisbon AI Week artwork.",
+        image: { src: "/about/lisbon-ai-week-illustration.svg", thumbnail: "/about/lisbon-ai-week-illustration-thumb.webp", alt: "Editorial illustration for Lisbon AI Week, with a Lisbon-inspired skyline, river and connected nodes; not an event photograph.", width: 960, height: 1200 },
+      },
+      {
+        id: "web-summit-lisbon-attendee",
+        title: "Web Summit, Lisbon.",
+        label: "Lisbon · Conference attendee",
+        group: "Web Summit Lisbon",
+        eventRole: "Attendee",
+        text: "Not every event was an ambassador role. I also attended Web Summit in Lisbon as the founder of 3C Trix, as part of my wider participation in technology events.",
+        caption: "At Web Summit in Lisbon, as an attendee rather than an ambassador.",
+        image: { src: "/about/web-summit-lisbon.webp", thumbnail: "/about/web-summit-lisbon-thumb.webp", alt: "Beatriz Ferreira standing in front of the large Web Summit sign in Lisbon.", width: 1600, height: 1200 },
+      },
+      {
+        id: "web-summit-lisbon-attendee-pass",
+        title: "A moment from the conference.",
+        label: "Web Summit Lisbon · Attendance",
+        group: "Web Summit Lisbon",
+        eventRole: "Attendee",
+        text: "A photograph with my Web Summit attendee pass — another moment from the event, and from this part of my story as a founder.",
+        caption: "My original Web Summit pass photograph.",
+        image: { src: "/about/web-summit-lisbon-pass.webp", thumbnail: "/about/web-summit-lisbon-pass-thumb.webp", alt: "Beatriz Ferreira holding a Web Summit Lisbon attendee pass in a selfie.", width: 1080, height: 1920 },
+      },
+      {
+        id: "ai-week-italy-attendee",
+        title: "AI Week, Italy.",
+        label: "Italy · Conference attendee",
+        group: "AI Week Italy",
+        eventRole: "Attendee",
+        text: "I also attended AI Week in Italy as the founder of 3C Trix. Here, too, I was participating as an attendee, not as an ambassador.",
+        caption: "At AI Week in Italy.",
+        image: { src: "/about/ai-week-italy.webp", thumbnail: "/about/ai-week-italy-thumb.webp", alt: "Beatriz Ferreira standing beside a large AI Week event backdrop in Italy.", width: 1080, height: 1920 },
+      },
+      {
+        id: "ai-week-italy-business-pass",
+        title: "3C Trix on the badge.",
+        label: "AI Week Italy · Business pass",
+        group: "AI Week Italy",
+        eventRole: "Attendee",
+        text: "My AI Week business pass bears my name and 3C TRIX. These photographs close this chapter of the AI, crypto and technology events I attended as a founder.",
+        caption: "My AI Week Italy business pass.",
+        image: { src: "/about/ai-week-italy-pass.webp", thumbnail: "/about/ai-week-italy-pass-thumb.webp", alt: "AI Week business pass bearing Beatriz Ferreira’s name and 3C TRIX.", width: 1080, height: 1920 },
       },
     ],
   },

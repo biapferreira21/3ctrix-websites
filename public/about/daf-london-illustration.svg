@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1200" viewBox="0 0 960 1200" role="img" aria-labelledby="title desc">
+  <title id="title">DAF London - an illustrated chapter marker</title>
+  <desc id="desc">An editorial illustration of a London bridge and connected ideas, not a photograph or official event artwork.</desc>
+  <style>
+    .signal{stroke-dasharray:12 18;animation:flow 12s linear infinite}
+    @keyframes flow{to{stroke-dashoffset:-240}}
+    @media(prefers-reduced-motion:reduce){.signal{animation:none}}
+  </style>
+  <defs><pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#d8dfd1" stroke-width="1"/></pattern></defs>
+  <rect width="960" height="1200" fill="#f5f1e8"/>
+  <rect x="32" y="32" width="896" height="1136" rx="46" fill="url(#grid)" stroke="#16180f" stroke-width="4"/>
+  <g font-family="Arial,Helvetica,sans-serif" fill="#164d3d">
+    <text x="90" y="122" font-size="20" letter-spacing="5">EVENT AMBASSADOR</text>
+    <text x="84" y="274" font-size="130" font-weight="700" fill="#16180f">DAF</text>
+    <text x="90" y="363" font-size="72">London.</text>
+  </g>
+  <circle cx="731" cy="299" r="85" fill="#d9e5cf" stroke="#16180f" stroke-width="3"/>
+  <path class="signal" d="M127 474C250 384 353 580 480 486S714 382 823 480" fill="none" stroke="#164d3d" stroke-width="5"/>
+  <g fill="#fff" stroke="#16180f" stroke-width="5" stroke-linejoin="round">
+    <path d="M220 870V625L260 575L300 625V870ZM660 870V625L700 575L740 625V870Z"/>
+    <path d="M212 640H308V683H212ZM652 640H748V683H652Z" fill="#8fa38a"/>
+    <path d="M260 573V528M700 573V528M157 840H803V873H157"/>
+    <path d="M300 707C420 808 540 808 660 707M300 730H660" fill="none"/>
+    <path d="M340 752V840M400 775V840M460 785V840M520 785V840M580 775V840M620 752V840" fill="none" stroke-width="3"/>
+  </g>
+  <path d="M90 930Q180 910 270 930T450 930T630 930T810 930M90 958Q180 938 270 958T450 958T630 958T810 958" fill="none" stroke="#164d3d" stroke-width="3"/>
+  <g fill="#164d3d" stroke="#f5f1e8" stroke-width="6"><circle cx="127" cy="474" r="12"/><circle cx="480" cy="486" r="12"/><circle cx="823" cy="480" r="12"/></g>
+  <path d="M90 1034H870" stroke="#16180f" stroke-width="2"/>
+  <g font-family="Arial,Helvetica,sans-serif" fill="#164d3d"><text x="90" y="1083" font-size="23" font-weight="700">3C TRIX FOUNDER</text><text x="90" y="1124" font-size="16" letter-spacing="2">EDITORIAL ILLUSTRATION / NOT A PHOTOGRAPH</text></g>
+</svg>

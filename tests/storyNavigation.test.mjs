@@ -69,9 +69,35 @@ test("research collaborations lead into events without implying solo report auth
   assert.match(research.moments[1].caption, /does not show a specific publication I authored/);
   assert.match(research.moments[3].text, /alongside the Stablecoin Insider team and partners/);
   assert.equal(research.moments[2].links[0].href, "https://stablecoininsider.org/2025-stablecoin-year-end-report/");
-  assert.match(research.moments[4].text, /EBC Barcelona and DAF London/);
-  assert.match(research.moments[4].caption, /DAF London was a separate research collaboration/);
+  const dafWork = research.moments[4];
+  assert.match(dafWork.text, /EBC Barcelona and DAF London/);
+  assert.equal(dafWork.linkLayout, "list");
+  assert.equal(dafWork.image.src, "/about/daf-research-publications.svg");
+  assert.deepEqual(dafWork.links.map((link) => link.href), [
+    "https://eblockchainconvention.com/where-institutional-digital-asset-budgets-are-flowing-in-2026/",
+    "https://eblockchainconvention.com/digital-assets-forum-expands-to-two-days/",
+    "https://eblockchainconvention.com/sponsor-roi-industry-events-daf-2026/",
+    "https://eblockchainconvention.com/how-leading-financial-institutions-evaluate-digital-asset-infrastructure-partners/",
+  ]);
   assert.equal(existsSync(new URL("../public/about/stablecoin-insider-year-end-report-2025.pdf", import.meta.url)), false);
+});
+
+test("event chapter separates five ambassador events from two attendee events", () => {
+  const events = storyChapters.find((chapter) => chapter.id === "events-as-a-founder");
+  assert.ok(events);
+  assert.equal(events.moments.length, 11);
+  const groups = storyGroupStarts(events.moments);
+  assert.deepEqual(groups.map((group) => group.label), ["EBC Barcelona", "DAF London", "Proof of Talk", "AI Summit Barcelona", "Lisbon AI Week", "Web Summit Lisbon", "AI Week Italy"]);
+  assert.deepEqual(groups.map((group) => events.moments[group.index].eventRole), ["Ambassador", "Ambassador", "Ambassador", "Ambassador", "Ambassador", "Attendee", "Attendee"]);
+  assert.ok(existsSync(new URL(`../public${events.identityImage.src}`, import.meta.url)));
+  const illustrations = events.moments.filter((moment) => moment.image.src.endsWith(".svg"));
+  assert.equal(illustrations.length, 2);
+  for (const illustration of illustrations) {
+    assert.match(illustration.caption, /not an event photograph/);
+    const svg = readFileSync(new URL(`../public${illustration.image.src}`, import.meta.url), "utf8");
+    assert.match(svg, /prefers-reduced-motion:reduce/);
+    assert.ok(!svg.includes("<script"));
+  }
 });
 
 test("keyboard controls work without capturing unrelated keys", () => {
