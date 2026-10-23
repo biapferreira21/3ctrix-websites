@@ -110,7 +110,7 @@ export function StoryGallery({ chapters }: { chapters: readonly StoryChapter[] }
 
         {chapter.highlights && (
           <div className="mb-8">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[.15em] text-forest">University roles · select to explore</p>
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[.15em] text-forest">{chapter.highlightsLabel ?? "University roles · select to explore"}</p>
             <div className="grid items-start gap-3 lg:grid-cols-3">
               {chapter.highlights.map((highlight) => (
                 <details key={highlight.title} name={`${id}-roles`} className="group rounded-2xl border-2 border-night bg-white">

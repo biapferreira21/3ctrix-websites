@@ -100,6 +100,29 @@ test("event chapter separates five ambassador events from two attendee events", 
   }
 });
 
+test("Repsol story preserves trainee and product chronology without inventing outcomes", () => {
+  const repsol = storyChapters.find((chapter) => chapter.id === "repsol-product-management");
+  assert.ok(repsol);
+  assert.equal(repsol.moments.length, 5);
+  assert.equal(repsol.highlightsLabel, "My work · select to explore");
+  assert.deepEqual(storyGroupStarts(repsol.moments), [
+    { label: "Joining Repsol", index: 0 },
+    { label: "Trainee experiences", index: 1 },
+    { label: "My Repsol", index: 4 },
+  ]);
+  assert.match(repsol.moments[0].text, /early 2025, while finishing my master’s degree/);
+  assert.match(repsol.moments[0].text, /began working in pricing/);
+  assert.match(repsol.moments[1].text, /Madrid, to Repsol University and to Tarragona/);
+  const product = repsol.moments[4];
+  assert.match(product.text, /Since September 2025/);
+  assert.match(product.text, /Product Manager for the My Repsol app/);
+  assert.match(product.text, /automations and built AI agents/);
+  assert.match(product.caption, /not a claim that I designed or built every feature/);
+  assert.equal(repsol.results, undefined);
+  assert.ok(!JSON.stringify(repsol).includes("Microsoft"));
+  assert.ok(!JSON.stringify(repsol).includes("Rovo"));
+});
+
 test("keyboard controls work without capturing unrelated keys", () => {
   assert.equal(storyIndexFromKey("ArrowRight", 0, 60), 1);
   assert.equal(storyIndexFromKey("ArrowLeft", 0, 60), 0);

@@ -22,6 +22,7 @@ export type StoryChapter = {
   topics: readonly string[];
   identityImage?: { src: string; alt: string };
   results?: readonly { label: string; value: string }[];
+  highlightsLabel?: string;
   highlights?: readonly { title: string; text: string; links?: readonly StoryLink[] }[];
   moments: readonly StoryMoment[];
 };
@@ -310,6 +311,67 @@ export const storyChapters: readonly StoryChapter[] = [
         text: "My AI Week business pass bears my name and 3C TRIX. These photographs close this chapter of the AI, crypto and technology events I attended as a founder.",
         caption: "My AI Week Italy business pass.",
         image: { src: "/about/ai-week-italy-pass.webp", thumbnail: "/about/ai-week-italy-pass-thumb.webp", alt: "AI Week business pass bearing Beatriz Ferreira’s name and 3C TRIX.", width: 1080, height: 1920 },
+      },
+    ],
+  },
+  {
+    id: "repsol-product-management",
+    title: "Repsol & digital product",
+    eyebrow: "From early 2025 · Portugal",
+    introduction: "After The Block, I looked for a role in Portugal. Repsol took me from a trainee programme in pricing to product management for My Repsol — a consumer-facing app, and work I love that brings product management and technology together.",
+    topics: ["Pricing", "Trainee programme", "My Repsol", "Product management", "Automations & AI agents"],
+    highlightsLabel: "My work · select to explore",
+    highlights: [
+      { title: "Pricing · Early 2025", text: "I joined Repsol’s trainee programme in early 2025, starting in pricing while I was finishing my master’s degree." },
+      { title: "Product · Since September 2025", text: "Since September 2025, I’ve been Product Manager for the My Repsol app. I love the combination of product management and a digital, consumer-facing product." },
+      { title: "Automations & AI agents", text: "I’ve also developed automations and built AI agents in the platforms we use at work, supporting our day-to-day activities." },
+    ],
+    moments: [
+      {
+        id: "repsol-joining-trainee-programme",
+        title: "A new chapter in Portugal.",
+        label: "Early 2025 · Pricing trainee",
+        group: "Joining Repsol",
+        text: "After leaving The Block, I looked for a job in Portugal. In early 2025, while finishing my master’s degree, I joined Repsol’s trainee programme and began working in pricing.",
+        caption: "With my trainee group outside Repsol University.",
+        image: { src: "/about/repsol-trainee-group.webp", thumbnail: "/about/repsol-trainee-group-thumb.webp", alt: "Beatriz Ferreira with her trainee group outside the Repsol University building.", width: 1500, height: 2000 },
+      },
+      {
+        id: "repsol-trainee-experiences",
+        title: "The people along the way.",
+        label: "Repsol · Trainee programme",
+        group: "Trainee experiences",
+        text: "The trainee programme also gave me opportunities to travel with the group: to Repsol in Madrid, to Repsol University and to Tarragona. These photographs are part of that shared experience.",
+        caption: "A moment with the trainee group during the programme.",
+        image: { src: "/about/repsol-trainee-moments.webp", thumbnail: "/about/repsol-trainee-moments-thumb.webp", alt: "A group selfie with Beatriz Ferreira and fellow trainees outdoors.", width: 1600, height: 1200 },
+      },
+      {
+        id: "repsol-university-visit",
+        title: "At Repsol University.",
+        label: "Repsol · Training visits",
+        group: "Trainee experiences",
+        text: "Alongside my work in pricing, I had the opportunity to visit Repsol University during the trainee programme. A different setting from the day-to-day work in Portugal.",
+        caption: "The Repsol University campus.",
+        image: { src: "/about/repsol-university.webp", thumbnail: "/about/repsol-university-thumb.webp", alt: "The Repsol University campus, with its sign, trees and buildings.", width: 1125, height: 2000 },
+      },
+      {
+        id: "repsol-trainee-training",
+        title: "Inside the programme.",
+        label: "Repsol · Trainee training",
+        group: "Trainee experiences",
+        text: "A photograph from a training session during the programme — another part of my first chapter at Repsol, before moving into the My Repsol product role.",
+        caption: "A training session with the trainee group.",
+        image: { src: "/about/repsol-training.webp", thumbnail: "/about/repsol-training-thumb.webp", alt: "A Repsol training session in an auditorium, photographed from the audience.", width: 1500, height: 2000 },
+      },
+      {
+        id: "my-repsol-product-manager",
+        title: "Product meets technology.",
+        label: "Since September 2025 · My Repsol Product Manager",
+        group: "My Repsol",
+        text: "Since September 2025, I’ve been Product Manager for the My Repsol app, where I work today. It brings together two things I love: product management and a digital, consumer-facing product. I’ve also developed automations and built AI agents to help with our everyday work.",
+        caption: "A supplied screenshot of My Repsol. It illustrates the app, not a claim that I designed or built every feature shown.",
+        resourceNote: "Original app interface in Portuguese. Offers and balances shown are part of the captured screen, not current promotions.",
+        image: { src: "/about/my-repsol-app.webp", thumbnail: "/about/my-repsol-app-thumb.webp", alt: "A screenshot of the My Repsol app home screen in Portuguese, showing its consumer services and navigation.", width: 1044, height: 2000 },
       },
     ],
   },
