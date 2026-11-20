@@ -30,12 +30,19 @@ function projectPhoto(id: string): CvPhoto[] {
 export const cvContact = {
   name: "Beatriz Pereira Ferreira",
   email: "beatrizferreira2176@gmail.com",
+  businessEmail: "beatrizferreira@3ctrix.com",
   linkedin: "https://www.linkedin.com/in/beatriz-pereira-ferreira/",
   github: "https://github.com/biapferreira21",
   pdf: "/cv/Beatriz-Ferreira-CV.pdf",
 };
 
 const portrait: CvPhoto = { src: "/cv/beatriz.webp", alt: "Portrait of Beatriz Pereira Ferreira.", caption: "Beatriz Pereira Ferreira · Lisbon, Portugal", width: 1046, height: 777 };
+
+const newPhotos = {
+  amcham: { src: "/cv/amcham-next-generation.webp", alt: "Participants in an AmCham Next Generation round-table discussion.", caption: "AmCham Next Generation · Portugal", width: 1042, height: 587 },
+  aiEngineer: { src: "/cv/ai-engineer-staff.webp", alt: "Beatriz wearing a yellow AI Engineer staff cap at the event.", caption: "AI Engineer Code Summit · Staff", width: 1012, height: 1800 },
+  fellowship: { src: "/cv/silicon-valley-fellowship.webp", alt: "The Silicon Valley Fellowship cohort outside Stanford Memorial Church.", caption: "Silicon Valley Fellowship · Stanford · November 2026", width: 1800, height: 1200 },
+} satisfies Record<string, CvPhoto>;
 
 export const cvChapters: CvChapter[] = [
   {
@@ -89,17 +96,17 @@ export const cvChapters: CvChapter[] = [
     entries: [
       { id: "event-content", title: "Event Ambassador & Content Lead", organisation: "Technology & digital-asset events", summary: "Marketing, content planning and on-site activation across European events.", photos: photos("ebc-barcelona-ambassador", "proof-of-talk-ambassador", "the-block-emergence", "research-to-events-ebc-daf"), points: ["Emergence — Prague", "European Blockchain Convention — Barcelona", "Digital Asset Forum — London", "Proof of Talk — Paris"], links: [{ label: "DAF research & event publications", href: "https://eblockchainconvention.com/where-institutional-digital-asset-budgets-are-flowing-in-2026/" }] },
       { id: "ai-events", title: "AI event ambassador", organisation: "AI Summit Barcelona · Lisbon AI Week", summary: "Helping connect people and conversations around artificial intelligence.", photos: photos("ai-summit-barcelona-ambassador", "ai-summit-barcelona-founder-pass", "lisbon-ai-week-ambassador"), paragraphs: ["Ambassador for AI Summit Barcelona and Lisbon AI Week." ] },
-      { id: "ai-engineer", title: "AI Engineer Code Summit", organisation: "Staff", summary: "Worked as staff; ambassador selection process ongoing.", photos: [], paragraphs: ["Supported the event as a member of staff. The process to become an ambassador is ongoing."] },
+      { id: "ai-engineer", title: "AI Engineer Code Summit", organisation: "Staff", summary: "Worked as staff; ambassador selection process ongoing.", photos: [newPhotos.aiEngineer], paragraphs: ["Supported the event as a member of staff. The process to become an ambassador is ongoing."] },
       { id: "agentiq", title: "Agentiq World · Berlin", organisation: "Upcoming ambassador role", summary: "An upcoming chapter in the AI event community.", photos: [] },
     ],
   },
   {
     id: "fellowships", label: "Fellowships & communities", title: "A wider\nperspective.",
     introduction: "Learning with people who bring different experiences — in Silicon Valley and in Portugal.",
-    color: "#7b4939", paper: "#f4e9df", photo: { ...photos("silicon-valley-fellowship-november-2026")[0], caption: "Silicon Valley Fellowship · programme artwork", alt: "Golden Gate Bridge artwork introducing the Silicon Valley Fellowship." }, photoEntry: "svf", note: "Silicon Valley · Portugal",
+    color: "#7b4939", paper: "#f4e9df", photo: newPhotos.fellowship, photoEntry: "svf", note: "Silicon Valley · Portugal",
     entries: [
-      { id: "svf", title: "Silicon Valley Fellowship · Alumna", organisation: "Silicon Valley, California", date: "Nov 2026", summary: "Completed the programme in Silicon Valley. Acceptance rate below 3%.", photos: [{ ...photos("silicon-valley-fellowship-november-2026")[0], caption: "Silicon Valley Fellowship · programme artwork", alt: "Golden Gate Bridge with Silicon Valley Fellowship lettering." }], paragraphs: ["Completed the Silicon Valley Fellowship in November 2026, learning with a cohort from different professional backgrounds.", "Recent programme updates I shared on LinkedIn include visits to Google and Stanford, conversations with founders and a design-thinking session at the University of San Francisco."], links: [{ label: "siliconvalleyfellowship.com", href: "https://www.siliconvalleyfellowship.com/" }, { label: "Recent posts & programme updates · LinkedIn", href: "https://www.linkedin.com/in/beatriz-pereira-ferreira/recent-activity/all/" }] },
-      { id: "amcham", title: "AmCham Next Generation", organisation: "Member", date: "Nov 2026 — present", summary: "American Chamber of Commerce programme engaging young people in initiatives.", photos: [], paragraphs: ["Part of the American Chamber of Commerce’s Next Generation programme, bringing young professionals into conversations and initiatives."] },
+      { id: "svf", title: "Silicon Valley Fellowship · Alumna", organisation: "Silicon Valley, California", date: "Nov 2026", summary: "Completed the programme in Silicon Valley. Acceptance rate below 3%.", photos: [newPhotos.fellowship], paragraphs: ["Completed the Silicon Valley Fellowship in November 2026, learning with a cohort from different professional backgrounds.", "Recent programme updates I shared on LinkedIn include visits to Google and Stanford, conversations with founders and a design-thinking session at the University of San Francisco."], links: [{ label: "siliconvalleyfellowship.com", href: "https://www.siliconvalleyfellowship.com/" }, { label: "Recent posts & programme updates · LinkedIn", href: "https://www.linkedin.com/in/beatriz-pereira-ferreira/recent-activity/all/" }] },
+      { id: "amcham", title: "AmCham Next Generation", organisation: "Member", date: "Nov 2026 — present", summary: "American Chamber of Commerce programme engaging young people in initiatives.", photos: [newPhotos.amcham], paragraphs: ["Part of the American Chamber of Commerce’s Next Generation programme, bringing young professionals into conversations and initiatives."] },
       { id: "yec", title: "Youth Economic Circle", organisation: "YEC Portugal · Member", date: "Feb 2025 — present", summary: "A community connecting young people with leading Portuguese professionals through dinners.", photos: photos("yec-portugal-sofia-lufinha", "yec-portugal-patricia-barao", "yec-portugal-francisco-jalles-meneses"), links: [{ label: "YEC Portugal · LinkedIn", href: "https://pt.linkedin.com/company/yec-portugal" }] },
     ],
   },
