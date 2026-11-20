@@ -16,6 +16,7 @@ const studioLinks = [
   { label: "Events & Media", href: "/#experience", external: false },
   { label: "Research", href: siteConfig.urls.research, external: false },
   { label: "About", href: "/about", external: false },
+  { label: "CV", href: "/cv", external: false },
 ] as const;
 const websitesLinksPt = [
   { label: "Serviços", href: "/websites#servicos", external: false },

@@ -12,6 +12,7 @@ This is a multi-service company website built as one cohesive Next.js applicatio
 
 - `/` — studio homepage and service overview
 - `/research` — AI research, analysis and content portfolio
+- `/cv` — interactive CV book with photographs, chapter navigation and a downloadable PDF
 - `/automations` — AI automation and implementation services
 - `/websites` — website creation and redesign, in Portuguese
 - `/websites/en` — English version of the websites service
@@ -61,6 +62,7 @@ The principal content files are:
 - `src/content/automations.ts` — automation services
 - `src/content/research.ts` — research narrative
 - `src/content/researchProjects.ts` — research portfolio
+- `src/content/cv.ts` — CV chapters, experience copy, gallery references and links
 - `src/config/site.ts` — public contact and brand configuration
 
 ## Run locally
@@ -104,6 +106,8 @@ npm run lint
 npx tsc --noEmit
 npm run build
 ```
+
+The interactive CV has a browser check in `tests/cvBook.browser.cjs`. With Playwright available, start the production server on port 3012 and run `node tests/cvBook.browser.cjs`. Set `CV_TEST_URL` to test another local address. It checks chapter navigation, every gallery, PDF download, deep links, keyboard focus, mobile layout and reduced-motion, WebGL and JavaScript fallbacks. Screenshots go to the system temporary directory, or `CV_SCREENSHOT_DIR` when set.
 
 ## Deploy to Cloudflare
 

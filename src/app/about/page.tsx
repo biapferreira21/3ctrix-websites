@@ -33,6 +33,7 @@ export default function AboutPage() {
               <nav data-about-reveal aria-label="On this page" className="mt-7 flex flex-wrap gap-x-8 gap-y-2 border-t border-night/20 pt-4">
                 <a href="#my-story" className="inline-flex min-h-12 items-center gap-3 text-sm font-semibold text-forest"><span className="font-mono text-[10px] text-slate">01</span>My story <ArrowDown size={14} aria-hidden /></a>
                 <a href="#projects" className="inline-flex min-h-12 items-center gap-3 text-sm font-semibold text-forest"><span className="font-mono text-[10px] text-slate">02</span>Projects <ArrowDown size={14} aria-hidden /></a>
+                <Link href="/cv" className="inline-flex min-h-12 items-center rounded-full border border-forest/30 bg-mint-soft px-5 text-sm font-semibold text-forest">Open my interactive CV</Link>
               </nav>
             </div>
             <div data-about-portrait className="mx-auto w-full max-w-xs rounded-lg border border-night/20 bg-white p-3 shadow-[14px_14px_0_#D9CBEE] lg:rotate-2">
